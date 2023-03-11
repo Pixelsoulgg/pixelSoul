@@ -93,13 +93,28 @@
 					"totalUSD": {
 						"type": "number",
 						"format": "double"
+					},
+					"floorPriceETH": {
+						"type": "number",
+						"format": "double"
+					},
+					"ethPrice": {
+						"type": "number",
+						"format": "double"
+					},
+					"priceInUSD": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
 					"slug",
 					"amount",
 					"totalETH",
-					"totalUSD"
+					"totalUSD",
+					"floorPriceETH",
+					"ethPrice",
+					"priceInUSD"
 				],
 				"type": "object",
 				"additionalProperties": false

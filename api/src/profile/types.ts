@@ -19,7 +19,10 @@ export interface NFT {
     slug: string,
     amount: number,
     totalETH: number,
-    totalUSD: number
+    totalUSD: number,
+    floorPriceETH: number,
+    ethPrice: number,
+    priceInUSD: number
 }
 export interface NFTHolding {
     nfts: (NFT | undefined)[],
