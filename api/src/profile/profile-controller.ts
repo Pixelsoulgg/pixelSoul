@@ -2,7 +2,6 @@
 import {
     Body, Controller, Get, Path, Post, Query, Route, SuccessResponse,
 } from "tsoa";
-import { Profile } from "./profile";
 import { ProfileService } from "./profiles-service";
 import { ScoreData } from "./types";
 
@@ -12,6 +11,7 @@ export class UsersController extends Controller {
     public async getProfile(
         @Path() address: string
     ): Promise<ScoreData | undefined> {
-        return new ProfileService().getScore(address);
+        const service = new ProfileService();
+        return service.getScore(address);
     }
 }

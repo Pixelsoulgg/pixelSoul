@@ -4,8 +4,8 @@
   "author": "Dequest",
   "license": "UNLICENSED",
   "scripts": {
-    "clean": "rm -rf dist",
-    "build": "yarn clean && tsc",
+    "clean": "rm -rf build",
+    "build": "yarn clean && tsoa spec-and-routes && tsc",
     "start": "yarn build && node build/server.js",
     "start:dev": "npx nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"

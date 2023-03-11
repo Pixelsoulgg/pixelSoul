@@ -29,8 +29,8 @@ export interface NFTHolding {
 export interface ScoreData {
     tokenHolding: (TokenHolding | undefined)[],
     nftHolding: NFTHolding | undefined,
-    totalAllChain: number,
-    totalAllChainNfts: number,
+    totalCoinsAllChain: number,
+    totalNFTsAllChain: number,
     investorLevel: number,
     collectorLevel: number
 }

@@ -1,5 +1,5 @@
 import { OPENSEA_API_KEY } from "../settings";
-import { NTFCollection, Stats } from "./types";
+import { NTFCollection, NTFCollectionGeneral, Stats } from "./types";
 
 const axios = require('axios');
 const api_host = `https://api.opensea.io/api/v1`;
@@ -19,10 +19,10 @@ export async function getNFTStats(slug: string): Promise<Stats> {
     return rs;
 }
 
-export async function getNFTCollections(wallet: string, limit = 300): Promise<NTFCollection[]> {
+export async function getNFTCollections(wallet: string, limit = 300): Promise<NTFCollectionGeneral[]> {
     let url = `${api_host}/collections?asset_owner=${wallet}&offset=0&limit=${limit}`;
 
     const response = await axios.get(url, axiosOptions);
-    const collections = <NTFCollection[]>response.data.collections;
+    const collections = <NTFCollectionGeneral[]>response.data;
     return collections;
 }
