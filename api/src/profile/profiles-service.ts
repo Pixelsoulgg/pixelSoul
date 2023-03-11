@@ -134,24 +134,28 @@ export class ProfileService {
                 if (nft.stats.total_volume < 30) return;
                 let totalETH = 0;// floor_price in ETH
                 let totalUSD = 0;// floor_price in USD
+                let floorPriceETH = 0;
+                let priceInUSD = 0;
                 const amount = nft.owned_asset_count || 0;
                 const stats = await this.callAPIGetNFTStats(nft.slug);
 
                 if (stats) {
                     if (stats?.floor_price > 100) return;
-
-                    totalETH = amount * stats.floor_price;// floor_price in ETH
+                    floorPriceETH = stats.floor_price;
+                    totalETH = amount * floorPriceETH;// floor_price in ETH
                     totalUSD = totalETH * price;// floor_price in USD
-
+                    priceInUSD = floorPriceETH * price;
                     totalNftsAmount += amount;
                     totalNftsInUsd += totalUSD;
-
                 }
                 const ntfData: NFT = {
                     slug: nft.slug,
                     amount,
                     totalETH,
-                    totalUSD
+                    totalUSD,
+                    floorPriceETH,
+                    ethPrice: price,
+                    priceInUSD
                 }
                 return ntfData;
             }));
@@ -198,5 +202,6 @@ export class ProfileService {
             console.log('get_score', error);
         }
     }
+
 }
 //get_score('0xdAC17F958D2ee523a2206206994597C13D831ec7');
