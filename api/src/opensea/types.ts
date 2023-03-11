@@ -56,7 +56,7 @@ export interface Fees {
     opensea_fees: OpenseaFees;
 }
 
-export interface NTFCollection {
+export interface NTFCollectionGeneral {
     primary_asset_contracts: any[]; // You may want to create another interface for primary_asset_contracts
     traits: { [key: string]: any }; // You may want to create another interface for traits
     stats: Stats;
@@ -96,3 +96,41 @@ export interface NTFCollection {
     is_creator_fees_enforced: boolean;
     owned_asset_count: number | undefined;
 }
+
+interface AssetContract {
+    address: string;
+    asset_contract_type: string;
+    created_date: string;
+    name: string;
+    nft_version: string | null;
+    opensea_version: string | null;
+    owner: number;
+    schema_name: string;
+    symbol: string;
+    total_supply: string;
+    description: string;
+    external_link: string;
+    image_url: string;
+    default_to_fiat: boolean;
+    dev_buyer_fee_basis_points: number;
+    dev_seller_fee_basis_points: number;
+    only_proxied_transfers: boolean;
+    opensea_buyer_fee_basis_points: number;
+    opensea_seller_fee_basis_points: number;
+    buyer_fee_basis_points: number;
+    seller_fee_basis_points: number;
+    payout_address: string;
+}
+
+interface Trait {
+    [traitName: string]: {
+        [traitValue: string]: number;
+    };
+}
+
+export interface NTFCollection {
+    primary_asset_contracts: AssetContract[];
+    traits: Trait;
+
+}
+

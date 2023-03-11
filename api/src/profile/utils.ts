@@ -130,5 +130,7 @@ export function getStableCoinList(chain: string) {
 
 export function getChainList() {
     return ['eth', 'polygon', 'bsc', 'avalanche', 'arbitrum', 'fantom'];
+    //return ['eth'];
+
 }
 

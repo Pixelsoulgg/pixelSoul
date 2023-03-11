@@ -1,13 +1,12 @@
 import { getExchangeRate } from '../coin-market-cap/service';
 import { getNativeBalance, getAllBalances } from "../moralis/service";
 import { TokenBalance } from '../moralis/types';
-import { getNFTCollections } from '../opensea/service';
-import { NTFCollection } from '../opensea/types';
+import { getNFTCollections, getNFTStats } from '../opensea/service';
+import { NTFCollection, NTFCollectionGeneral, Stats } from '../opensea/types';
 import { NFT, NFTHolding, ScoreData, StableCoinsHolding, TokenHolding } from './types';
 import { getStableCoinList, getSlugBySymbol, getLevel, getChainList } from './utils';
 
 export class ProfileService {
-
     callAPINativeBalance = async (wallet: string, chain: string): Promise<number> => {
         try {
             const result = await getNativeBalance(wallet, chain);
@@ -28,6 +27,7 @@ export class ProfileService {
         try {
             const result = await getAllBalances(wallet, chain);
             const stableCoins = getStableCoinList(chain);
+            console.log(stableCoins, 'statble coins:', chain)
             const rsfilter = result.filter(f => stableCoins.includes(f.address));
             return rsfilter;
         } catch (er: any) {
@@ -43,7 +43,7 @@ export class ProfileService {
 
     }
 
-    callAPIGetNFTs = async (wallet: string): Promise<NTFCollection[]> => {
+    callAPIGetNFTs = async (wallet: string): Promise<NTFCollectionGeneral[]> => {
         try {
             const nfts = await getNFTCollections(wallet);
             return nfts;
@@ -58,6 +58,21 @@ export class ProfileService {
         }
         return [];
     }
+    callAPIGetNFTStats = async (slug: string): Promise<Stats | undefined> => {
+        try {
+            const nftStats = await getNFTStats(slug);
+            return nftStats;
+        } catch (er: any) {
+            if (er.response?.status === 429) {
+                return await this.callAPIGetNFTStats(slug);
+            }
+            if (er == 'Error: read ECONNRESET') {
+                return await this.callAPIGetNFTStats(slug);
+            }
+            console.log(er);
+        }
+        return undefined;
+    }
 
 
 
@@ -70,7 +85,7 @@ export class ProfileService {
             const nativeBalance = await getNativeBalance(wallet, chain_symbol);
             const nativeTotal = (nativeBalance * (nativePrice?.quote?.USD?.price || 0)) / (10 ** 18);
             // statble coin
-            const stableBalance = await getAllBalances(wallet, chain_symbol);
+            const stableBalance = await this.callAPIGetBalances(wallet, chain_symbol);
             let totalStableCoinValue = 0;
             const stableValues = await Promise.all(stableBalance.map(async (b) => {
                 const slug = getSlugBySymbol(b.symbol.split(".")[0]);
@@ -109,7 +124,7 @@ export class ProfileService {
     getTotalNft = async (wallet: string): Promise<NFTHolding | undefined> => {
         try {
             // nft holding
-            const nfts = await getNFTCollections(wallet);
+            const nfts = await this.callAPIGetNFTs(wallet);
             const ethPrice = await getExchangeRate('ethereum');
             let totalNftsAmount = 0;
             let totalNftsInUsd = 0;
@@ -117,15 +132,21 @@ export class ProfileService {
             const price = ethPrice?.quote.USD.price || 0;
             const nftsValue = await Promise.all(nfts.map(async nft => {
                 if (nft.stats.total_volume < 30) return;
+                let totalETH = 0;// floor_price in ETH
+                let totalUSD = 0;// floor_price in USD
                 const amount = nft.owned_asset_count || 0;
-                const stats = nft.stats;
-                if (stats.floor_price > 100) return;
+                const stats = await this.callAPIGetNFTStats(nft.slug);
 
-                const totalETH = amount * stats.floor_price;// floor_price in ETH
-                const totalUSD = totalETH * price;// floor_price in USD
+                if (stats) {
+                    if (stats?.floor_price > 100) return;
 
-                totalNftsAmount += amount;
-                totalNftsInUsd += totalUSD;
+                    totalETH = amount * stats.floor_price;// floor_price in ETH
+                    totalUSD = totalETH * price;// floor_price in USD
+
+                    totalNftsAmount += amount;
+                    totalNftsInUsd += totalUSD;
+
+                }
                 const ntfData: NFT = {
                     slug: nft.slug,
                     amount,
@@ -165,8 +186,8 @@ export class ProfileService {
             const data: ScoreData = {
                 tokenHolding: result,
                 nftHolding: nft,
-                totalAllChain: totalAllChain,
-                totalAllChainNfts: totalAllChainNfts,
+                totalCoinsAllChain: totalAllChain,
+                totalNFTsAllChain: totalAllChainNfts,
                 investorLevel: investorLevel,
                 collectorLevel: collectorLevel
             }

@@ -6,66 +6,166 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"Profile": {
+			"Native": {
 				"properties": {
-					"id": {
+					"balance": {
 						"type": "number",
 						"format": "double"
 					},
-					"email": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"status": {
-						"type": "string",
-						"enum": [
-							"Happy",
-							"Sad"
-						]
-					},
-					"phoneNumbers": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
+					"value": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
-					"id",
-					"email",
-					"name",
-					"phoneNumbers"
+					"balance",
+					"value"
 				],
 				"type": "object",
 				"additionalProperties": false
 			},
-			"Pick_Profile.email-or-name-or-phoneNumbers_": {
+			"StableCoinsHolding": {
 				"properties": {
-					"email": {
-						"type": "string"
-					},
 					"name": {
 						"type": "string"
 					},
-					"phoneNumbers": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
+					"symbol": {
+						"type": "string"
+					},
+					"tokenAddress": {
+						"type": "string"
+					},
+					"totalUsd": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
-					"email",
 					"name",
-					"phoneNumbers"
+					"symbol",
+					"tokenAddress",
+					"totalUsd"
 				],
 				"type": "object",
-				"description": "From T, pick a set of properties whose keys are in the union K"
+				"additionalProperties": false
 			},
-			"UserCreationParams": {
-				"$ref": "#/components/schemas/Pick_Profile.email-or-name-or-phoneNumbers_"
+			"TokenHolding": {
+				"properties": {
+					"chain": {
+						"type": "string"
+					},
+					"native": {
+						"$ref": "#/components/schemas/Native"
+					},
+					"stableCoins": {
+						"items": {
+							"$ref": "#/components/schemas/StableCoinsHolding"
+						},
+						"type": "array"
+					},
+					"totalHolding": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"chain",
+					"native",
+					"stableCoins",
+					"totalHolding"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"NFT": {
+				"properties": {
+					"slug": {
+						"type": "string"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
+					},
+					"totalETH": {
+						"type": "number",
+						"format": "double"
+					},
+					"totalUSD": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"slug",
+					"amount",
+					"totalETH",
+					"totalUSD"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"NFTHolding": {
+				"properties": {
+					"nfts": {
+						"items": {
+							"$ref": "#/components/schemas/NFT"
+						},
+						"type": "array"
+					},
+					"totalNftsAmount": {
+						"type": "number",
+						"format": "double"
+					},
+					"totalNftsInUsd": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"nfts",
+					"totalNftsAmount",
+					"totalNftsInUsd"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ScoreData": {
+				"properties": {
+					"tokenHolding": {
+						"items": {
+							"$ref": "#/components/schemas/TokenHolding"
+						},
+						"type": "array"
+					},
+					"nftHolding": {
+						"$ref": "#/components/schemas/NFTHolding"
+					},
+					"totalCoinsAllChain": {
+						"type": "number",
+						"format": "double"
+					},
+					"totalNFTsAllChain": {
+						"type": "number",
+						"format": "double"
+					},
+					"investorLevel": {
+						"type": "number",
+						"format": "double"
+					},
+					"collectorLevel": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"tokenHolding",
+					"totalCoinsAllChain",
+					"totalNFTsAllChain",
+					"investorLevel",
+					"collectorLevel"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -82,16 +182,16 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/users/{userId}": {
+		"/profile/{address}": {
 			"get": {
-				"operationId": "GetUser",
+				"operationId": "GetProfile",
 				"responses": {
 					"200": {
 						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Profile"
+									"$ref": "#/components/schemas/ScoreData"
 								}
 							}
 						}
@@ -101,44 +201,13 @@
 				"parameters": [
 					{
 						"in": "path",
-						"name": "userId",
+						"name": "address",
 						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "query",
-						"name": "name",
-						"required": false,
 						"schema": {
 							"type": "string"
 						}
 					}
 				]
-			}
-		},
-		"/users": {
-			"post": {
-				"operationId": "CreateUser",
-				"responses": {
-					"201": {
-						"description": "Created"
-					}
-				},
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/UserCreationParams"
-							}
-						}
-					}
-				}
 			}
 		}
 	},
