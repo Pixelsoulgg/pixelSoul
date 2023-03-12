@@ -11,7 +11,8 @@ import {
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import React from "react";
+import React, { useCallback, useMemo } from "react";
+import { getProfile } from "../apis";
 import ComingSoon from "../components/ComingSoon";
 import NFTTable from "../components/dashboards/NFTTable";
 import StatCard from "../components/dashboards/StatCard";
@@ -21,9 +22,37 @@ import {
   NFTsData,
   SBTs_And_Collectibles,
 } from "../configs/constants";
+import { INftDashboardItem } from "../types";
 
 const Home: NextPage = () => {
   const [available, setAvailable] = React.useState<string>("Bronxe");
+
+  const [profile, setProfile] = React.useState<any>();
+
+
+  const fetchData = useCallback(async() => {
+    const profile = await getProfile();
+    setProfile(profile);   
+  }, []);
+
+  const nftsDatasource = useMemo(() => {
+    if (!profile) return [];
+    const {nfts} = profile.nftHolding;
+    return nfts.map((nft: any) => {
+      const item: INftDashboardItem = {
+        img: 'file.svg',
+        name: nft.slug,
+        kb: 0,
+        amount: Number(nft.priceInUSD).toFixed(3),
+        type: 'UnCategorized'
+      };
+      return item;
+    })   
+  }, [profile]);
+
+  React.useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -210,8 +239,8 @@ const Home: NextPage = () => {
                 isUp={false}
                 comingSoon
               />
-              <StatCard title="InvestScore" value="999" percent={60} isUp />
-              <StatCard title="CollectorScore" value="999" percent={103} isUp />
+              <StatCard title="InvestScore" value={profile && profile.investorLevel || 0} percent={60} isUp />
+              <StatCard title="CollectorScore" value={profile && profile.collectorLevel || 0} percent={13} isUp={false} />
             </SimpleGrid>
           </Flex>
 
@@ -240,7 +269,7 @@ const Home: NextPage = () => {
             <NFTTable
               title="NFTs"
               tableLabels={NFTsData.header}
-              data={NFTsData.data}
+              data={nftsDatasource}
             />
           </Flex>
         </Flex>
