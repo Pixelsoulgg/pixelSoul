@@ -1,15 +1,23 @@
 import { Box, Flex, HStack, Image, Img, Spacer, Text } from "@chakra-ui/react";
 import React from "react";
 import { fonts } from "../../configs/constants";
+import ComingSoon from "../ComingSoon";
 
 interface IProps {
   title: string;
   value: string;
   percent?: number;
   isUp: boolean;
+  comingSoon?: boolean;
 }
 
-export default function StatCard({ title, value, percent, isUp }: IProps) {
+export default function StatCard({
+  title,
+  value,
+  percent,
+  isUp,
+  comingSoon,
+}: IProps) {
   const color = isUp ? "#027A48" : "#B42318";
   const bg = isUp ? "#ECFDF3" : "#FEF3F2";
   const icon = isUp ? "up" : "down";
@@ -39,39 +47,42 @@ export default function StatCard({ title, value, percent, isUp }: IProps) {
         </Text>
         <Image src="/three-dot.svg" />
       </HStack>
-      <HStack w="full">
-        <Text
-          color="#101828"
-          fontFamily={fonts.Inter}
-          fontWeight="600"
-          fontSize="30px"
-          lineHeight="38px"
-        >
-          {value}
-        </Text>
-        <Spacer />
-        <Box
-          display="flex"
-          flexDirection="row"
-          bg={bg}
-          w="61px"
-          h="24px"
-          borderRadius="16px"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Image w="12px" src={`/arrow-${icon}.svg`} />
+      {!comingSoon && (
+        <HStack w="full">
           <Text
-            color={color}
-            fontWeight="bold"
-            fontSize="14px"
+            color="#101828"
             fontFamily={fonts.Inter}
-            ml="4px"
+            fontWeight="600"
+            fontSize="30px"
+            lineHeight="38px"
           >
-            {percent}%
+            {value}
           </Text>
-        </Box>
-      </HStack>
+          <Spacer />
+          <Box
+            display="flex"
+            flexDirection="row"
+            bg={bg}
+            w="61px"
+            h="24px"
+            borderRadius="16px"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Image w="12px" src={`/arrow-${icon}.svg`} />
+            <Text
+              color={color}
+              fontWeight="bold"
+              fontSize="14px"
+              fontFamily={fonts.Inter}
+              ml="4px"
+            >
+              {percent}%
+            </Text>
+          </Box>
+        </HStack>
+      )}
+      {comingSoon && <ComingSoon isSmall  bg="#f1f1f170" borderRadius="5px" />}
     </Flex>
   );
 }

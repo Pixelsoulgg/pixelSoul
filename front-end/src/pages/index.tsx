@@ -12,6 +12,7 @@ import {
 import type { NextPage } from "next";
 import Head from "next/head";
 import React from "react";
+import ComingSoon from "../components/ComingSoon";
 import NFTTable from "../components/dashboards/NFTTable";
 import StatCard from "../components/dashboards/StatCard";
 import {
@@ -22,7 +23,7 @@ import {
 } from "../configs/constants";
 
 const Home: NextPage = () => {
-  const [available, setAvailable] = React.useState<string>('Bronxe');
+  const [available, setAvailable] = React.useState<string>("Bronxe");
 
   return (
     <>
@@ -75,6 +76,8 @@ const Home: NextPage = () => {
               right="15px"
               top="16px"
             />
+
+            <ComingSoon />
           </Box>
 
           <HStack
@@ -108,9 +111,9 @@ const Home: NextPage = () => {
                   fontSize="14px"
                   fontFamily={fonts.Inter}
                   fontWeight="600"
-                  bg={available === 'Bronxe' ? "#F9FAFB" : ''} 
+                  bg={available === "Bronxe" ? "#F9FAFB" : ""}
                   cursor="pointer"
-                  onClick={() => setAvailable('Bronxe')}
+                  onClick={() => setAvailable("Bronxe")}
                 >
                   Bronxe
                 </Box>
@@ -123,8 +126,8 @@ const Home: NextPage = () => {
                   borderLeft="1px solid #D0D5DD"
                   borderRight="1px solid #D0D5DD"
                   cursor="pointer"
-                  bg={available === 'Silver' ? "#F9FAFB" : ''} 
-                  onClick={() => setAvailable('Silver')}
+                  bg={available === "Silver" ? "#F9FAFB" : ""}
+                  onClick={() => setAvailable("Silver")}
                 >
                   Silver
                 </Box>
@@ -135,8 +138,8 @@ const Home: NextPage = () => {
                   fontFamily={fonts.Inter}
                   fontWeight="600"
                   cursor="pointer"
-                  bg={available === 'Gold' ? "#F9FAFB" : ''} 
-                  onClick={() => setAvailable('Gold')}
+                  bg={available === "Gold" ? "#F9FAFB" : ""}
+                  onClick={() => setAvailable("Gold")}
                 >
                   Gold
                 </Box>
@@ -164,7 +167,7 @@ const Home: NextPage = () => {
               pb="21px"
               borderBottom="1px solid #EAECF0"
               mb="10px"
-              mt={{base: "70px", lg: "0px"}}
+              mt={{ base: "70px", lg: "0px" }}
             >
               <VStack alignItems="flex-start">
                 <Heading
@@ -193,15 +196,22 @@ const Home: NextPage = () => {
             </HStack>
 
             <SimpleGrid columns={{ base: 1, lg: 4 }} w="full" columnGap="20px">
-              <StatCard title="SoulScore" value="999" percent={10} isUp />
               <StatCard
                 title="SoulScore"
                 value="999"
+                percent={10}
+                isUp
+                comingSoon
+              />
+              <StatCard
+                title="GamerScore"
+                value="999"
                 percent={50}
                 isUp={false}
+                comingSoon
               />
-              <StatCard title="SoulScore" value="999" percent={60} isUp />
-              <StatCard title="SoulScore" value="999" percent={103} isUp />
+              <StatCard title="InvestScore" value="999" percent={60} isUp />
+              <StatCard title="CollectorScore" value="999" percent={103} isUp />
             </SimpleGrid>
           </Flex>
 
@@ -215,12 +225,14 @@ const Home: NextPage = () => {
               title="SBTs and Collectibles"
               tableLabels={SBTs_And_Collectibles.header}
               data={SBTs_And_Collectibles.data}
+              comingSoon
             />
 
             <NFTTable
               title="Bundles and Packages"
               tableLabels={Bundles_And_Packages.header}
               data={Bundles_And_Packages.data}
+              comingSoon
             />
           </SimpleGrid>
 
