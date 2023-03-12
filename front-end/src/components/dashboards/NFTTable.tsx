@@ -21,15 +21,17 @@ import {
 import React from "react";
 import { fonts } from "../../configs/constants";
 import { INftDashboardItem, INftLabel } from "../../types";
+import ComingSoon from "../ComingSoon";
 import Tag from "./Tag";
 
 type IProps = {
   title: string;
   tableLabels: INftLabel[];
   data: INftDashboardItem[];
+  comingSoon?: boolean;
 };
 
-const NFTTable = ({ title, tableLabels, data }: IProps) => {
+const NFTTable = ({ title, tableLabels, data, comingSoon }: IProps) => {
   return (
     <Flex
       flex={1}
@@ -38,7 +40,7 @@ const NFTTable = ({ title, tableLabels, data }: IProps) => {
       px="10px"
       py="10px"
       borderRadius="10px"
-      mt={{base: "20px", lg: "0px"}}
+      mt={{ base: "20px", lg: "0px" }}
     >
       <Heading
         size="md"
@@ -55,7 +57,11 @@ const NFTTable = ({ title, tableLabels, data }: IProps) => {
         <Thead>
           <Tr px="0px">
             {tableLabels.map((p, index) => (
-              <Th w={p.width || "20%"} textTransform="capitalize" key={String(index)}>
+              <Th
+                w={p.width || "20%"}
+                textTransform="capitalize"
+                key={String(index)}
+              >
                 <HStack>
                   <Text>{p.label}</Text>
                   {p.description && (
@@ -69,49 +75,57 @@ const NFTTable = ({ title, tableLabels, data }: IProps) => {
           </Tr>
         </Thead>
         <Tbody>
-          {data.map((d, index) => (
-            <Tr key={String(index)}>
-              <Td>
-                <HStack>
-                  <Image src={`/${d.img}`} />
-                  <VStack alignItems="flex-start">
-                    <Text
-                      fontSize="14px"
-                      color="#101828"
-                      lineHeight="20px"
-                      fontWeight="500"
-                      fontFamily={fonts.Inter}
-                    >
-                      {d.name}
-                    </Text>
-                    <Text
-                      fontSize="14px"
-                      color="#101828"
-                      lineHeight="20px"
-                      fontWeight="400"
-                      fontFamily={fonts.Inter}
-                    >
-                      {d.kb} KB
-                    </Text>
-                  </VStack>
-                </HStack>
-              </Td>
-              <Td>
-                <Text
-                  fontSize="14px"
-                  color="#101828"
-                  lineHeight="20px"
-                  fontWeight="400"
-                  fontFamily={fonts.Inter}
-                >
-                  ${d.amount}
-                </Text>
-              </Td>
-              <Td>
-                <Tag label={d.type} type={d.type.toLocaleLowerCase()} />
+          {!comingSoon &&
+            data.map((d, index) => (
+              <Tr key={String(index)}>
+                <Td>
+                  <HStack>
+                    <Image src={`/${d.img}`} />
+                    <VStack alignItems="flex-start">
+                      <Text
+                        fontSize="14px"
+                        color="#101828"
+                        lineHeight="20px"
+                        fontWeight="500"
+                        fontFamily={fonts.Inter}
+                      >
+                        {d.name}
+                      </Text>
+                      <Text
+                        fontSize="14px"
+                        color="#101828"
+                        lineHeight="20px"
+                        fontWeight="400"
+                        fontFamily={fonts.Inter}
+                      >
+                        {d.kb} KB
+                      </Text>
+                    </VStack>
+                  </HStack>
+                </Td>
+                <Td>
+                  <Text
+                    fontSize="14px"
+                    color="#101828"
+                    lineHeight="20px"
+                    fontWeight="400"
+                    fontFamily={fonts.Inter}
+                  >
+                    ${d.amount}
+                  </Text>
+                </Td>
+                <Td>
+                  <Tag label={d.type} type={d.type.toLocaleLowerCase()} />
+                </Td>
+              </Tr>
+            ))}
+          {comingSoon && (
+            <Tr>
+              <Td colSpan={tableLabels.length}>
+                <ComingSoon minH="200px" bg="#f1f1f170" />
               </Td>
             </Tr>
-          ))}
+          )}
         </Tbody>
       </Table>
 
