@@ -37,7 +37,7 @@ export interface INftDashboardItem {
   img: string;
   name: string;
   kb: number;
-  amount: number;
+  amount: number | string;
   type: string;
 }
 

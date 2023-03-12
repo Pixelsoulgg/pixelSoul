@@ -82,7 +82,7 @@ export default function StatCard({
           </Box>
         </HStack>
       )}
-      {comingSoon && <ComingSoon isSmall  bg="#f1f1f170" borderRadius="5px" />}
+      {comingSoon && <ComingSoon isSmall  bg="#f1f1f170" borderRadius="5px" minH="50px" />}
     </Flex>
   );
 }

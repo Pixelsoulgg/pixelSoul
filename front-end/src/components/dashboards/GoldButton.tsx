@@ -11,6 +11,7 @@ export default function GoldButton() {
       px="42px"
       borderRadius="8px"
       border="1px solid #D0D5DD"
+      justifyContent={{base: 'center', lg: 'flex-start'}}
     >
       <Text>500 Gold</Text>
     </Box>
