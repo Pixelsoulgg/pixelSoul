@@ -16,12 +16,18 @@ app.use(
     extended: true,
   })
 );
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://pixelsoul.dequest.io', '*'],
+  methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH', 'OPTIONS'],
+  optionsSuccessStatus: 204,
+  preflightContinue: false
+}));
 RegisterRoutes(app);
 app.use(["/swagger"], swaggerUI.serve, swaggerUI.setup(swaggerJson));
 
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(cors());
+
 app.use(rateLimiterMiddleware);
 app.use(errorMiddleware);
 
