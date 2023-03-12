@@ -91,7 +91,7 @@ const NFTTable = ({ title, tableLabels, data, comingSoon }: IProps) => {
                       >
                         {d.name}
                       </Text>
-                      <Text
+                      {/* <Text
                         fontSize="14px"
                         color="#101828"
                         lineHeight="20px"
@@ -99,7 +99,7 @@ const NFTTable = ({ title, tableLabels, data, comingSoon }: IProps) => {
                         fontFamily={fonts.Inter}
                       >
                         {d.kb} KB
-                      </Text>
+                      </Text> */}
                     </VStack>
                   </HStack>
                 </Td>
@@ -111,11 +111,11 @@ const NFTTable = ({ title, tableLabels, data, comingSoon }: IProps) => {
                     fontWeight="400"
                     fontFamily={fonts.Inter}
                   >
-                    ${d.amount}
+                    {d.amount}
                   </Text>
                 </Td>
                 <Td>
-                  <Tag label={d.type} type={d.type.toLocaleLowerCase()} />
+                  <Tag label={`${d.floorPrice?.toString() || 0} ETH`} type={d.type.toLocaleLowerCase()} />
                 </Td>
               </Tr>
             ))}

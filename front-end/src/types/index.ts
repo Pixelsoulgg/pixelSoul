@@ -38,6 +38,7 @@ export interface INftDashboardItem {
   name: string;
   kb: number;
   amount: number | string;
+  floorPrice?: number | string;
   type: string;
 }
 

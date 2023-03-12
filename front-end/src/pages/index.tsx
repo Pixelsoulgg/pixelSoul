@@ -43,7 +43,8 @@ const Home: NextPage = () => {
         img: 'file.svg',
         name: nft.slug,
         kb: 0,
-        amount: Number(nft.priceInUSD).toFixed(3),
+        amount: Number(nft.amount),
+        floorPrice: Number(nft.floorPriceETH).toFixed(5),
         type: 'UnCategorized'
       };
       return item;
