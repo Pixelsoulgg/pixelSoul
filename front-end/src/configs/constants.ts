@@ -5,6 +5,10 @@ export const fonts = {
   Inter: "Inter",
 };
 
+export const layouts = {
+  title: 'pixelSoul'
+}
+
 export const CHOOSE_BEST = [0.05, 0.1, 0.25, 0.5, 0.75, 1, 2, 3];
 
 export const SBTs_And_Collectibles = {

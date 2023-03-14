@@ -6,6 +6,7 @@ import MainLayout from "../layouts";
 import { Provider } from "react-redux";
 import store from "../reduxs/store";
 import Head from "next/head";
+import DashboardLayout from "../layouts/dashboards";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const AnyComponent = Component as any;
@@ -13,15 +14,20 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <ChakraProvider theme={theme}>
-      <Head>
-        <meta charSet="UTF-8" />
-        <meta name="keywords" content="Flip, coin, deget" />
-        <meta name="author" content="Flip Coin" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </Head>
-        <MainLayout>
+        <Head>
+          <meta charSet="UTF-8" />
+          <meta name="keywords" content="Flip, coin, deget" />
+          <meta name="author" content="Flip Coin" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+        </Head>
+        <DashboardLayout>
+          {/* <MainLayout> */}
           <AnyComponent {...pageProps} />
-        </MainLayout>
+          {/* </MainLayout> */}
+        </DashboardLayout>
       </ChakraProvider>
     </Provider>
   );

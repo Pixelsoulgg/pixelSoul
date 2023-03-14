@@ -32,6 +32,13 @@ const colors = {
 
 const Text: ComponentStyleConfig = {
   variants: {
+    "with-title": {
+      fontFamily: fonts.Inter,
+      fontSize: "30px",
+      lineHeight: "38px",
+      color: '#101828',    
+      fontWeight: '600',      
+    },
   },
 };
 
