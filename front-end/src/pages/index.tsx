@@ -225,7 +225,7 @@ const Home: NextPage = () => {
               <Image src="./three-dot.svg" />
             </HStack>
 
-            <SimpleGrid columns={{ base: 1, lg: 4 }} w="full" columnGap="20px">
+            <SimpleGrid columns={{ base: 1, sm: 2,  lg: 2, xl: 4 }} w="full" columnGap="20px">
               <StatCard
                 title="SoulScore"
                 value="999"
@@ -246,7 +246,7 @@ const Home: NextPage = () => {
           </Flex>
 
           <SimpleGrid
-            columns={{ base: 1, lg: 2 }}
+            columns={{ base: 1, lg: 1, xl: 2 }}
             w="full"
             columnGap="13px"
             mt="16px"
