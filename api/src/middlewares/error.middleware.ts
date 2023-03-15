@@ -1,17 +1,20 @@
-import { NextFunction, Request, Response } from 'express';
-import HttpException from '../exceptions/http';
+import { NextFunction, Request, Response } from 'express'
+import HttpException from '../exceptions/http'
 
-function errorMiddleware(error: HttpException, request: Request, response: Response, next: NextFunction) {
-  const status = error.status || 500;
-  const message = error.message || 'Something went wrong';
+function errorMiddleware(
+  error: HttpException,
+  request: Request,
+  response: Response,
+  next: NextFunction
+) {
+  const status = error.status || 500
+  const message = error.message || 'Something went wrong'
 
   console.log('in error')
-  response
-    .status(status)
-    .send({
-      message,
-      status,
-    });
+  response.status(status).send({
+    message,
+    status
+  })
 }
 
-export default errorMiddleware;
+export default errorMiddleware
