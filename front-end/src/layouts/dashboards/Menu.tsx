@@ -19,9 +19,8 @@ export default function Menu({ ...props }: IProps) {
     <Flex w="full" flex={1} flexDirection="column" {...props}>
       <Flex w="full" flexDirection="column" flex={1}>
         {MENUS.map((menu) => (
-          <Link href={menu.nav}>
+          <Link href={menu.nav} key={menu.name}>
             <HStack
-              key={menu.name}
               cursor="pointer"
               mx="15px"
               padding={{ base: "8px 12px", lg: "8px 0px" }}
@@ -35,14 +34,13 @@ export default function Menu({ ...props }: IProps) {
         ))}
       </Flex>
 
-      <Flex minH="100px" mx="10px" flexDirection="column">
+      <Flex minH="100px"  flexDirection="column">
         {SETTING_MENU.map((menu) => (
-          <Link href={menu.nav}>
+          <Link href={menu.nav}  key={menu.name}>
             <HStack
-              key={menu.name}
               cursor="pointer"
               mx="15px"
-              padding="8px 12px"
+              padding={{ base: "8px 12px", lg: "8px 0px" }}
             >
               <Image src={`./nav/${menu.icon}`} />
               <Text variant="with-title" fontSize="16px" ml="12px">
