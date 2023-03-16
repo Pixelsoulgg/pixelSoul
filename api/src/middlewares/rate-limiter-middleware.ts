@@ -8,7 +8,6 @@ const options: IRateLimiterOptions = {
   duration: MAX_REQUEST_WINDOW,
   points: MAX_REQUEST_LIMIT
 }
-
 const rateLimiter = new RateLimiterMemory(options)
 
 export const rateLimiterMiddleware = (req: Request, res: Response, next: NextFunction) => {
