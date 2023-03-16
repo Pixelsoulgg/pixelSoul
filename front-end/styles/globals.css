@@ -31,3 +31,18 @@ a {
   padding: 16px 0px !important;
   margin: 0px !important;
 } 
+
+.game-table tr >th {
+  background: #F9FAFB;
+  text-transform: capitalize;
+  border-bottom: 1px solid #EAECF0;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.game-table tr > td {
+  border-bottom: 1px solid #EAECF0;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 16px 24px;
+}

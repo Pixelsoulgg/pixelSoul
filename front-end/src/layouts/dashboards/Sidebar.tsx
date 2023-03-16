@@ -14,7 +14,7 @@ export default function Sidebar({ ...props }: IProps) {
     flex={1}
     {...props}>
       <HStack w="full" py="32px" ml="20px">
-        <Image src="./logo.svg" sizes="content" alt="pixelSoul" />
+        <Image src="/logo.svg" sizes="content" alt="pixelSoul" />
         <Text variant="with-title">{layouts.title}</Text>
       </HStack>
       <Menu mt="25px" />

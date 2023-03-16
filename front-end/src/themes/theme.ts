@@ -19,6 +19,7 @@ const colors = {
     subscriptions: "#EFF8FF",
     dining: "#FDF2FA",
     uncategorized: "#F2F4F7",
+    inprogress: "#ECFDF3"
   },
   color: {
     white: "#ffffff",
@@ -27,6 +28,7 @@ const colors = {
     subscriptions: "#175CD3",
     dining: "#C11574",
     uncategorized: "#344054",
+    inprogress: "#027A48"
   },
 };
 
@@ -38,6 +40,13 @@ const Text: ComponentStyleConfig = {
       lineHeight: "38px",
       color: '#101828',    
       fontWeight: '600',      
+    },
+    "with-sub": {
+      fontFamily: fonts.Inter,
+      fontSize: "16px",
+      lineHeight: "24px",
+      color: '#475467',    
+      fontWeight: '400',      
     },
   },
 };

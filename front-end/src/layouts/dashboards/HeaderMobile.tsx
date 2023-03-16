@@ -37,11 +37,11 @@ function HeaderMobile({ ...props }: IProps) {
       px="16px"
     >
       <HStack w="full">
-        <Image src="./logo.svg" sizes="content" alt="pixelSoul" />
+        <Image src="/logo.svg" sizes="content" alt="pixelSoul" />
         <Text variant="with-title">{layouts.title}</Text>
         <Spacer />
         <Button bg="transparent" onClick={onOpen}>
-          <Image src="./menu.svg" sizes="content" alt="menu" />
+          <Image src="/menu.svg" sizes="content" alt="menu" />
         </Button>
       </HStack>
 
