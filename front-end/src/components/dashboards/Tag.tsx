@@ -5,9 +5,10 @@ import { fonts } from '../../configs/constants'
 type IProps = {
   label: string;
   type: string;
+  showDot?: boolean;
 }
 
-export default function Tag({label = 'Subscriptions', type = 'subscriptions'}: IProps) {
+export default function Tag({label = 'Subscriptions', type = 'subscriptions', showDot}: IProps) {
   return (
     <Box display="inline-block" 
       bg={`bg.${type}`}
@@ -15,7 +16,7 @@ export default function Tag({label = 'Subscriptions', type = 'subscriptions'}: I
       p="2px 8px"
     >
       <HStack>
-        {type !== 'uncategorized' && <Box bg={`color.${type}`} w="8px" h="8px" borderRadius="full" />}
+        {(showDot) && <Box bg={`color.${type}`} w="8px" h="8px" borderRadius="full" />}
         <Text
           fontFamily={fonts.Inter}
           fontSize="12px"

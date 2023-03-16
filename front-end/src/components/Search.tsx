@@ -15,7 +15,7 @@ export default function Search({ ...props }: IProps) {
       {...props}
     >
       <HStack w="full">
-        <Image src="./search.svg" />
+        <Image src="/search.svg" />
         <Input
           w="full"
           placeholder="Search"
@@ -25,6 +25,7 @@ export default function Search({ ...props }: IProps) {
             fontSize: "14px",
             fontWeight: "400",
           }}
+          _focus={{border: "none"}}
         />
       </HStack>
     </Flex>
