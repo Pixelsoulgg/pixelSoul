@@ -4,12 +4,10 @@ import TooManyRequestException from '../exceptions/too-many-request'
 
 const MAX_REQUEST_LIMIT = 100
 const MAX_REQUEST_WINDOW = 1 * 60 // Per 1 minutes by IP
-
 const options: IRateLimiterOptions = {
   duration: MAX_REQUEST_WINDOW,
   points: MAX_REQUEST_LIMIT
 }
-
 const rateLimiter = new RateLimiterMemory(options)
 
 export const rateLimiterMiddleware = (req: Request, res: Response, next: NextFunction) => {
