@@ -8,15 +8,19 @@ import {
   Tbody,
   Td,
   Text,
+  Tfoot,
   Th,
   Thead,
   Tr,
+  VStack,
 } from "@chakra-ui/react";
 import React from "react";
+import { CHALLANGES_DATA } from "../../configs/mockup.data";
 import Tag from "../dashboards/Tag";
 
 interface IProps extends FlexProps {}
-export default function GameTable({...props}: IProps) {
+
+export default function ChallangesTable({ ...props }: IProps) {
   return (
     <Flex
       w="full"
@@ -33,50 +37,61 @@ export default function GameTable({...props}: IProps) {
       <Table w="full" className="game-table">
         <Thead>
           <Tr>
-            <Th minW="200px">Name</Th>
-            <Th w="20%" minW="150px">
-              Requirment
+            <Th w="20%" minW="250px">
+              Challenge
             </Th>
             <Th w="10%" minW="150px">
-              Value
+              Reward
             </Th>
             <Th w="20%" minW="150px">
-              Holders
+              Status
             </Th>
             <Th w="20%" minW="200px">
+              Players
+            </Th>
+            <Th w="10%" minW="150px">
               Progress
             </Th>
             <Th w="10%" minW="150px">
-              Action
+              actions
             </Th>
           </Tr>
         </Thead>
         <Tbody>
-          {new Array(5).fill(0).map((item, index) => (
+          {CHALLANGES_DATA.map((item, index) => (
             <Tr key={index.toString()}>
               <Td>
                 <HStack>
-                  <Image src={`/games/${index % 4}.svg`} mr="12px" />
+                  <Image src={`/challenges/${item.id}.svg`} mr="12px" />
+                  <VStack w="full" alignItems="flex-start">
                   <Text variant="with-sub" fontWeight="500" color="#101828">
-                    Eth Holder
+                    {item.challenge}
                   </Text>
+                  {item.subName && (
+                    <Text
+                      variant="with-sub"
+                      fontSize="14px"
+                      fontWeight="400"
+                      color="#475467"
+                    >
+                      {item.subName}
+                    </Text>
+                  )}
+                  </VStack>
                 </HStack>
               </Td>
               <Td>
-                <Tag label="In process" type="inprogress" />
+                <Tag label={item.reward} type="inprogress" />
               </Td>
               <Td>
-                <Tag
-                  type={index % 4 === 0 ? "inprogress" : "uncategorized"}
-                  label={(index * 2).toString()}
-                />
+                <Tag label={item.status} type={item.status.toLocaleLowerCase().replace(' ','')} />
               </Td>
               <Td>
                 <Image src="/games/holders.svg" />
               </Td>
               <Td>
                 <Flex w="full" h="8px" borderRadius="full" bg="#EAECF0">
-                  <Flex w="60%" h="8px" borderRadius="full" bg="#7F56D9" />
+                  <Flex w={`${item.process}%`} h="8px" borderRadius="full" bg={item.process > 75 ? '#12B76A' : '#7F56D9' } />
                 </Flex>
               </Td>
               <Td>
@@ -104,7 +119,9 @@ export default function GameTable({...props}: IProps) {
           Previous
         </Button>
 
-        <Text variant="with-sub" fontSize="14px">Page 1 of 5</Text>
+        <Text variant="with-sub" fontSize="14px">
+          Page 1 of 5
+        </Text>
 
         <Button
           border="1px solid #D0D5DD"
