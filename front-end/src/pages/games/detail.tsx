@@ -10,12 +10,15 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import BudgetCard from "../../components/games/BudgetCard";
+import ChallangesTable from "../../components/games/ChallangesTable";
 import GameCard from "../../components/games/GameCard";
 import GameTable from "../../components/games/GameTable";
 
 export default function GameDetail() {
+  const [tabActive, setTabActive] = useState<string>("SBT");
+
   return (
     <Flex flex={1} w="full" flexDirection="column" pb="50px">
       <Flex flexDirection="column" w="full">
@@ -62,9 +65,24 @@ export default function GameDetail() {
         </HStack>
       </Flex>
       <Flex w="full" flex={1} flexDirection="column" px="10px">
-        <SimpleGrid columns={{base: 1, sm: 2,  lg: 2, xl: 4}} w="full" gap="5px">
-          <BudgetCard name="Your Illuvium Score" score={80} percent={80} flex={1} showIcon />
-          <BudgetCard name="SBTs Collected" score={"10/30"} percent={70} flex={1} />
+        <SimpleGrid
+          columns={{ base: 1, sm: 2, lg: 2, xl: 4 }}
+          w="full"
+          gap="5px"
+        >
+          <BudgetCard
+            name="Your Illuvium Score"
+            score={80}
+            percent={80}
+            flex={1}
+            showIcon
+          />
+          <BudgetCard
+            name="SBTs Collected"
+            score={"10/30"}
+            percent={70}
+            flex={1}
+          />
           <BudgetCard name="Leaderboard" score={12046} percent={20} flex={1} />
           <BudgetCard
             name="Your Illuvium Score"
@@ -76,17 +94,57 @@ export default function GameDetail() {
             boxShadow="0px 1px 2px rgba(16, 24, 40, 0.05)"
             w="70%"
           />
-        </SimpleGrid> 
+        </SimpleGrid>
 
-        <SimpleGrid columns={{base: 1, sm: 2,  lg: 2, xl: 4}} w="full" gap={{ lg: "24px"}} >
-          <GameCard iconName="1" title="SBT Collectibles" subName="In-game" isActive />
-          <GameCard iconName="2" title="Challanges" subName="In-game" />
-          <GameCard iconName="3"  title="Bundles" subName="Holdings" />
-          <GameCard iconName="4" title="Packages" subName="Catalog" />
+        <SimpleGrid
+          columns={{ base: 1, sm: 2, lg: 2, xl: 4 }}
+          w="full"
+          gap={{ lg: "24px" }}
+        >
+          <GameCard
+            iconName="1"
+            title="SBT Collectibles"
+            subName="In-game"
+            isActive={tabActive === "SBT"}
+            onClick={() => setTabActive("SBT")}
+          />
+          <GameCard
+            iconName="2"
+            title="Challanges"
+            subName="In-game"
+            isActive={tabActive === "Challanges"}
+            onClick={() => setTabActive("Challanges")}
+          />
+          <GameCard
+            iconName="3"
+            title="Bundles"
+            subName="Holdings"
+            isActive={tabActive === "Bundles"}
+            onClick={() => setTabActive("Bundles")}
+          />
+          <GameCard
+            iconName="4"
+            title="Packages"
+            subName="Catalog"
+            isActive={tabActive === "Packages"}
+            onClick={() => setTabActive("Packages")}
+          />
         </SimpleGrid>
         <Flex w="full" flexDirection="column" mt="20px">
-          <Text variant="with-title" fontSize="18px" color="#101828" mb="10px">Soulbound Collectibles</Text>
-          <GameTable />
+          {tabActive === "SBT" && (
+            <Text
+              variant="with-title"
+              fontSize="18px"
+              color="#101828"
+              mb="10px"
+            >
+              Soulbound Collectibles
+            </Text>
+          )}
+          <GameTable display={tabActive === "SBT" ? "flex" : "none"} />
+          <ChallangesTable
+            display={tabActive === "Challanges" ? "flex" : "none"}
+          />
         </Flex>
       </Flex>
     </Flex>

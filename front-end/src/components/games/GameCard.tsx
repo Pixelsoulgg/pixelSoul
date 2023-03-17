@@ -1,12 +1,11 @@
-import { Flex, HStack, Image, Text, VStack } from "@chakra-ui/react";
+import { Flex, FlexProps, HStack, Image, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 
-interface IProps {
+interface IProps extends FlexProps {
   iconName: string;
   title: string;
   subName: string;
   isActive?: boolean;
-  onClick?: () => void;
 }
 
 export default function GameCard({
@@ -14,7 +13,7 @@ export default function GameCard({
   title,
   subName,
   isActive,
-  onClick,
+ ...props
 }: IProps) {
   const boxShadow = isActive ? "0px 4px 4px #6941C6" : "0px 1px 3px rgba(16, 24, 40, 0.1), 0px 1px 2px rgba(16, 24, 40, 0.06)"
   return (
@@ -26,6 +25,11 @@ export default function GameCard({
       border="1px solid #EAECF0"
       padding="24px"
       my="10px"
+      cursor="pointer"
+      _hover={{
+        transform: "scale(1.01)"
+      }}
+      {...props}
     >
       <HStack w="full">
         <Image src={`/games/${iconName}.svg`} mr="12px" />
