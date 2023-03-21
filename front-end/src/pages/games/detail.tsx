@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import BudgetCard from "../../components/games/BudgetCard";
+import BundleCard from "../../components/games/BundleCard";
 import ChallangesTable from "../../components/games/ChallangesTable";
 import GameCard from "../../components/games/GameCard";
 import GameTable from "../../components/games/GameTable";
@@ -121,6 +122,9 @@ export default function GameDetail() {
             subName="Holdings"
             isActive={tabActive === "Bundles"}
             onClick={() => setTabActive("Bundles")}
+
+
+            
           />
           <GameCard
             iconName="4"
@@ -145,6 +149,20 @@ export default function GameDetail() {
           <ChallangesTable
             display={tabActive === "Challanges" ? "flex" : "none"}
           />
+          <SimpleGrid columns={{base: 1, lg: 3}} gap="30px"
+            display={tabActive === "Bundles" ? "grid" : "none"}
+          >
+              <BundleCard />
+              <BundleCard />
+              <BundleCard />
+         </SimpleGrid>
+
+
+         <SimpleGrid columns={{base: 1, lg: 3}} gap="30px"
+            display={tabActive === "Packages" ? "grid" : "none"}
+          >
+              <BundleCard maxW="400px" />
+         </SimpleGrid>
         </Flex>
       </Flex>
     </Flex>
