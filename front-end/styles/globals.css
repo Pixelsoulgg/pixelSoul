@@ -46,3 +46,22 @@ a {
   font-weight: 500;
   padding: 16px 24px;
 }
+
+/* Add 20230327 */
+
+
+.game-table-no-border-header tr >th {
+  background: #F9FAFB;
+  text-transform: capitalize;
+  /* border-bottom: 1px solid #EAECF0; */
+  font-size: 12px;
+  font-weight: 500;
+  background-color: transparent;
+}
+
+.game-table-no-border-header tr > td {
+  /* border-bottom: 1px solid #EAECF0; */
+  font-size: 12px;
+  font-weight: 500;
+  padding: 16px 24px;
+}

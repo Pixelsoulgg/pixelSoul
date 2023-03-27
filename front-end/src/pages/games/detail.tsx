@@ -38,7 +38,7 @@ export default function GameDetail() {
             position="relative"
             mt="-20px"
           >
-            <Image src="/avatar.svg" />
+            <Image w="200px" src="/avatar.svg" />
             <Image
               src="/verified-tick.svg"
               position="absolute"

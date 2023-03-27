@@ -6,7 +6,7 @@ export const fonts = {
 };
 
 export const layouts = {
-  title: 'pixelSoul'
+  title: 'PixelSoul'
 }
 
 export const CHOOSE_BEST = [0.05, 0.1, 0.25, 0.5, 0.75, 1, 2, 3];
