@@ -32,6 +32,7 @@ import {
 import { INftDashboardItem } from "../types";
 import DataEmpty from "../components/DataEmpty";
 import { LIST_AVATAR } from "../layouts/dashboards/constants";
+import TopPlayerCard from "../components/dashboards/TopPlayerCard";
 
 const Home: NextPage = () => {
   const [available, setAvailable] = React.useState<string>("Bronxe");
@@ -223,11 +224,11 @@ const Home: NextPage = () => {
                       <Image
                         width="100%"
                         height="100%"
-                        sx={{
-                          boxShadow: avatarPath === avatar ? "0px 4px 8px rgba(164, 59, 246, 0.35),0 0 0 6px #6938EF" : "none",
-                        }}
-                        //  border={avatarPath===avatar?"4px solid #6938EF":"4px solid transparent"} 
-                        //  boxShadow={avatarPath===avatar?"0px 4px 8px rgba(164, 59, 246, 0.35)":""} 
+                        // sx={{
+                        //   boxShadow: avatarPath === avatar ? "0px 4px 8px rgba(164, 59, 246, 0.35),0 0 0 6px #6938EF" : "none",
+                        // }}
+                         border={avatarPath===avatar?"4px solid #6938EF":"4px solid transparent"} 
+                         boxShadow={avatarPath===avatar?"0px 4px 8px rgba(164, 59, 246, 0.35)":""} 
 
                         borderRadius="12px"
                         //
@@ -479,7 +480,8 @@ const Home: NextPage = () => {
             Steam General Data
           </Heading>
           {isConnectedSteam ? (
-            <Flex
+            <Box>
+<Flex
             w="full"
             borderRadius="12px"
             overflow="hidden"
@@ -544,6 +546,54 @@ const Home: NextPage = () => {
             </Table>
             
           </Flex>
+         <SimpleGrid
+            columns={{ base: 1, lg: 1, xl: 2 }}
+            w="full"
+            columnGap="13px"
+            mt="16px"
+          >
+            <Box  >
+            <Heading
+            paddingTop="50px"
+            paddingBottom="5px"
+            size="md"
+            fontFamily={fonts.Inter}
+            color="#101828"
+            fontSize="16px"
+            fontWeight="500"
+            lineHeight="24px"
+          >
+            Top Played Genres
+          </Heading>
+          <TopPlayerCard title="Total Hours" value={"999"} percent={10} isUp />  
+          <TopPlayerCard title="Genre Game" value={"912"} percent={2} isUp={false} />  
+          <TopPlayerCard title="Genre Game" value={"999"} percent={10} isUp />  
+
+
+            </Box>
+            <Box  >
+            <Heading
+            paddingTop="50px"
+            paddingBottom="5px"
+            size="md"
+            fontFamily={fonts.Inter}
+            color="#101828"
+            fontSize="16px"
+            fontWeight="500"
+            lineHeight="24px"
+          >
+            Top Played Games
+          </Heading>
+          <TopPlayerCard title="Game Name" value={"999"} percent={10} isUp />  
+          <TopPlayerCard title="Game Name" value={"912"} percent={2} isUp={false} />  
+          <TopPlayerCard title="Game Name" value={"999"} percent={10} isUp />  
+
+
+            </Box>
+
+          </SimpleGrid>
+            </Box>
+            
           ) : (
             <Box paddingTop="50px" paddingBottom="50px" w="full" display="flex" justifyContent="center" flexDirection="column" alignItems="center"
               bg="#F9FAFB"
@@ -554,6 +604,10 @@ const Home: NextPage = () => {
                 fontFamily={fonts.Inter}  >Data is empty</Text>
             </Box>
           )}
+
+
+
+
 
           <Heading
             paddingTop="50px"
