@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Flex,
@@ -7,16 +8,67 @@ import {
   Spacer,
   Stack,
   Text,
+  Tooltip,
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { PixelSouldLogo } from "../components";
 import { m, motion } from "framer-motion";
 import { varFade, varScale } from "../components/animate";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 const Home: NextPage = () => {
+  const { user, isLoading, error } = useUser();
+  const [authWindow, setAuthWindow] = useState<Window>();
+  const [currentWindow, setCurrentWindow] = useState<Window>();
+  const [test, setTest] = useState<string>();
+
+  const getAccessToken = useCallback(async () => {
+    const response = await fetch("/api/check");
+    const auth = await response.json();
+    if (auth.accessToken) {
+        setTest(auth.accessToken);
+    }    
+  }, []);
+
+ 
+  const handleAuth = useCallback(() =>  {
+    if (typeof window === "undefined") {
+      return;
+    }
+    const param = "toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500px,height=700px'); return false;";
+    const _openWindow = window?.open("/api/auth/login", "pixelSoulAuth0", param);
+    console.log({_openWindow})
+    if (_openWindow) {
+      setAuthWindow(_openWindow);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setCurrentWindow(window);
+    }
+  }, []);
+
+  useEffect(() => {    
+    if (authWindow) {
+      const interval = setInterval(() => {
+        getAccessToken();
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [authWindow]);
+
+  useEffect(() => {
+    if (test && authWindow) {
+      authWindow.close();
+      setAuthWindow(undefined);
+      if (currentWindow) currentWindow.location.reload();
+    }
+  }, [authWindow, test]);
+
   return (
     <>
       <Head>
@@ -25,10 +77,10 @@ const Home: NextPage = () => {
 
       <Flex flex={1} w="full" flexDirection={{ base: "column", lg: "column" }}>
         {/* Header */}
-        <Flex 
-          w="full" 
+        <Flex
+          w="full"
           as={m.header}
-          variants={varFade({easeIn: 'linear'}).inDown}
+          variants={varFade({ easeIn: "linear" }).inDown}
           initial="initial"
           animate="animate"
         >
@@ -47,25 +99,63 @@ const Home: NextPage = () => {
             </Link>
           </HStack>
           <Spacer />
-          <Button variant="with-no-bg" ml="20px">
-            Login
-          </Button>
-          <Button variant="with-no-bg" bg="bg.primary" border="none" ml="16px">
-            Sign up
-          </Button>
+          {!user && (
+            <>
+              <Link href="/api/auth/login">
+                <Button variant="with-no-bg" ml="20px" as="a" cursor="pointer"               
+                >
+                  Login
+                </Button>
+              </Link>
+              <Link href="/api/auth/login">
+                <Button
+                  cursor="pointer"
+                  variant="with-no-bg"
+                  bg="bg.primary"
+                  border="none"
+                  ml="16px"
+                >
+                  Sign up
+                </Button>
+              </Link>
+            </>
+          )}
+          {user && (
+            <HStack>
+              <Tooltip title={user.name || undefined}>
+                <Avatar
+                  name={user.name || "pixelSoul"}
+                  src={user.picture || ""}
+                  w="53px"
+                  h="53px"
+                  mr="10px"
+                  title={user.name || ""}
+                  border="1px solid rgba(0,0,0, 0.4)"
+                />
+              </Tooltip>
+              <Link href="/api/auth/logout">
+                <Button
+                  variant="with-no-bg"
+                  bg="bg.primary"
+                  border="none"
+                  ml="16px"
+                >
+                  log out
+                </Button>
+              </Link>
+            </HStack>
+          )}
         </Flex>
         {/* End Header */}
 
-        <Flex w="full" flex={1} flexDirection="column" justifyContent="center"
-          
-        >
+        <Flex w="full" flex={1} flexDirection="column" justifyContent="center">
           <Text
             variant="with-lexend"
             fontSize="20px"
             fontWeight="400"
             mb="22px"
             as={m.p}
-            variants={varFade({easeIn: 'linear', durationIn: 1}).in}
+            variants={varFade({ easeIn: "linear", durationIn: 1 }).in}
             initial="initial"
             animate="animate"
           >
@@ -73,36 +163,43 @@ const Home: NextPage = () => {
           </Text>
 
           <Text
-            variant="with-heading"    
+            variant="with-heading"
             as={m.p}
-            variants={varFade({easeIn: 'linear'}).inUp}
+            variants={varFade({ easeIn: "linear" }).inUp}
             initial="initial"
-            animate="animate"       
+            animate="animate"
           >
             New world of gaming
           </Text>
-
 
           <Text
             variant="with-lexend"
             mt="22px"
             fontSize="31px"
             fontWeight="500"
-
             as={m.p}
-            variants={varScale({easeIn: 'linear'}).inY}
+            variants={varScale({ easeIn: "linear" }).inY}
             initial="initial"
-            animate="animate"      
-
+            animate="animate"
           >
             Bringing the power back to the player
           </Text>
 
-          <Box mt="84px" w="full" as={m.div} variants={varFade().inUp}
+          <Box
+            mt="84px"
+            w="full"
+            as={m.div}
+            variants={varFade().inUp}
             initial="initial"
             animate="animate"
           >
-            <Button variant="with-bg" mr="30px" my="5px">
+            <Button
+              variant="with-bg"
+              mr="30px"
+              my="5px"
+              cursor="pointer"
+              onClick={handleAuth}
+            >
               Sign Up
             </Button>
             <Button
@@ -110,6 +207,7 @@ const Home: NextPage = () => {
               bg="bg.white"
               color="color.black"
               my="5px"
+              cursor="pointer"
             >
               <Image src="/subtract.svg" mr="17px" />
               Demo

@@ -1,4 +1,5 @@
 import "../../styles/globals.css";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "../themes/theme";
@@ -21,11 +22,13 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <Provider store={store}>
         <ChakraProvider theme={theme}>
-          <MotionLazyContainer>
-            <MainLayout>
-              <AnyComponent {...pageProps} />
-            </MainLayout>
-          </MotionLazyContainer>
+          <UserProvider>
+            <MotionLazyContainer>
+              <MainLayout>
+                <AnyComponent {...pageProps} />
+              </MainLayout>
+            </MotionLazyContainer>
+          </UserProvider>
         </ChakraProvider>
       </Provider>
     </>
