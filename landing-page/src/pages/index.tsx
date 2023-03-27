@@ -23,13 +23,13 @@ const Home: NextPage = () => {
   const { user, isLoading, error } = useUser();
   const [authWindow, setAuthWindow] = useState<Window>();
   const [currentWindow, setCurrentWindow] = useState<Window>();
-  const [test, setTest] = useState<string>();
+  const [accessToken, setAccessToken] = useState<string>();
 
   const getAccessToken = useCallback(async () => {
     const response = await fetch("/api/check");
     const auth = await response.json();
     if (auth.accessToken) {
-        setTest(auth.accessToken);
+      setAccessToken(auth.accessToken);
     }    
   }, []);
 
@@ -38,9 +38,12 @@ const Home: NextPage = () => {
     if (typeof window === "undefined") {
       return;
     }
+    if (authWindow) {
+      authWindow.close();
+    }
+
     const param = "toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500px,height=700px'); return false;";
     const _openWindow = window?.open("/api/auth/login", "pixelSoulAuth0", param);
-    console.log({_openWindow})
     if (_openWindow) {
       setAuthWindow(_openWindow);
     }
@@ -54,20 +57,24 @@ const Home: NextPage = () => {
 
   useEffect(() => {    
     if (authWindow) {
+      if (authWindow.closed) {
+        setAuthWindow(undefined);
+        return;
+      }
       const interval = setInterval(() => {
         getAccessToken();
-      }, 1000);
+      }, 500);
       return () => clearInterval(interval);
     }
   }, [authWindow]);
 
   useEffect(() => {
-    if (test && authWindow) {
+    if (accessToken && authWindow) {
       authWindow.close();
       setAuthWindow(undefined);
       if (currentWindow) currentWindow.location.reload();
     }
-  }, [authWindow, test]);
+  }, [authWindow, accessToken]);
 
   return (
     <>
@@ -101,23 +108,25 @@ const Home: NextPage = () => {
           <Spacer />
           {!user && (
             <>
-              <Link href="/api/auth/login">
-                <Button variant="with-no-bg" ml="20px" as="a" cursor="pointer"               
-                >
-                  Login
-                </Button>
-              </Link>
-              <Link href="/api/auth/login">
-                <Button
-                  cursor="pointer"
-                  variant="with-no-bg"
-                  bg="bg.primary"
-                  border="none"
-                  ml="16px"
-                >
-                  Sign up
-                </Button>
-              </Link>
+              <Button
+                variant="with-no-bg"
+                ml="20px"
+                as="a"
+                cursor="pointer"
+                onClick={handleAuth}
+              >
+                Login
+              </Button>
+              <Button
+                cursor="pointer"
+                variant="with-no-bg"
+                bg="bg.primary"
+                border="none"
+                ml="16px"
+                onClick={handleAuth}
+              >
+                Sign up
+              </Button>
             </>
           )}
           {user && (
