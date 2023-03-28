@@ -1,9 +1,6 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { ethers } from "ethers";
-import { IRequestInfo } from "../../contracts/types";
-import { IFlipModel, IWalletInfo } from "../../types";
-import { timer } from "../../utils";
-import stores from "../store";
+import { IWalletInfo } from "../../types";
 
 export const logoutAction = createAction("account/logoutAction");
 export const setActiveMenu = createAction<string>("account/setActiveMenu");
