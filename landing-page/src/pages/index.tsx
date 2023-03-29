@@ -211,6 +211,7 @@ const Home: NextPage = () => {
             >
               Sign Up
             </Button>
+            <Link href="https://pixelsoul.dequest.io/">
             <Button
               variant="with-bg"
               bg="bg.white"
@@ -221,6 +222,7 @@ const Home: NextPage = () => {
               <Image src="/subtract.svg" mr="17px" />
               Demo
             </Button>
+            </Link>
           </Box>
         </Flex>
       </Flex>
