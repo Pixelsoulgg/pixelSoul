@@ -30,11 +30,10 @@ const Home: NextPage = () => {
     const auth = await response.json();
     if (auth.accessToken) {
       setAccessToken(auth.accessToken);
-    }    
+    }
   }, []);
 
- 
-  const handleAuth = useCallback(() =>  {
+  const handleAuth = useCallback(() => {
     if (typeof window === "undefined") {
       return;
     }
@@ -42,8 +41,13 @@ const Home: NextPage = () => {
       authWindow.close();
     }
 
-    const param = "toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500px,height=700px'); return false;";
-    const _openWindow = window?.open("/api/auth/login", "pixelSoulAuth0", param);
+    const param =
+      "toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500px,height=700px'); return false;";
+    const _openWindow = window?.open(
+      "/api/auth/login",
+      "pixelSoulAuth0",
+      param
+    );
     if (_openWindow) {
       setAuthWindow(_openWindow);
     }
@@ -55,7 +59,7 @@ const Home: NextPage = () => {
     }
   }, []);
 
-  useEffect(() => {    
+  useEffect(() => {
     if (authWindow) {
       if (authWindow.closed) {
         setAuthWindow(undefined);
@@ -211,16 +215,18 @@ const Home: NextPage = () => {
             >
               Sign Up
             </Button>
-            <Button
-              variant="with-bg"
-              bg="bg.white"
-              color="color.black"
-              my="5px"
-              cursor="pointer"
-            >
-              <Image src="/subtract.svg" mr="17px" />
-              Demo
-            </Button>
+            <Link href="https://pixelsoul.dequest.io/">
+              <Button
+                variant="with-bg"
+                bg="bg.white"
+                color="color.black"
+                my="5px"
+                cursor="pointer"
+              >
+                <Image src="/subtract.svg" mr="17px" />
+                Demo
+              </Button>
+            </Link>
           </Box>
         </Flex>
       </Flex>
