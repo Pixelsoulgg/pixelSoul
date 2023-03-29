@@ -63,22 +63,47 @@ export const Bundles_And_Packages = {
 
 export const NFTsData = {
   header: [
-    { label: "Merchant", width: "60%" },
-    { label: "Amount" },
-    { label: "Floor", description: "Floor price", width: "10%" },
+    { label: "Name", width: "60%" },
+    { label: "Floor Price" },
+    { label: "Blockchain", width: "10%" },
   ],
   data: [
     {
-      img: "file.svg",
-      name: "Spotify",
+    
+      name: "Steam Card Level 1",
       kb: 200,
       amount: 18.99,
       type: "Subscriptions",
     },
-    { img: "img.svg", name: "A Coffee", kb: 200, amount: 4.5, type: "Dining" },
+    {  name: "Steam Card Level 1", kb: 200, amount: 4.5, type: "Dining" },
     {
-      img: "img.svg",
-      name: "Rosso Antico",
+   
+      name: "Steam Card Level 1",
+      kb: 200,
+      amount: 4.5,
+      type: "UnCategorized",
+    },
+  ],
+};
+
+export const MyCollectiblesData = {
+  header: [
+    { label: "Name", width: "60%" },
+    { label: "SoulScore Value" },
+    { label: "Source", width: "10%" },
+  ],
+  data: [
+    {
+    
+      name: "Steam Card Level 1",
+      kb: 200,
+      amount: 18.99,
+      type: "Subscriptions",
+    },
+    {  name: "Steam Card Level 1", kb: 200, amount: 4.5, type: "Dining" },
+    {
+   
+      name: "Steam Card Level 1",
       kb: 200,
       amount: 4.5,
       type: "UnCategorized",
