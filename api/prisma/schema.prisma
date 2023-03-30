@@ -7,9 +7,44 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Bundles {
+  id     Int      @id @default(autoincrement())
+  name   String?  @db.VarChar(200)
+  cost   Decimal? @db.Decimal(10, 3)
+  gameId Int?
+}
+
+model Challenges {
+  id            Int     @id @default(autoincrement())
+  name          String? @db.VarChar(200)
+  gameId        Int?
+  requirementId Int?
+}
+
+model Games {
+  id             Int     @id @default(autoincrement())
+  steamId        String? @unique(map: "steamId_UNIQUE") @db.VarChar(45)
+  name           String? @db.VarChar(45)
+  description    String? @db.VarChar(45)
+  gameUrl        String? @db.VarChar(200)
+  logo           String? @db.VarChar(200)
+  socialTwitter  String? @db.VarChar(200)
+  socialDiscord  String? @db.VarChar(200)
+  socialTelegram String? @db.VarChar(200)
+}
+
+model Requirements {
+  id          Int       @id @default(autoincrement())
+  description String?   @db.VarChar(1000)
+  typeId      Int?
+  playedTime  DateTime? @db.Timestamp(6)
+  reward      String?   @db.VarChar(45)
+}
+
 model Users {
   id            Int     @id @default(autoincrement())
   email         String? @db.VarChar(200)
   walletAddress String? @db.VarChar(34)
   steamId       String? @db.VarChar(45)
+  imageUrl      String? @db.VarChar(200)
 }
