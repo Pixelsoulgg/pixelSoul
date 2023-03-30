@@ -1,7 +1,6 @@
 import { Box, Flex, HStack, Image, Table, Tbody, Td, Text, Th, Thead, Tooltip, Tr, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { Empty } from '../../components'
-import Tag from '../../components/dashboards/Tag'
 import { fonts, NFTsData } from '../../configs/constants'
 
 export default function MyNFTs() {

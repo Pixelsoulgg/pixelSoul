@@ -1,4 +1,5 @@
 import { Box, Flex, HStack, Image, Table, Tbody, Td, Text, Th, Thead, Tooltip, Tr, VStack } from '@chakra-ui/react'
+import Link from 'next/link'
 import React from 'react'
 import { Empty } from '../../components'
 import { fonts, MyCollectiblesData, NFTsData } from '../../configs/constants'
@@ -67,7 +68,9 @@ export default function MyCollectibles() {
         </Tbody>
       </Table>
 
+      <Link href="/profiles/collectible">
       <Box
+        as="a"
         mt="20px"
         borderRadius="8px"
         padding="10px 16px"
@@ -86,6 +89,7 @@ export default function MyCollectibles() {
           View All
         </Text>
       </Box>
+      </Link>
 
 
     </Flex>

@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, HStack, Image, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { ReactNode, useMemo } from "react";
 import Search from "../../components/Search";
@@ -46,7 +46,12 @@ export default function DashboardLayout({ children }: IProps) {
             borderBottom="1px solid #EAECF0"
             mb="32px"
           >
-            <Text variant="with-title">Games</Text>
+            <HStack>
+            <Button bg="transparent" onClick={()=> router?.back() }>
+              <Image src="/back.svg" />
+            </Button>
+            <Text variant="with-title">My Collectibles</Text>
+            </HStack>
             <Search
               paddingY="0px"
               w="320px"
