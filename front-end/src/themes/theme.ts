@@ -19,7 +19,7 @@ const colors = {
     subscriptions: "#EFF8FF",
     dining: "#FDF2FA",
     uncategorized: "#F2F4F7",
-    inprogress: "#ECFDF3"
+    inprogress: "#ECFDF3",
   },
   color: {
     white: "#ffffff",
@@ -28,7 +28,7 @@ const colors = {
     subscriptions: "#175CD3",
     dining: "#C11574",
     uncategorized: "#344054",
-    inprogress: "#027A48"
+    inprogress: "#027A48",
   },
 };
 
@@ -38,24 +38,45 @@ const Text: ComponentStyleConfig = {
       fontFamily: fonts.Inter,
       fontSize: "30px",
       lineHeight: "38px",
-      color: '#101828',    
-      fontWeight: '600',      
+      color: "#101828",
+      fontWeight: "600",
     },
     "with-sub": {
       fontFamily: fonts.Inter,
       fontSize: "16px",
       lineHeight: "24px",
-      color: '#475467',    
-      fontWeight: '400',      
+      color: "#475467",
+      fontWeight: "400",
     },
   },
 };
 
 const Button: ComponentStyleConfig = {
   variants: {
-    solid: (props: GlobalStyleProps) => ({
-      bg: props.colorMode === "dark" ? "red.300" : "red.500",
-    }),
+    active: {
+      padding: "10px 16px",
+      bg: "white",
+      border: "2px solid #444CE7",
+      boxShadow: "0px 4px 4px rgba(151, 71, 255, 0.35)",
+      borderRadius: "8px",
+      fontSize: "16px",
+      fontWeight: "600",
+      fontFamily: fonts.Inter,
+      color: "#344054",
+      minW: "90px"
+    },
+    normal: {
+      padding: "10px 16px",
+      bg: "white",
+      border: "1px solid #D0D5DD",
+      boxShadow: "0px 1px 2px rgba(16, 24, 40, 0.05)",
+      borderRadius: "8px",
+      fontSize: "16px",
+      fontWeight: "600",
+      fontFamily: fonts.Inter,
+      color: "#344054",
+      minW: "90px"
+    },
   },
 };
 

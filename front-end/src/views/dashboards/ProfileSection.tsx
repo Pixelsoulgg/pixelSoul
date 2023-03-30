@@ -1,10 +1,12 @@
 import {
   Box,
+  Button,
   Flex,
   Heading,
   HStack,
   Image,
   SimpleGrid,
+  Spacer,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -135,6 +137,11 @@ export default function ProfileSection() {
           onClick={() => setAvatar(`${index+1}`)}
         />)}
       </SimpleGrid>
+      <Flex w="full" mt="15px" px="20px">
+        <Spacer />
+        <Button variant="normal">Cancel</Button>
+        <Button variant="active" ml="10px">Ok</Button>
+      </Flex>
     </Flex>
   );
 }

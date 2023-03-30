@@ -2,6 +2,7 @@ import { Flex, SimpleGrid, Text } from "@chakra-ui/react";
 import React from "react";
 import { Empty } from "../../components";
 import StatCard from "../../components/dashboards/StatCard";
+import SteamTable from "./SteamTable";
 
 export default function StreamGeneralData() {
   return (
@@ -10,7 +11,9 @@ export default function StreamGeneralData() {
         Steam General Data
       </Text>
       <Empty />
-      <SimpleGrid columns={{ base: 1, lg: 2 }} w="full" columnGap="20px">
+
+      <SteamTable />
+      <SimpleGrid columns={{ base: 1, lg: 2 }} w="full" columnGap="20px" mt="20px">
         <Flex w="full" flexDirection="column">
           <Text variant="with-title" fontSize="16px" fontWeight="500">
             Top Played Genres
@@ -26,7 +29,7 @@ export default function StreamGeneralData() {
           <StatCard title="Genre Game" value="999" percent={10} isUp />
           <StatCard title="Genre Game" value="999" percent={2} isUp={false} />
           <StatCard title="Genre Game" value="999" percent={10} isUp />
-        </Flex>{" "}
+        </Flex>
       </SimpleGrid>
     </Flex>
   );
