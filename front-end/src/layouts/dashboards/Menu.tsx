@@ -38,7 +38,7 @@ export default function Menu({ isExpand, ...props }: IProps) {
                   className={`menu-sidebar ${menuSelected === menu.name ? 'menu-sidebar-active' : ''}`}   
                   onClick={() => onMenuChange && onMenuChange(menu.name)}              
                 >
-                  <Image src={`/nav/${menu.icon}`} />
+                  <Image src={`/nav/${menu.icon}`} color="white"  />
                   {isExpand && (
                     <Text variant="with-title" fontSize="16px" ml="12px" color={menuSelected === menu.name ? 'white' : '#101828'} >
                       {menu.name}

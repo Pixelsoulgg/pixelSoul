@@ -6,7 +6,6 @@ import { timer } from "../../utils";
 import stores from "../store";
 
 export const logoutAction = createAction("account/logoutAction");
-export const setActiveMenu = createAction<string>("account/setActiveMenu");
 
 export const setProvider = createAction<ethers.providers.Web3Provider>(
   "account/setProvider"

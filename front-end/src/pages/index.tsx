@@ -22,13 +22,13 @@ import {
   NFTsData,
   SBTs_And_Collectibles,
 } from "../configs/constants";
+import { useAppSelector } from "../reduxs/hooks";
 import { INftDashboardItem } from "../types";
 import { MyCollectibles, MyNFTs, ProfileSection, StreamGeneralData } from "../views/dashboards";
 import SteamContainer from "../views/dashboards/SteamContainer";
 import WalletContainer from "../views/dashboards/WalletContainer";
 
 const Home: NextPage = () => {
-  
   const [profile, setProfile] = React.useState<any>();
 
 
@@ -111,9 +111,7 @@ const Home: NextPage = () => {
               <SteamContainer />     
               <WalletContainer />                       
             </SimpleGrid>           
-          </Flex>
-
-         
+          </Flex>         
           <StreamGeneralData />
           <MyCollectibles />
           <MyNFTs />
