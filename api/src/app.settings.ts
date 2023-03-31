@@ -12,5 +12,15 @@ export function setAppSetting(app: INestApplication) {
   app.enableVersioning({
     type: VersioningType.URI
   })
-  app.enableCors()
+  app.enableCors({
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:3004',
+      'https://pixelsoul.dequest.io',
+      '/.dequest.io$/'
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 204
+  })
 }
