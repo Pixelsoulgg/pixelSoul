@@ -1,15 +1,22 @@
-import { getExchangeRate } from '../coin-market-cap/coin-market-cap.service'
-import { getNativeBalance, getAllBalances } from '../moralis/moralis.service'
+import { Injectable } from '@nestjs/common'
+import { CoinMarketCapService } from 'src/coin-market-cap/coin-market-cap.service'
+import { MoralisService } from 'src/moralis/moralis.service'
+import { OpenseaService } from 'src/opensea/opensea.service'
 import { TokenBalance } from '../moralis/moralis.types'
-import { getNFTCollections, getNFTStats } from '../opensea/opensea.service'
 import { NTFCollectionGeneral, Stats } from '../opensea/opensea.types'
 import { NFT, NFTHolding, ScoreData, StableCoinsHolding, TokenHolding } from './score.types'
 import { getStableCoinList, getSlugBySymbol, getLevel, getChainList } from './utils/score.utils'
 
+@Injectable()
 export class ScoreService {
+  constructor(
+    private coinMarketCapService: CoinMarketCapService,
+    private moralisService: MoralisService,
+    private openseaService: OpenseaService
+  ) {}
   async callAPINativeBalance(wallet: string, chain: string): Promise<number> {
     try {
-      const result = await getNativeBalance(wallet, chain)
+      const result = await this.moralisService.getNativeBalance(wallet, chain)
       return result
     } catch (er: any) {
       if (er.response?.status === 429) {
@@ -25,7 +32,7 @@ export class ScoreService {
 
   async callAPIGetBalances(wallet: string, chain: string): Promise<TokenBalance[]> {
     try {
-      const result = await getAllBalances(wallet, chain)
+      const result = await this.moralisService.getAllBalances(wallet, chain)
       const stableCoins = getStableCoinList(chain)
       console.log(stableCoins, 'statble coins:', chain)
       const rsfilter = result.filter((f) => stableCoins.includes(f.address))
@@ -44,7 +51,7 @@ export class ScoreService {
 
   async callAPIGetNFTs(wallet: string): Promise<NTFCollectionGeneral[]> {
     try {
-      const nfts = await getNFTCollections(wallet)
+      const nfts = await this.openseaService.getNFTCollections(wallet)
       return nfts
     } catch (er: any) {
       if (er.response?.status === 429) {
@@ -59,7 +66,7 @@ export class ScoreService {
   }
   async callAPIGetNFTStats(slug: string): Promise<Stats | undefined> {
     try {
-      const nftStats = await getNFTStats(slug)
+      const nftStats = await this.openseaService.getNFTStats(slug)
       return nftStats
     } catch (er: any) {
       if (er.response?.status === 429) {
@@ -77,9 +84,9 @@ export class ScoreService {
     try {
       // eth
       const nativeSlug = getSlugBySymbol(chain_symbol)
-      const nativePrice = await getExchangeRate(nativeSlug)
+      const nativePrice = await this.coinMarketCapService.getExchangeRate(nativeSlug)
 
-      const nativeBalance = await getNativeBalance(wallet, chain_symbol)
+      const nativeBalance = await this.moralisService.getNativeBalance(wallet, chain_symbol)
       const nativeTotal = (nativeBalance * (nativePrice?.quote?.USD?.price || 0)) / 10 ** 18
       // statble coin
       const stableBalance = await this.callAPIGetBalances(wallet, chain_symbol)
@@ -87,7 +94,7 @@ export class ScoreService {
       const stableValues = await Promise.all(
         stableBalance.map(async (b) => {
           const slug = getSlugBySymbol(b.symbol.split('.')[0])
-          const price = await getExchangeRate(slug)
+          const price = await this.coinMarketCapService.getExchangeRate(slug)
           const total = (b.balance * (price?.quote.USD.price || 0)) / 10 ** b.decimals
           totalStableCoinValue += total
           const stableCoins: StableCoinsHolding = {
@@ -122,7 +129,7 @@ export class ScoreService {
     try {
       // nft holding
       const nfts = await this.callAPIGetNFTs(wallet)
-      const ethPrice = await getExchangeRate('ethereum')
+      const ethPrice = await this.coinMarketCapService.getExchangeRate('ethereum')
       let totalNftsAmount = 0
       let totalNftsInUsd = 0
 
