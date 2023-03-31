@@ -1,6 +1,7 @@
 import { Button, Flex, HStack, Image, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React, { ReactNode, useMemo } from "react";
+import React, { ReactNode, useMemo, useState } from "react";
+import GoldButton from "../../components/dashboards/GoldButton";
 import Search from "../../components/Search";
 import HeaderMobile from "./HeaderMobile";
 import Sidebar from "./Sidebar";
@@ -10,13 +11,32 @@ export interface IProps {
 }
 export default function DashboardLayout({ children }: IProps) {
   const router = useRouter();
+  const { pathname } = router;
+
+  const isHideBackAndSearch = useMemo(() => {
+    const checkList = ["/"];
+    if (checkList.findIndex((p) => p === pathname) > -1) return false;
+    return true;
+  }, [pathname]);
 
   const isHideHeader = useMemo(() => {
-    const { pathname } = router;
     const checkList = ["/games/detail"];
     if (checkList.findIndex((p) => p === pathname) > -1) return false;
     return true;
-  }, [router]);
+  }, [pathname]);
+
+  const getTitle = useMemo(() => {
+    switch (pathname) {
+      case "/profiles/collectible":
+        return "My Collectibles";
+      case "/profiles/nfts":
+        return "My NFT";
+      case "/":
+        return "Welcome to PixelSoul, gamer69";
+      default:
+        return "";
+    }
+  }, [pathname]);
 
   return (
     <Flex
@@ -47,16 +67,21 @@ export default function DashboardLayout({ children }: IProps) {
             mb="32px"
           >
             <HStack>
-            <Button bg="transparent" onClick={()=> router?.back() }>
-              <Image src="/back.svg" />
-            </Button>
-            <Text variant="with-title">My Collectibles</Text>
+              {isHideBackAndSearch && (
+                <Button bg="transparent" onClick={() => router?.back()}>
+                  <Image src="/back.svg" />
+                </Button>
+              )}
+              <Text variant="with-title">{getTitle}</Text>
             </HStack>
-            <Search
-              paddingY="0px"
-              w="320px"
-              display={{ base: "none", lg: "flex" }}
-            />
+            {!isHideBackAndSearch && <GoldButton />}
+            {isHideBackAndSearch && (
+              <Search
+                paddingY="0px"
+                w="320px"
+                display={{ base: "none", lg: "flex" }}
+              />
+            )}
           </Flex>
         )}
         {children}

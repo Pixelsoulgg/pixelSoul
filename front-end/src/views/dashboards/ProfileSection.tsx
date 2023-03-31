@@ -10,6 +10,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import React from "react";
 import ComingSoon from "../../components/ComingSoon";
 import { fonts } from "../../configs/constants";
@@ -45,7 +46,7 @@ export default function ProfileSection() {
             fontFamily={fonts.Inter}
             mt="4px"
           >
-            Manage and track your card spending.
+            Your PixelSoul gaming identity.
           </Text>
         </VStack>
       </HStack>
@@ -69,7 +70,11 @@ export default function ProfileSection() {
           top="16px"
         />
 
-        <Image src={`/avatar/${avatar ? avatar : 'avatar-default'}.svg`} objectFit={avatar ? "cover" : "none"} w="full" />
+        <Image
+          src={`/avatar/${avatar ? avatar : "avatar-default"}.svg`}
+          objectFit={avatar ? "cover" : "none"}
+          w="full"
+        />
       </Box>
 
       <HStack
@@ -111,7 +116,7 @@ export default function ProfileSection() {
                 available === "STEAM_PROFILE" ? "tab-steam-active" : ""
               }
             >
-              Steam Profile Image
+              PixelSoul Profiles
             </Flex>
             <Flex
               flex={1}
@@ -130,17 +135,36 @@ export default function ProfileSection() {
           </Flex>
         </VStack>
       </HStack>
-      
 
-      <SimpleGrid columns={4} gap="10px" w="332px" h="250px" overflowY="scroll" id="style-1" p="10px">
-        {new Array(16).fill(1).map((_, index) => <Image src={`/avatar/${index + 1}.svg`} key={index.toString()}
-          onClick={() => setAvatar(`${index+1}`)}
-        />)}
+      <SimpleGrid
+        columns={4}
+        gap="10px"
+        w="332px"
+        h="250px"
+        overflowY="scroll"
+        id="style-1"
+        p="10px"
+      >
+        {new Array(16).fill(1).map((_, index) => (
+          <Image
+            src={`/avatar/${index + 1}.svg`}
+            key={index.toString()}
+            onClick={() => setAvatar(`${index + 1}`)}
+            cursor="pointer"
+            as={motion.img}
+            borderRadius="10px"
+            objectFit="cover"
+            whileHover={{boxShadow: "0px 4px 4px rgba(151, 71, 255, 0.35)",}}
+            whileTap={{border: "2px solid #444CE7"}}
+          />
+        ))}
       </SimpleGrid>
       <Flex w="full" mt="15px" px="20px">
         <Spacer />
         <Button variant="normal">Cancel</Button>
-        <Button variant="active" ml="10px">Ok</Button>
+        <Button variant="active" ml="10px">
+          Ok
+        </Button>
       </Flex>
     </Flex>
   );
