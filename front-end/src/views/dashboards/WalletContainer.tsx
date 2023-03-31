@@ -7,7 +7,6 @@ import {connectToWalletConnect, connectToMetamask} from '../../contracts/interfa
 
 export default function WalletContainer() {
   const { walletInfo } = useAppSelector((state) => state.account);
-  console.log({walletInfo})
   return (
     <Flex w="full" flexDir="column">
       {/* <Empty

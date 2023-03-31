@@ -211,7 +211,7 @@ const Home: NextPage = () => {
             >
               Sign Up
             </Button>
-            <Link href="https://pixelsoul.dequest.io/">
+            <Link href="http://localhost:3004/">
               <Button
                 variant="with-bg"
                 bg="bg.white"

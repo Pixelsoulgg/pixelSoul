@@ -21,7 +21,6 @@ interface IProps extends FlexProps {
 
 export default function Menu({ isExpand, ...props }: IProps) {
   const { onMenuChange, menuSelected } = useGlobal();
-  console.log({menuSelected})
 
   return (
     <Flex w="full" flex={1} flexDirection="column" {...props}>

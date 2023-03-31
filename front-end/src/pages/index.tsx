@@ -1,3 +1,4 @@
+import { useUser } from "@auth0/nextjs-auth0/client";
 import {
   Box,
   Flex,
@@ -29,6 +30,9 @@ import SteamContainer from "../views/dashboards/SteamContainer";
 import WalletContainer from "../views/dashboards/WalletContainer";
 
 const Home: NextPage = () => {
+  const { user, isLoading, error } = useUser();
+  console.log({user, isLoading, error})
+
   const [profile, setProfile] = React.useState<any>();
 
 
