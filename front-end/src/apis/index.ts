@@ -11,7 +11,7 @@ const headers: Readonly<Record<string, string | boolean>> = {
 };
 
 const axiosInstance = axios.create({
-  baseURL: 'https://pixelsoul-api.dequest.io/',
+  baseURL: 'https://pixelsoul-api.dequest.io/api/v1',
   headers,
   paramsSerializer: (params) => queryString.stringify(params)
 });
@@ -25,6 +25,6 @@ axiosInstance.interceptors.response.use(
 
 export const getProfile = async(): Promise<any> => {
   const address = '0xdAC17F958D2ee523a2206206994597C13D831ec7';
-  return axiosInstance.get(`profile/${address}`); 
+  return axiosInstance.get(`score/${address}`); 
 }
 

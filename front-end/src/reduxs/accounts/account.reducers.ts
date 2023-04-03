@@ -1,33 +1,22 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { ethers } from "ethers";
+import build from "next/dist/build";
 import { IWalletInfo } from "../../types";
 
-import {generateContract, logoutAction, setActiveMenu, setProvider } from "./account.actions";
+import {generateContract, getScoreAction, logoutAction, setProvider } from "./account.actions";
 
 
 export const DEFAULT_MES = 'Something error!';
 
 export interface AccountState {
-  selectedMenu: string,
   web3Provider?: ethers.providers.Web3Provider;
-  walletInfo: IWalletInfo;
-  flip: {
-    isLoading: boolean;   
-    errorMsg: string;
-  },
+  walletInfo?: IWalletInfo; 
+  steamInfo?: any;
+
+  score?: any;
 }
 
-const initialState: AccountState = {
-  selectedMenu: 'PLAY',
-  walletInfo: {
-    address: '',
-    bnbBalance: 0, 
-  },
-  flip: {
-    errorMsg: '',
-    isLoading: false,    
-  }
-};
+const initialState: AccountState = {};
 
 export const accountReducer = createReducer(initialState, (builder) => { 
   builder.addCase(setProvider, (state, { payload }) => {
@@ -38,11 +27,13 @@ export const accountReducer = createReducer(initialState, (builder) => {
       state.walletInfo = payload;
   });
 
+
+  builder.addCase(getScoreAction.fulfilled, (state, {payload}) => {
+    state.score = payload;
+  });
+
   // logout
   builder.addCase(logoutAction, (state) => {
     Object.assign(state, initialState);
   });
-  builder.addCase(setActiveMenu, (state, {payload}) => {
-    state.selectedMenu = payload;
-  });  
 });
