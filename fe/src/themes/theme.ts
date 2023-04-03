@@ -20,6 +20,8 @@ const colors = {
     dining: "#FDF2FA",
     uncategorized: "#F2F4F7",
     inprogress: "#ECFDF3",
+    action: "#7F56D9",
+    arena: "#F63D68",
   },
   color: {
     white: "#ffffff",
