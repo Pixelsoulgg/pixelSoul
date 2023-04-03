@@ -19,3 +19,7 @@ export const getRPC = () => {
 export const getBscScanUrl = () => {
   return process.env.NEXT_PUBLIC_BSC_SCAN;
 }
+
+export const getRedirectAuthUrl = () => {
+  return process.env.NEXT_PUBLIC_REDIRECT_AUTH;
+}
