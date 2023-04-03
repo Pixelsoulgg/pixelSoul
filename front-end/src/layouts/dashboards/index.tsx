@@ -1,3 +1,4 @@
+import { useUser } from "@auth0/nextjs-auth0/client";
 import { Button, Flex, HStack, Image, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { ReactNode, useMemo, useState } from "react";
@@ -10,6 +11,7 @@ export interface IProps {
   children: ReactNode;
 }
 export default function DashboardLayout({ children }: IProps) {
+  const { user, isLoading, error } = useUser();
   const router = useRouter();
   const { pathname } = router;
 
@@ -32,11 +34,11 @@ export default function DashboardLayout({ children }: IProps) {
       case "/profiles/nfts":
         return "My NFT";
       case "/":
-        return "Welcome to PixelSoul, gamer69";
+        return `Welcome to PixelSoul, ${user?.name}`;
       default:
         return "";
     }
-  }, [pathname]);
+  }, [pathname, user]);
 
   return (
     <Flex

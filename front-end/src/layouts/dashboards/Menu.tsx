@@ -1,4 +1,6 @@
+import { useUser } from "@auth0/nextjs-auth0/client";
 import {
+  Avatar,
   Button,
   Flex,
   FlexProps,
@@ -20,6 +22,8 @@ interface IProps extends FlexProps {
 }
 
 export default function Menu({ isExpand, ...props }: IProps) {
+  const {user} = useUser();
+  console.log({user})
   const { onMenuChange, menuSelected } = useGlobal();
 
   return (
@@ -77,20 +81,21 @@ export default function Menu({ isExpand, ...props }: IProps) {
 
       <Flex minH="80px" mx="10px" borderTop="1px solid #EAECF0">
         <HStack w="full" >
-          <Image src="/avatar.svg" w="50px" />
+          <Avatar name={user?.name || ''}  src={user?.picture || ''}  w="50px" />
           {isExpand && (
             <VStack justifyContent="center" alignItems="flex-start" py="24px">
               <Text variant="with-title" fontSize="14px" mb="-25px !important">
-                Olivia Rhye
+                {user?.name || ''}
               </Text>
-              <Text
+            {user && user.email && <><Text
                 variant="with-title"
                 fontSize="14px"
                 color="#475467"
                 fontWeight="normal"
               >
-                olivia@untitledui.com
+                {user.email}
               </Text>
+              </>}
             </VStack>
           )}
           <Spacer />

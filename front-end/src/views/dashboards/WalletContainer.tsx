@@ -6,7 +6,7 @@ import { useAppSelector } from "../../reduxs/hooks";
 import {connectToWalletConnect, connectToMetamask} from '../../contracts/interfaces/EthersConnect';
 
 export default function WalletContainer() {
-  const { walletInfo } = useAppSelector((state) => state.account);
+  const { walletInfo, score } = useAppSelector((state) => state.account);
   return (
     <Flex w="full" flexDir="column">
       {/* <Empty
@@ -38,14 +38,13 @@ export default function WalletContainer() {
       <SimpleGrid w="full" columns={{ base: 1, lg: 2 }} columnGap="24px">
         <StatCard
           title="InvestScore"
-          value="999"
+          value={score?.investorLevel}
           percent={10}
-          isUp
-          comingSoon
+          isUp        
         />
         <StatCard
           title="CollectorScore"
-          value="999"
+          value={score?.collectorLevel}
           percent={50}
           isUp={false}
         />
