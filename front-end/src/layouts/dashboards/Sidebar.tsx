@@ -30,7 +30,8 @@ export default function Sidebar({ ...props }: IProps) {
     <Flex
       flexDirection="column"
       minW={`${isExpand ? 280 : 100}px`}
-      pl="20px"
+      pl="16px"
+     
       flex={1}
       position="relative"
       {...props}
@@ -40,11 +41,12 @@ export default function Sidebar({ ...props }: IProps) {
           w="full"
           py="32px"
           ml="10px"
+          pr="26px"
           cursor="pointer"
           onClick={handleClick}
         >
           <Image src="/logo.svg" sizes="content" alt="pixelSoul" />
-          {isExpand && <Text variant="with-title">{layouts.title}</Text>}
+          {isExpand && <Text variant="with-title" fontSize="24px">{layouts.title}</Text>}
         </HStack>
         <Menu mt="25px" isExpand={isExpand} />
       </Flex>

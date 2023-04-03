@@ -23,43 +23,49 @@ import {
   NFTsData,
   SBTs_And_Collectibles,
 } from "../configs/constants";
-import { useAppSelector } from "../reduxs/hooks";
+import { getScoreAction } from "../reduxs/accounts/account.actions";
+import { useAppDispatch, useAppSelector } from "../reduxs/hooks";
 import { INftDashboardItem } from "../types";
-import { MyCollectibles, MyNFTs, ProfileSection, StreamGeneralData } from "../views/dashboards";
+import {
+  MyCollectibles,
+  MyNFTs,
+  ProfileSection,
+  StreamGeneralData,
+} from "../views/dashboards";
 import SteamContainer from "../views/dashboards/SteamContainer";
 import WalletContainer from "../views/dashboards/WalletContainer";
 
 const Home: NextPage = () => {
-  const { user, isLoading, error } = useUser();
-  console.log({user, isLoading, error})
+  const { walletInfo, score } = useAppSelector((s) => s.account);
 
   const [profile, setProfile] = React.useState<any>();
+  const dispatch = useAppDispatch();
 
-
-  const fetchData = useCallback(async() => {
-    const profile = await getProfile();
-    setProfile(profile);   
-  }, []);
+  const fetchData = useCallback(async () => {
+    if (walletInfo && walletInfo.address) {
+      dispatch(getScoreAction());
+    }
+  }, [walletInfo]);
 
   const nftsDatasource = useMemo(() => {
     if (!profile) return [];
-    const {nfts} = profile.nftHolding;
+    const { nfts } = profile.nftHolding;
     return nfts.map((nft: any) => {
       const item: INftDashboardItem = {
-        img: 'file.svg',
+        img: "file.svg",
         name: nft.slug,
         kb: 0,
         amount: Number(nft.amount),
         floorPrice: Number(nft.floorPriceETH).toFixed(5),
-        type: 'UnCategorized'
+        type: "UnCategorized",
       };
       return item;
-    })   
+    });
   }, [profile]);
 
   React.useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return (
     <>
@@ -68,7 +74,7 @@ const Home: NextPage = () => {
       </Head>
 
       <Flex flex={1} w="full" flexDirection={{ base: "column", lg: "row" }}>
-       <ProfileSection />
+        <ProfileSection />
         <Flex
           flex={{ base: 1, lg: 4 }}
           w="full"
@@ -76,7 +82,6 @@ const Home: NextPage = () => {
           borderLeft={{ base: "none", lg: "1px solid #EAECF0" }}
           pl={{ base: "0px", lg: "32px" }}
         >
-          
           <Flex w="full" flexDir="column">
             <HStack
               w="full"
@@ -87,7 +92,7 @@ const Home: NextPage = () => {
             >
               <VStack alignItems="flex-start">
                 <Heading
-                  size="md"   
+                  size="md"
                   fontFamily={fonts.Inter}
                   color="#101828"
                   fontSize="18px"
@@ -111,11 +116,11 @@ const Home: NextPage = () => {
               <Image src="./three-dot.svg" />
             </HStack>
 
-            <SimpleGrid columns={{ base: 1, sm: 2}} w="full" columnGap="20px">
-              <SteamContainer />     
-              <WalletContainer />                       
-            </SimpleGrid>           
-          </Flex>         
+            <SimpleGrid columns={{ base: 1, sm: 2 }} w="full" columnGap="20px">
+              <SteamContainer />
+              <WalletContainer />
+            </SimpleGrid>
+          </Flex>
           <StreamGeneralData />
           <MyCollectibles />
           <MyNFTs />
