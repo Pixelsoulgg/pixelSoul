@@ -23,8 +23,10 @@ export const generateContract = createAsyncThunk<
   return { address, bnbBalance: bnb };
 });
 
-
-export const getScoreAction = createAsyncThunk<any>("account/getScore", async () => {  
-  const rs = await getProfile();
-  return rs;
-});
+export const getScoreAction = createAsyncThunk<any>(
+  "account/getScore",
+  async () => {
+    const rs = await getProfile();
+    return rs;
+  }
+);
