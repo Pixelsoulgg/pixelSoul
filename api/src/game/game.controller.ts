@@ -16,11 +16,11 @@ export class GameController {
     return await this.gameService.findAll({})
   }
   @Patch(':id')
-  async update(@Param('id') id: number, @Body('data') gamesUpdateDto: GameDto) {
-    return await this.gameService.update({ id }, gamesUpdateDto)
+  async update(@Param('id') id: string, @Body() gamesUpdateDto: GameDto) {
+    return await this.gameService.update({ id: Number(id) }, gamesUpdateDto)
   }
   @Delete(':id')
-  async remove(@Param('id') id: number) {
-    return await this.gameService.remove({ id })
+  async remove(@Param('id') id: string) {
+    return await this.gameService.remove({ id: Number(id) })
   }
 }
