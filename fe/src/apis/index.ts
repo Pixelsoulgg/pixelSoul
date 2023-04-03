@@ -11,7 +11,7 @@ const headers: Readonly<Record<string, string | boolean>> = {
 };
 
 const axiosInstance = axios.create({
-  baseURL: 'https://pixelsoul-api.dequest.io/api/v1',
+  baseURL: 'https://api.pixelsoul.gg/api/v1',
   headers,
   paramsSerializer: (params) => queryString.stringify(params)
 });

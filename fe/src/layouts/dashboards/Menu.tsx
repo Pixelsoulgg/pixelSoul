@@ -6,6 +6,7 @@ import {
   FlexProps,
   HStack,
   Image,
+  ImageProps,
   Spacer,
   Text,
   Tooltip,
@@ -13,7 +14,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import React from "react";
+import React, { ImgHTMLAttributes, useRef } from "react";
 import { useGlobal } from "../../contexts/Globals";
 import { MENUS, SETTING_MENU } from "./constants";
 
@@ -23,7 +24,6 @@ interface IProps extends FlexProps {
 
 export default function Menu({ isExpand, ...props }: IProps) {
   const {user} = useUser();
-  console.log({user})
   const { onMenuChange, menuSelected } = useGlobal();
 
   return (
@@ -39,11 +39,16 @@ export default function Menu({ isExpand, ...props }: IProps) {
                   my="5px"
                   padding={{ base: "8px 12px", lg: "8px 0px" }}
                   className={`menu-sidebar ${menuSelected === menu.name ? 'menu-sidebar-active' : ''}`}   
-                  onClick={() => onMenuChange && onMenuChange(menu.name)}              
+                  onClick={() => onMenuChange && onMenuChange(menu.name)}        
+                  role="group"     
+                  _hover={{bg: '#475467', borderRadius: "6px"}}
                 >
-                  <Image src={`/nav/${menu.icon}`} color="white"  />
+                  <Flex id="initial" w="25px" h="25px" bgImage={`/nav/${menu.icon}.svg`} objectFit="contain" bgRepeat="no-repeat" mr="10px" />
+                  <Flex id="onhover" w="25px" h="25px" bgImage={`/nav/${menu.icon}-hover.svg`} objectFit="contain" bgRepeat="no-repeat" mr="10px" />
                   {isExpand && (
-                    <Text variant="with-title" fontSize="16px" ml="12px" color={menuSelected === menu.name ? 'white' : '#101828'} >
+                    <Text variant="with-title" fontSize="16px" ml="12px" color={menuSelected === menu.name ? 'white' : '#101828'}
+                      _groupHover={{color: 'white'}}
+                    >
                       {menu.name}
                     </Text>
                   )}
@@ -66,7 +71,9 @@ export default function Menu({ isExpand, ...props }: IProps) {
                   padding={{ base: "8px 12px", lg: "8px 0px" }}
                   className="menu-sidebar"
                 >
-                  <Image src={`/nav/${menu.icon}`} />
+                  <Flex id="initial" w="25px" h="25px" bgImage={`/nav/${menu.icon}.svg`} objectFit="contain" bgRepeat="no-repeat" mr="10px" />
+                  <Flex id="onhover" w="25px" h="25px" bgImage={`/nav/${menu.icon}-hover.svg`} objectFit="contain" bgRepeat="no-repeat" mr="10px" />
+
                   {isExpand && (
                     <Text variant="with-title" fontSize="16px" ml="12px">
                       {menu.name}

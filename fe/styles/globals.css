@@ -48,7 +48,7 @@ a {
 }
 
 .menu-sidebar {  
-  padding: 11px 14px !important; 
+  padding: 11px !important; 
   color: white;
 }
 
@@ -60,10 +60,35 @@ a {
 .menu-sidebar:hover > p {
   color: white
 }
+#onhover {
+  /* display: none; */
+}
+
+.menu-sidebar > div[id="onhover"] {
+  display: none;
+}
+
+.menu-sidebar:hover > div[id="initial"] {
+  display: none;
+}
+.menu-sidebar:hover > div[id="onhover"] {
+  display: block;
+  margin-left: 0px;
+}
+
 .menu-sidebar-active {
   background-color: #475467 !important;
   border-radius: 6px;
 }
+.menu-sidebar-active > div[id="initial"] {
+  display: none;
+}
+
+.menu-sidebar-active > div[id="onhover"] {
+  display: block;
+  margin-left: 0px;
+}
+
 .menu-text-active {
   color: '#fff' !important;
 }

@@ -28,15 +28,21 @@ export default function Sidebar({ ...props }: IProps) {
 
   return (
     <Flex
-      flexDirection="column"
-      minW={`${isExpand ? 280 : 100}px`}
-      pl="16px"
-     
+      flexDirection="column"      
+      pl="16px"     
       flex={1}
       position="relative"
+      mr={`${isExpand ? 280 : 100}px`}
       {...props}
     >
-      <Flex h="full" flexDirection="column" position="fixed" borderRight="1px solid #EAECF0">
+      <Flex 
+        h="full" 
+        flexDirection="column" 
+        position="fixed"
+        minW={`${isExpand ? 280 : 100}px`}
+        borderRight="1px solid #EAECF0"
+        bg="white"       
+      >
         <HStack
           w="full"
           py="32px"
