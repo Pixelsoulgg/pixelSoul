@@ -1,14 +1,15 @@
 import { Flex, HStack, Image, Text } from "@chakra-ui/react";
 import {motion} from 'framer-motion'
 import React from "react";
+import { Animate } from "../../components/animations";
 
 export default function CollectibleItem() {
   return (
     <Flex flex={1} 
       flexDir="column" 
       as={motion.div}
-      whileHover={{scale: 1.01, boxShadow: "4px 4px 4px rgba(151, 71, 255, 0.35)" }}
-      whileTap={{scale: 1.01, boxShadow: "4px 4px 4px rgba(151, 71, 255, 0.35)" }}
+      whileHover={Animate.whileHover}
+      whileTap={Animate.whileTap}
       borderRadius="20px"
       padding="10px"
       cursor="pointer"

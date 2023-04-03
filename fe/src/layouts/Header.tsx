@@ -5,19 +5,15 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { fonts } from "../configs/constants";
-import { setActiveMenu } from "../reduxs/accounts/account.actions";
 import { useAppDispatch, useAppSelector } from "../reduxs/hooks";
 import React from 'react';
 import GoldButton from "../components/dashboards/GoldButton";
 
 export default function Header() {
-  const { walletInfo, selectedMenu } = useAppSelector((state) => state.account);
+  const { walletInfo } = useAppSelector((state) => state.account);
   const dispatch = useAppDispatch();
   const [isOpenMenu, setOpenMenu] = React.useState<boolean>(false);
 
-  const handleNavigate = (name: string) => {
-    dispatch(setActiveMenu(name));
-  };
 
   return (
     <Flex

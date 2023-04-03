@@ -7,7 +7,6 @@ export interface IProps {
   children: ReactNode;
 }
 export default function MainLayout({ children }: IProps) {
-  const { height } = useWindowSize();
   return (
     <Flex
       w="100%"
