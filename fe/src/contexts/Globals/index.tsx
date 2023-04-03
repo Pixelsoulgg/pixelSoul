@@ -24,9 +24,10 @@ export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
   const onMenuChange = (menu: string) => setMenuSelected(menu);
 
   useEffect(() => {
-    if(!user) {
-        router.push(getRedirectAuthUrl() || '')
-    }
+    // if(!user) {
+    //     router.push(getRedirectAuthUrl() || '')
+    // }
+    console.log({user})
   }, [user]);
 
   return (

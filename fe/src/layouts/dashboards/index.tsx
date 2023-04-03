@@ -21,6 +21,12 @@ export default function DashboardLayout({ children }: IProps) {
     return true;
   }, [pathname]);
 
+  const isHideBack = useMemo(() => {
+    const checkList = ["/", "/dungeons"];
+    if (checkList.findIndex((p) => p === pathname) > -1) return false;
+    return true;
+  }, [pathname]);
+
   const isHideHeader = useMemo(() => {
     const checkList = ["/games/detail"];
     if (checkList.findIndex((p) => p === pathname) > -1) return false;
@@ -28,11 +34,13 @@ export default function DashboardLayout({ children }: IProps) {
   }, [pathname]);
 
   const getTitle = useMemo(() => {
-    switch (pathname) {
+    switch (pathname.toLocaleLowerCase()) {
       case "/profiles/collectible":
         return "My Collectibles";
       case "/profiles/nfts":
         return "My NFT";
+      case "/dungeons": 
+        return "Dungeon";
       case "/":
         return `Welcome to PixelSoul, ${user?.name}`;
       default:
@@ -69,7 +77,7 @@ export default function DashboardLayout({ children }: IProps) {
             mb="32px"
           >
             <HStack>
-              {isHideBackAndSearch && (
+              {isHideBack && (
                 <Button bg="transparent" onClick={() => router?.back()}>
                   <Image src="/back.svg" />
                 </Button>
