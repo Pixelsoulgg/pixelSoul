@@ -25,7 +25,7 @@ model Games {
   id             Int     @id @default(autoincrement())
   steamId        String? @unique(map: "steamId_UNIQUE") @db.VarChar(45)
   name           String? @db.VarChar(45)
-  description    String? @db.VarChar(45)
+  description    String? @db.VarChar(1000)
   gameUrl        String? @db.VarChar(200)
   logo           String? @db.VarChar(200)
   socialTwitter  String? @db.VarChar(200)
@@ -43,7 +43,7 @@ model Requirements {
 
 model Users {
   id            Int     @id @default(autoincrement())
-  email         String? @db.VarChar(200)
+  email         String? @unique(map: "email_UNIQUE") @db.VarChar(200)
   walletAddress String? @db.VarChar(34)
   steamId       String? @db.VarChar(45)
   imageUrl      String? @db.VarChar(200)
