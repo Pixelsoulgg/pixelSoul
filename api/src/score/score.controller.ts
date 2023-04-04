@@ -1,6 +1,6 @@
 import { Controller, Get, Injectable, Param } from '@nestjs/common'
 import { ScoreService } from './score.service'
-import { ScoreData } from './score.types'
+import { ScoreData } from './score.interface'
 @Controller({
   version: '1',
   path: 'score'

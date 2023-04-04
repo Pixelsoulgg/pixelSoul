@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common'
 import { CoinMarketCapService } from 'src/coin-market-cap/coin-market-cap.service'
 import { MoralisService } from 'src/moralis/moralis.service'
 import { OpenseaService } from 'src/opensea/opensea.service'
-import { TokenBalance } from '../moralis/moralis.types'
-import { NTFCollectionGeneral, Stats } from '../opensea/opensea.types'
-import { NFT, NFTHolding, ScoreData, StableCoinsHolding, TokenHolding } from './score.types'
+import { TokenBalance } from '../moralis/moralis.interface'
+import { NTFCollectionGeneral, Stats } from '../opensea/opensea.interface'
+import { NFT, NFTHolding, ScoreData, StableCoinsHolding, TokenHolding } from './score.interface'
 import { getStableCoinList, getSlugBySymbol, getLevel, getChainList } from './utils/score.utils'
 
 @Injectable()
