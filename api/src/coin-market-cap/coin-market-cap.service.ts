@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import axios from 'axios'
 import { COINMARKETCAP_API_KEY } from '../app.settings'
-import { Currency } from './coin-market-cap.types'
+import { Currency } from './coin-market-cap.interface'
 
 @Injectable()
 export class CoinMarketCapService {

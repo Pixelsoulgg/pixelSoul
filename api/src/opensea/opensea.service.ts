@@ -1,5 +1,5 @@
 import { OPENSEA_API_KEY } from '../app.settings'
-import { NTFCollectionGeneral, Stats } from './opensea.types'
+import { AssetResponse, NTFCollectionGeneral, Stats } from './opensea.interface'
 import axios from 'axios'
 import { Injectable } from '@nestjs/common'
 @Injectable()
@@ -26,5 +26,13 @@ export class OpenseaService {
     const response = await axios.get(url, this.axiosOptions)
     const collections = <NTFCollectionGeneral[]>response.data
     return collections
+  }
+
+  async assets(wallet: string, limit = 20): Promise<AssetResponse> {
+    const url = `${this.api_host}/assets?owner=${wallet}&order_direction=desc&limit=${limit}&include_orders=false`
+
+    const response = await axios.get(url, this.axiosOptions)
+    const assets = <AssetResponse>response.data
+    return assets
   }
 }

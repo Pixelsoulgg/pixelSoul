@@ -5,9 +5,10 @@ import { AppService } from './app.service'
 import { GameModule } from './game/game.module'
 import { ScoreModule } from './score/score.module'
 import { UserModule } from './user/user.module'
+import { NftModule } from './nft/nft.module'
 
 @Module({
-  imports: [GameModule, ScoreModule, UserModule],
+  imports: [GameModule, ScoreModule, UserModule, NftModule],
   controllers: [AppController],
   providers: [AppService, ConfigService]
 })
