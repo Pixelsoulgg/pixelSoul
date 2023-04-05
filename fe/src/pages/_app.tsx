@@ -9,10 +9,10 @@ import store from "../reduxs/store";
 import Head from "next/head";
 import DashboardLayout from "../layouts/dashboards";
 import { GlobalContextProvider } from "../contexts/Globals";
+import ErrorBoundary from "../components/ErrorBoundary";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const AnyComponent = Component as any;
-
   return (
     <Provider store={store}>
       <ChakraProvider theme={theme}>
@@ -27,10 +27,9 @@ function MyApp({ Component, pageProps }: AppProps) {
                 content="width=device-width, initial-scale=1.0"
               />
             </Head>
+
             <DashboardLayout>
-              {/* <MainLayout> */}
-              <AnyComponent {...pageProps} />
-              {/* </MainLayout> */}
+                <AnyComponent {...pageProps} />
             </DashboardLayout>
           </GlobalContextProvider>
         </UserProvider>
