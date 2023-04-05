@@ -14,7 +14,7 @@ export default function StreamGeneralData() {
       </Text>
       {!steamInfo && <Empty />}
       {steamInfo && (
-        <>
+        <Flex w="full">
           <SteamTable />
           <SimpleGrid
             columns={{ base: 1, lg: 2 }}
@@ -49,7 +49,7 @@ export default function StreamGeneralData() {
               <StatCard title="Genre Game" value="999" percent={10} isUp />
             </Flex>
           </SimpleGrid>
-        </>
+        </Flex>
       )}
     </Flex>
   );
