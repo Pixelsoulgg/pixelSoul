@@ -1,6 +1,12 @@
+import { DungeonContent } from "@/views/dungeons";
 import { Button, Flex, Text } from "@chakra-ui/react";
 import React from "react";
-import { DungeonContent } from "../../views/dungeons";
+
+import Layout from '@/layouts'
+
+index.getLayout = function getLayout(page: React.ReactElement) {
+  return <Layout variant="dashboard">{page}</Layout>;
+};
 
 export default function index() {
   return (

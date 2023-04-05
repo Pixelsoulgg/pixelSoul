@@ -1,4 +1,3 @@
-import { useUser } from "@auth0/nextjs-auth0/client";
 import { Button, Flex, HStack, Image, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { ReactNode, useMemo, useState } from "react";
@@ -6,23 +5,25 @@ import GoldButton from "../../components/dashboards/GoldButton";
 import Search from "../../components/Search";
 import HeaderMobile from "./HeaderMobile";
 import Sidebar from "./Sidebar";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 export interface IProps {
   children: ReactNode;
 }
 export default function DashboardLayout({ children }: IProps) {
-  const { user, isLoading, error } = useUser();
+  const {user} = useUser();
   const router = useRouter();
+  
   const { pathname } = router;
 
   const isHideBackAndSearch = useMemo(() => {
-    const checkList = ["/"];
+    const checkList = ["/my-souls"];
     if (checkList.findIndex((p) => p === pathname) > -1) return false;
     return true;
   }, [pathname]);
 
   const isHideBack = useMemo(() => {
-    const checkList = ["/", "/dungeons"];
+    const checkList = ["/my-souls", "/dungeons"];
     if (checkList.findIndex((p) => p === pathname) > -1) return false;
     return true;
   }, [pathname]);
@@ -41,12 +42,12 @@ export default function DashboardLayout({ children }: IProps) {
         return "My NFT";
       case "/dungeons": 
         return "Dungeon";
-      case "/":
-        return `Welcome to PixelSoul, ${user?.name}`;
+      case "/my-souls":
+        return `Welcome to PixelSoul, ${user?.name || ''}`;
       default:
         return "";
     }
-  }, [pathname, user]);
+  }, [pathname, user?.name]);
 
   return (
     <Flex
@@ -79,7 +80,7 @@ export default function DashboardLayout({ children }: IProps) {
             <HStack>
               {isHideBack && (
                 <Button bg="transparent" onClick={() => router?.back()}>
-                  <Image src="/back.svg" />
+                  <Image src="/back.svg" alt="back" />
                 </Button>
               )}
               <Text variant="with-title">{getTitle}</Text>

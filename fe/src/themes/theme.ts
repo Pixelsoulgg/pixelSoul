@@ -22,6 +22,7 @@ const colors = {
     inprogress: "#ECFDF3",
     action: "#7F56D9",
     arena: "#F63D68",
+    white: "#ffffff",
   },
   color: {
     white: "#ffffff",
@@ -49,6 +50,33 @@ const Text: ComponentStyleConfig = {
       lineHeight: "24px",
       color: "#475467",
       fontWeight: "400",
+    },
+    "with-heading": {
+      fontFamily: fonts.Inter,
+      fontStyle: "normal",
+      fontSize: "72px",
+      lineHeight: "90px",
+      color: 'color.white',    
+      fontWeight: '700',      
+      lineSpace: "-0.02em",
+    },
+    "with-lexend": {
+      fontSize: "20px",
+      fontFamily: fonts.Lexend,
+      fontStyle: "normal",
+      fontWeight: "500",
+      lineHeight: "140%",
+      color: "color.white",
+      fontFeatureSettings: "'salt' on, 'liga' off"
+    },
+    "with-lexend-menu": {
+      fontSize: "18px",
+      fontFamily: fonts.Lexend,
+      fontStyle: "normal",
+      fontWeight: "400",
+      lineHeight: "150%",
+      color: "color.secondary",
+      fontFeatureSettings: "'salt' on, 'liga' off"
     },
   },
 };
@@ -79,6 +107,28 @@ const Button: ComponentStyleConfig = {
       color: "#344054",
       minW: "90px"
     },
+    "with-bg": {
+      backgroundColor: "bg.primary",
+      borderRadius: "10.5px",
+      color: "color.white",
+      fontFamily: fonts.Lexend,
+      fontSize: "23.5px",
+      lineHeight: "150%",
+      fontWeight: "400",
+      minWidth: "198px",
+      minHeight: "76.69px",
+      // padding: "20px 41px !important"
+    },
+    "with-no-bg": {
+      backgroundColor: "transparent",
+      color: 'color.white',
+      borderRadius: "8px",
+      border: "1px solid #FFFFFF",
+      padding: "8px 25px !important",
+      fontWeight: "400",
+      fontSize: "15px",
+      fontFamily: fonts.Lexend,
+    }
   },
 };
 

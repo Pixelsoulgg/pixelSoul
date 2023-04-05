@@ -3,9 +3,6 @@ import moment from 'moment';
 const DATE_TIME_FORMAT = 'DD/MM/YYYY HH:mm:ss';
 const DATE_TIME_FORMAT_ONE = 'DD/MM/YYYY HH:mm';
 
-
-export * from './getEnv';
-
 export const convertNumberTextInput = (str?: string) => {
   if (!str) return 0;
   const v = str.split(',').join('');

@@ -1,7 +1,5 @@
 import axios from 'axios';
 import queryString from 'query-string';
-import { Player } from '../types';
-import { getApiEndpoint } from '../utils';
 
 const headers: Readonly<Record<string, string | boolean>> = {
   Accept: 'application/json',
@@ -13,7 +11,11 @@ const headers: Readonly<Record<string, string | boolean>> = {
 const axiosInstance = axios.create({
   baseURL: 'https://api.pixelsoul.gg/api/v1',
   headers,
-  paramsSerializer: (params) => queryString.stringify(params)
+  paramsSerializer: {
+    serialize: (params) => {
+        return  queryString.stringify(params)
+    }
+  }
 });
 
 axiosInstance.interceptors.response.use(

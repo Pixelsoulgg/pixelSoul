@@ -8,7 +8,7 @@ import {
   Tag,
   Text,
 } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import React from "react";
 import { Animate } from "../../components/animations";
 
@@ -25,7 +25,7 @@ export default function DungeonItem({
 }: IProps) {
   return (
     <Flex
-      as={motion.div}
+      as={m.div}
       flex={1}
       w="full"
       flexDirection="column"

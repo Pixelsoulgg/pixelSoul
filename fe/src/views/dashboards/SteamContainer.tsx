@@ -1,8 +1,9 @@
 import { Box, Flex, SimpleGrid, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useCallback } from "react";
 import { Empty } from "../../components";
 import StatCard from "../../components/dashboards/StatCard";
 import { useAppSelector } from "../../reduxs/hooks";
+
 
 export default function SteamContainer() {
   const { steamInfo } = useAppSelector((state) => state.account);

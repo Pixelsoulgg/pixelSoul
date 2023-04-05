@@ -10,7 +10,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import React from "react";
 import ComingSoon from "../../components/ComingSoon";
 import { fonts } from "../../configs/constants";
@@ -151,11 +151,12 @@ export default function ProfileSection() {
             key={index.toString()}
             onClick={() => setAvatar(`${index + 1}`)}
             cursor="pointer"
-            as={motion.img}
+            as={m.img}
             borderRadius="10px"
             objectFit="cover"
             whileHover={{boxShadow: "0px 4px 4px rgba(151, 71, 255, 0.35)",}}
             whileTap={{border: "2px solid #444CE7"}}
+            alt="profile"
           />
         ))}
       </SimpleGrid>

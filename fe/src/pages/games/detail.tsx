@@ -1,3 +1,8 @@
+import BudgetCard from "@/components/games/BudgetCard";
+import BundleCard from "@/components/games/BundleCard";
+import ChallangesTable from "@/components/games/ChallangesTable";
+import GameCard from "@/components/games/GameCard";
+import GameTable from "@/components/games/GameTable";
 import {
   Box,
   Button,
@@ -11,11 +16,12 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import BudgetCard from "../../components/games/BudgetCard";
-import BundleCard from "../../components/games/BundleCard";
-import ChallangesTable from "../../components/games/ChallangesTable";
-import GameCard from "../../components/games/GameCard";
-import GameTable from "../../components/games/GameTable";
+
+import Layout from '@/layouts'
+
+GameDetail.getLayout = function getLayout(page: React.ReactElement) {
+  return <Layout variant="dashboard">{page}</Layout>;
+};
 
 export default function GameDetail() {
   const [tabActive, setTabActive] = useState<string>("SBT");
