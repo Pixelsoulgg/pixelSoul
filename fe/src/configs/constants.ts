@@ -1,8 +1,16 @@
 export const NUMBER_PATTERN = "/^[0-9]*.?[0-9]*$/";
 export const IPT_PRICE = 0.2;
 
+
+export const user = {
+  name: "vien test",
+  picture: "https://lh3.googleusercontent.com/a/AGNmyxa0lKiJqqHry_ETr6c8270j3vYbyYo2C9xdCIFzl34=s96-c",
+  email: "test@gmail.com"
+}
+
 export const fonts = {
   Inter: "Inter",
+  Lexend: "Lexend",
 };
 
 export const layouts = {

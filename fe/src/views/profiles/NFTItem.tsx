@@ -1,5 +1,5 @@
 import { Button, Flex, HStack, Image, Spacer, Text } from "@chakra-ui/react";
-import {motion} from 'framer-motion'
+import {m} from 'framer-motion'
 import React from "react";
 import { Animate } from "../../components/animations";
 
@@ -7,7 +7,7 @@ export default function NFTItem() {
   return (
     <Flex flex={1} 
     flexDir="column" 
-    as={motion.div}
+    as={m.div}
     whileHover={Animate.whileHover}
     whileTap={Animate.whileTap}
     borderRadius="20px"

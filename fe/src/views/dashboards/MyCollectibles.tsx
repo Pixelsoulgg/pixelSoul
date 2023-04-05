@@ -9,15 +9,14 @@ import {
   Text,
   Th,
   Thead,
-  Tooltip,
   Tr,
   VStack,
 } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Link from "next/link";
 import React from "react";
 import { Empty } from "../../components";
-import { fonts, MyCollectiblesData, NFTsData } from "../../configs/constants";
+import { fonts, MyCollectiblesData } from "../../configs/constants";
 import { useAppSelector } from "../../reduxs/hooks";
 
 export default function MyCollectibles() {
@@ -49,10 +48,10 @@ export default function MyCollectibles() {
             </Thead>
             <Tbody>
               {MyCollectiblesData.data.map((d, index) => (
-                <Tr key={String(index)} as={motion.tr} whileHover={{backgroundColor: 'rgba(0,0,0, 0.05)', cursor: 'pointer'}}>
+                <Tr key={String(index)} as={m.tr} whileHover={{backgroundColor: 'rgba(0,0,0, 0.05)', cursor: 'pointer'}}>
                   <Td>
                     <HStack>
-                      <Image src={`/nfts/${index + 4}.svg`} />
+                      <Image src={`/nfts/${index + 4}.svg`} alt="ntfs" />
                       <VStack alignItems="flex-start">
                         <Text
                           fontSize="14px"
@@ -79,7 +78,7 @@ export default function MyCollectibles() {
                   </Td>
                   <Td>
                     <HStack>
-                      <Image src="/steam-icon.svg" />
+                      <Image src="/steam-icon.svg" alt="steam" />
                       <Text variant="with-sub" fontWeight="600">
                         Steam
                       </Text>
@@ -89,8 +88,6 @@ export default function MyCollectibles() {
               ))}
             </Tbody>
           </Table>
-
-          <Link href="/profiles/collectible">
             <Box
               as="a"
               mt="20px"
@@ -102,16 +99,18 @@ export default function MyCollectibles() {
               w="fit-content"
               cursor="pointer"
             >
-              <Text
-                color="#344054"
-                fontSize="14px"
-                fontWeight="600"
-                fontFamily={fonts.Inter}
-              >
-                View All
-              </Text>
-            </Box>
-          </Link>
+              <Link href="/profiles/collectible">
+                <Text
+                  color="#344054"
+                  fontSize="14px"
+                  fontWeight="600"
+                  fontFamily={fonts.Inter}
+                  flex={1}
+                >
+                  View All
+                </Text>
+              </Link>
+            </Box>         
         </>
       )}
     </Flex>

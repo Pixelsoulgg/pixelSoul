@@ -1,4 +1,4 @@
-import { Flex, FlexProps, HStack, Image, Spacer, Text } from "@chakra-ui/react";
+import { Flex, FlexProps, HStack, Image, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { layouts } from "../../configs/constants";
 import Menu from "./Menu";
@@ -8,6 +8,7 @@ interface IProps extends FlexProps {}
 const KEY_EXPAND = "SIDEBAR_COLLAPSE";
 
 export default function Sidebar({ ...props }: IProps) {
+
   const [isExpand, setIsExpand] = useState<boolean>(true);
 
   useEffect(() => {

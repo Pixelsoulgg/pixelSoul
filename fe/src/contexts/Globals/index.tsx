@@ -1,7 +1,6 @@
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
-import { getRedirectAuthUrl } from '../../utils';
+import React, { useCallback, useEffect } from 'react';
 
 interface IGlobalContext {
  menuSelected: string;
@@ -17,18 +16,17 @@ const GlobalContext = React.createContext<IGlobalContext>({
 });
 
 export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
+  const {pathname, push} = useRouter();
   const {user} = useUser();
-  const router = useRouter();
-  const [menuSelected, setMenuSelected] = React.useState<string>('Dashboard'); 
 
+  const [menuSelected, setMenuSelected] = React.useState<string>('My Soul'); 
   const onMenuChange = (menu: string) => setMenuSelected(menu);
 
   useEffect(() => {
-    // if(!user) {
-    //     router.push(getRedirectAuthUrl() || '')
-    // }
-    console.log({user})
-  }, [user]);
+    if (!user) {
+      push('/')
+    }
+  }, [push, user]);
 
   return (
     <GlobalContext.Provider

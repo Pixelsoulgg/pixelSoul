@@ -1,6 +1,13 @@
 import { Button, Flex, Spacer, Image, SimpleGrid } from '@chakra-ui/react'
 import React from 'react'
-import { CollectibleItem } from '../../views/profiles'
+import { CollectibleItem } from '@/views/profiles'
+
+
+import Layout from '@/layouts'
+
+collectible.getLayout = function getLayout(page: React.ReactElement) {
+  return <Layout variant="dashboard">{page}</Layout>;
+};
 
 export default function collectible() {
   return (

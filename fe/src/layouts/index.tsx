@@ -1,33 +1,21 @@
-import { Flex } from "@chakra-ui/react";
 import { ReactNode } from "react";
-import { useWindowSize } from "../hooks/useWindowSize";
-import Header from "./Header";
+import DashboardLayout from "./dashboards";
+import LandingLayout from "./landings";
+import { GlobalContextProvider } from "@/contexts/Globals";
 
-export interface IProps {
+type Props = {
   children: ReactNode;
-}
-export default function MainLayout({ children }: IProps) {
+  variant?: "landing" | "dashboard";
+};
+
+export default function Layout({ variant = "dashboard", children }: Props) {
+  if (variant === "landing") {
+    return <LandingLayout>{children}</LandingLayout>;
+  }
+
   return (
-    <Flex
-      w="100%"
-      maxW="1440px"
-      margin="0px auto"
-      flexDirection="column"
-      alignItems="flex-start"
-      justifyContent="flex-start"
-    >
-      <Header />
-      <Flex
-        flexDirection="column"
-        w="100%"
-        px="20px"
-        py="20px"
-        minH="100vh"
-        justifyContent="center"
-        alignItems="center"
-      >
-        {children}
-      </Flex>
-    </Flex>
+    <GlobalContextProvider>
+      <DashboardLayout> {children} </DashboardLayout>
+    </GlobalContextProvider>
   );
 }

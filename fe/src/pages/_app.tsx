@@ -1,23 +1,30 @@
-import "../../styles/globals.css";
-import type { AppProps } from "next/app";
-import { UserProvider } from "@auth0/nextjs-auth0/client";
+import {UserProvider} from '@auth0/nextjs-auth0/client';
+import store from "@/reduxs/store";
+import "@/styles/globals.css";
+import theme from "@/themes/theme";
 import { ChakraProvider } from "@chakra-ui/react";
-import theme from "../themes/theme";
-import MainLayout from "../layouts";
-import { Provider } from "react-redux";
-import store from "../reduxs/store";
+import type { AppProps } from "next/app";
 import Head from "next/head";
-import DashboardLayout from "../layouts/dashboards";
-import { GlobalContextProvider } from "../contexts/Globals";
+import { Provider } from "react-redux";
+import { NextPage } from 'next';
+import { ReactElement, ReactNode } from 'react';
+import { MotionLazyContainer } from '@/components/animations';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  const AnyComponent = Component as any;
 
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+interface MyAppProps extends AppProps {
+  Component: NextPageWithLayout;
+}
+
+export default function App({ Component, pageProps }: MyAppProps) {
+  const getLayout = Component.getLayout ?? ((page) => page);
   return (
     <Provider store={store}>
       <ChakraProvider theme={theme}>
-        <UserProvider>
-          <GlobalContextProvider>
+        <UserProvider>         
             <Head>
               <meta charSet="UTF-8" />
               <meta name="keywords" content="Flip, coin, deget" />
@@ -27,16 +34,11 @@ function MyApp({ Component, pageProps }: AppProps) {
                 content="width=device-width, initial-scale=1.0"
               />
             </Head>
-            <DashboardLayout>
-              {/* <MainLayout> */}
-              <AnyComponent {...pageProps} />
-              {/* </MainLayout> */}
-            </DashboardLayout>
-          </GlobalContextProvider>
+            <MotionLazyContainer>
+              {getLayout(<Component {...pageProps} />)}
+            </MotionLazyContainer>
         </UserProvider>
       </ChakraProvider>
     </Provider>
   );
 }
-
-export default MyApp;

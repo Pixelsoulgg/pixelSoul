@@ -5,14 +5,12 @@ export interface INavigationItem {
 }
 
 export const MENUS: INavigationItem[] = [
-  {name: 'Dashboard', nav: '/', icon: 'heart'},
+  {name: 'My Soul', nav: '/my-souls', icon: 'heart'},
   {name: 'Dungeon', nav: '/dungeons', icon: 'play-to-earn'},
   {name: 'Tavern', nav: '/games/detail', icon: 'tavern'},
-  // {name: 'Reporting', nav: '/report', icon: 'report.svg'},
-  // {name: 'Users', nav: '/users', icon: 'user.svg'},
 ]
 
 export const SETTING_MENU: INavigationItem[] = [
-  {name: 'Support', nav: '/', icon: 'support'},
-  {name: 'Settings', nav: '/', icon: 'setting'},
+  {name: 'Support', nav: '/my-souls', icon: 'support'},
+  {name: 'Settings', nav: '/my-souls', icon: 'setting'},
 ]

@@ -1,6 +1,13 @@
 import { Button, Flex, Image, SimpleGrid, Spacer } from '@chakra-ui/react'
 import React from 'react'
-import { NFTItem } from '../../views/profiles'
+import { NFTItem } from '@/views/profiles'
+
+import Layout from '@/layouts'
+
+
+nfts.getLayout = function getLayout(page: React.ReactElement) {
+  return <Layout variant="dashboard">{page}</Layout>;
+};
 
 export default function nfts() {
   return (

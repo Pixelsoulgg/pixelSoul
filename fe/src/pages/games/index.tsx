@@ -1,6 +1,12 @@
 import { Flex, SimpleGrid, Text } from "@chakra-ui/react";
 import React from "react";
-import GameCard from "../../components/dashboards/GameCard";
+import GameCard from "@/components/dashboards/GameCard";
+
+import Layout from '@/layouts'
+
+AllGames.getLayout = function getLayout(page: React.ReactElement) {
+  return <Layout variant="dashboard">{page}</Layout>;
+};
 
 export default function AllGames() {
   return (

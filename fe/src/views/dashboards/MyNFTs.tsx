@@ -12,7 +12,7 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Link from "next/link";
 import React from "react";
 import { Empty } from "../../components";
@@ -49,10 +49,10 @@ export default function MyNFTs() {
             </Thead>
             <Tbody>
               {NFTsData.data.map((d, index) => (
-                <Tr key={String(index)} as={motion.tr} whileHover={{backgroundColor: 'rgba(0,0,0, 0.05)', cursor: 'pointer'}}>
+                <Tr key={String(index)} as={m.tr} whileHover={{backgroundColor: 'rgba(0,0,0, 0.05)', cursor: 'pointer'}}>
                   <Td>
                     <HStack>
-                      <Image src={`/nfts/nft${index + 1}.svg`} />
+                      <Image src={`/nfts/nft${index + 1}.svg`} alt="nft" />
                       <VStack alignItems="flex-start">
                         <Text
                           fontSize="14px"
@@ -79,7 +79,7 @@ export default function MyNFTs() {
                   </Td>
                   <Td>
                     <HStack>
-                      <Image src="/steam-icon.svg" />
+                      <Image src="/steam-icon.svg" alt="steam" />
                       <Text variant="with-sub" fontWeight="600">
                         Steam
                       </Text>
@@ -90,7 +90,7 @@ export default function MyNFTs() {
             </Tbody>
           </Table>
 
-          <Link href="profiles/nfts">
+         
             <Box
               as="a"
               mt="20px"
@@ -100,18 +100,20 @@ export default function MyNFTs() {
               bg="#fff"
               boxShadow="0px 1px 2px rgba(16, 24, 40, 0.05)"
               w="fit-content"
-              cursor="pointer"
+              
             >
-              <Text
-                color="#344054"
-                fontSize="14px"
-                fontWeight="600"
-                fontFamily={fonts.Inter}
-              >
-                View All
-              </Text>
+               <Link href="profiles/nfts">
+                  <Text
+                    color="#344054"
+                    fontSize="14px"
+                    fontWeight="600"
+                    fontFamily={fonts.Inter}
+                    flex={1}
+                  >
+                    View All
+                  </Text>
+                </Link>
             </Box>
-          </Link>
         </>
       )}
     </Flex>
