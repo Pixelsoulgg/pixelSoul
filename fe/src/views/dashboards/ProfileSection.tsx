@@ -14,10 +14,12 @@ import { m } from "framer-motion";
 import React from "react";
 import ComingSoon from "../../components/ComingSoon";
 import { fonts } from "../../configs/constants";
+import UserAvatar from "@/components/dashboards/UserAvatar";
+import { useGlobal } from "@/contexts/Globals";
 
 export default function ProfileSection() {
+  const {avatar, onChangeAvatar} = useGlobal();
   const [available, setAvailable] = React.useState<string>("STEAM_PROFILE");
-  const [avatar, setAvatar] = React.useState<string>();
 
   return (
     <Flex
@@ -51,31 +53,7 @@ export default function ProfileSection() {
         </VStack>
       </HStack>
 
-      <Box
-        bg="#EAECF0"
-        w="348px"
-        h="302px"
-        borderRadius="24px"
-        mt="32px"
-        position="relative"
-        justifyContent="center"
-        alignItems="center"
-        display="flex"
-        overflow="hidden"
-      >
-        <Image
-          src="/three-dot.svg"
-          position="absolute"
-          right="15px"
-          top="16px"
-        />
-
-        <Image
-          src={`/avatar/${avatar ? avatar : "avatar-default"}.svg`}
-          objectFit={avatar ? "cover" : "none"}
-          w="full"
-        />
-      </Box>
+      <UserAvatar avatar={avatar} />
 
       <HStack
         w="full"
@@ -149,7 +127,7 @@ export default function ProfileSection() {
           <Image
             src={`/avatar/${index + 1}.svg`}
             key={index.toString()}
-            onClick={() => setAvatar(`${index + 1}`)}
+            onClick={() =>onChangeAvatar && onChangeAvatar(`${index + 1}`)}
             cursor="pointer"
             as={m.img}
             borderRadius="10px"

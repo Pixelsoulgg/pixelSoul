@@ -2,6 +2,7 @@ import { Flex, FlexProps, HStack, Image, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { layouts } from "../../configs/constants";
 import Menu from "./Menu";
+import { AnimatePresence, m } from "framer-motion";
 
 interface IProps extends FlexProps {}
 
@@ -29,20 +30,28 @@ export default function Sidebar({ ...props }: IProps) {
 
   return (
     <Flex
+       as={m.div}
       flexDirection="column"      
       pl="16px"     
       flex={1}
       position="relative"
-      mr={`${isExpand ? 280 : 100}px`}
+      mr={`${isExpand ? 240 : 100}px`}
+      animate={{width: 280}}
+      initial={{width: 100}}
+      exit={{width: 100}}
+      transition='0.3s linear'
       {...props}
     >
+      <AnimatePresence>
       <Flex 
         h="full" 
         flexDirection="column" 
-        position="fixed"
-        minW={`${isExpand ? 280 : 100}px`}
+        position="fixed"        
         borderRight="1px solid #EAECF0"
         bg="white"       
+        // animate={{width: 280}}
+        // initial={{width: 100}}
+        // exit={{width: 100}}
       >
         <HStack
           w="full"
@@ -57,6 +66,7 @@ export default function Sidebar({ ...props }: IProps) {
         </HStack>
         <Menu mt="25px" isExpand={isExpand} />
       </Flex>
+      </AnimatePresence>
     </Flex>
   );
 }

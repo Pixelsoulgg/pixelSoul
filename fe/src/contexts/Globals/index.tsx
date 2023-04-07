@@ -5,6 +5,8 @@ import React, { useCallback, useEffect } from 'react';
 interface IGlobalContext {
  menuSelected: string;
  onMenuChange?: (menu: string) => void;
+ avatar?: string;
+ onChangeAvatar?:(v: string) => void;
 }
 
 interface ProviderProps {
@@ -20,7 +22,11 @@ export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
   const {user} = useUser();
 
   const [menuSelected, setMenuSelected] = React.useState<string>('My Soul'); 
+  const [avatar, setAvatar] = React.useState<string>(); 
+
   const onMenuChange = (menu: string) => setMenuSelected(menu);
+  const onChangeAvatar = useCallback((menu: string) => setAvatar(menu), []);
+
 
   useEffect(() => {
     if (!user) {
@@ -30,7 +36,7 @@ export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
 
   return (
     <GlobalContext.Provider
-      value={{menuSelected, onMenuChange}}>
+      value={{menuSelected, onMenuChange, onChangeAvatar, avatar}}>
       {children}
     </GlobalContext.Provider>
   );
