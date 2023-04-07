@@ -16,14 +16,14 @@ export default function DashboardLayout({ children }: IProps) {
   
   const { pathname } = router;
 
-  const isHideBackAndSearch = useMemo(() => {
-    const checkList = ["/my-souls"];
+  const isHideSearch = useMemo(() => {
+    const checkList = ["/my-souls", "/taverns"];
     if (checkList.findIndex((p) => p === pathname) > -1) return false;
     return true;
   }, [pathname]);
 
   const isHideBack = useMemo(() => {
-    const checkList = ["/my-souls", "/dungeons"];
+    const checkList = ["/my-souls", "/dungeons", "/taverns"];
     if (checkList.findIndex((p) => p === pathname) > -1) return false;
     return true;
   }, [pathname]);
@@ -36,6 +36,7 @@ export default function DashboardLayout({ children }: IProps) {
 
   const getTitle = useMemo(() => {
     switch (pathname.toLocaleLowerCase()) {
+      case "/taverns": return "Tavern"
       case "/profiles/collectible":
         return "My Collectibles";
       case "/profiles/nfts":
@@ -85,8 +86,8 @@ export default function DashboardLayout({ children }: IProps) {
               )}
               <Text variant="with-title">{getTitle}</Text>
             </HStack>
-            {!isHideBackAndSearch && <GoldButton />}
-            {isHideBackAndSearch && (
+            {!isHideSearch && <GoldButton />}
+            {isHideSearch && (
               <Search
                 paddingY="0px"
                 w="320px"
