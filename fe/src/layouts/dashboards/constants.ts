@@ -7,7 +7,7 @@ export interface INavigationItem {
 export const MENUS: INavigationItem[] = [
   {name: 'My Soul', nav: '/my-souls', icon: 'heart'},
   {name: 'Dungeon', nav: '/dungeons', icon: 'play-to-earn'},
-  {name: 'Tavern', nav: '/games/detail', icon: 'tavern'},
+  {name: 'Tavern', nav: '/taverns', icon: 'tavern'},
 ]
 
 export const SETTING_MENU: INavigationItem[] = [
