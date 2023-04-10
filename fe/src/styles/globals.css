@@ -145,3 +145,18 @@ a {
   justify-content: center;
   align-items: center;
 }
+
+.forge-table-detail tr > th,
+.forge-table-detail tr > td {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  color: #101828;
+  padding-left: 0px;
+  padding-right: 50px;
+}
+.forge-table-detail tr > th {
+  color: #026AA2;
+  font-weight: 500;
+  text-transform: none;
+}

@@ -24,7 +24,7 @@ export default function CollectibleItem() {
         padding="10px"
         flexDirection="column"
       >
-        <Image src="/steam-icon.svg" w="45px" h="45px" />
+        <Image src="/steam-icon.svg" w="45px" h="45px" alt='' />
         <Flex
           w="full"
           h="332px"
@@ -51,7 +51,7 @@ export default function CollectibleItem() {
       </Text>
 
       <HStack w="full" mt="15px">
-        <Image src="/pixel-icon.svg" mr="5px" />
+        <Image src="/pixel-icon.svg" mr="5px" alt='' />
         <Text
           variant="with-sub"
           fontSize="15px"
