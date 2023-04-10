@@ -12,12 +12,13 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
-import { m } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import React from "react";
 import { Empty } from "../../components";
 import { fonts, NFTsData } from "../../configs/constants";
 import { useAppSelector } from "../../reduxs/hooks";
+import { Animate } from "@/components/animations";
 
 export default function MyNFTs() {
   const { walletInfo } = useAppSelector((state) => state.account);
@@ -49,7 +50,7 @@ export default function MyNFTs() {
             </Thead>
             <Tbody>
               {NFTsData.data.map((d, index) => (
-                <Tr key={String(index)} as={m.tr} whileHover={{backgroundColor: 'rgba(0,0,0, 0.05)', cursor: 'pointer'}}>
+                <Tr key={String(index)} as={motion.tr} whileHover={Animate.tableHover}>
                   <Td>
                     <HStack>
                       <Image src={`/nfts/nft${index + 1}.svg`} alt="nft" />

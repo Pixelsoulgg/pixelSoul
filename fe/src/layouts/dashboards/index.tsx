@@ -17,13 +17,13 @@ export default function DashboardLayout({ children }: IProps) {
   const { pathname } = router;
 
   const isHideSearch = useMemo(() => {
-    const checkList = ["/my-souls", "/taverns"];
+    const checkList = ["/my-souls", "/taverns", "/forges", "/epochs"];
     if (checkList.findIndex((p) => p === pathname) > -1) return false;
     return true;
   }, [pathname]);
 
   const isHideBack = useMemo(() => {
-    const checkList = ["/my-souls", "/dungeons", "/taverns"];
+    const checkList = ["/my-souls", "/dungeons", "/taverns", "/forges", "/epochs"];
     if (checkList.findIndex((p) => p === pathname) > -1) return false;
     return true;
   }, [pathname]);
@@ -37,6 +37,8 @@ export default function DashboardLayout({ children }: IProps) {
   const getTitle = useMemo(() => {
     switch (pathname.toLocaleLowerCase()) {
       case "/taverns": return "Tavern"
+      case "/forges": return "Forge of Legends"
+      case "/epochs": return "Epoch"
       case "/profiles/collectible":
         return "My Collectibles";
       case "/profiles/nfts":

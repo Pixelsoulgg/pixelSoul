@@ -33,10 +33,8 @@ export default function App({ Component, pageProps }: MyAppProps) {
                 name="viewport"
                 content="width=device-width, initial-scale=1.0"
               />
-            </Head>
-            <MotionLazyContainer>
-              {getLayout(<Component {...pageProps} />)}
-            </MotionLazyContainer>
+            </Head>           
+            {getLayout(<Component {...pageProps} />)}
         </UserProvider>
       </ChakraProvider>
     </Provider>

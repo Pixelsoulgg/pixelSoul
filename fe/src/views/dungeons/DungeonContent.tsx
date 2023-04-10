@@ -33,10 +33,10 @@ export default function DungeonContent({
           </Button>
           <HStack>
             <Button variant="normal" minW="40px" w="44px" mx="10px">
-              <Image src="/arrow-pre.svg" />
+              <Image src="/arrow-pre.svg" alt="" />
             </Button>
             <Button variant="normal" minW="40px" w="44px">
-              <Image src="/arrow-next.svg" />
+              <Image src="/arrow-next.svg" alt="" />
             </Button>
           </HStack>
         </HStack>
