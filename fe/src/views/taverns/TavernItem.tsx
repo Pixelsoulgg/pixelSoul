@@ -1,11 +1,11 @@
 import { Animate } from "@/components/animations";
 import { Box, Button, Flex, HStack, Image, Spacer, Text } from "@chakra-ui/react";
-import { m } from "framer-motion";
+import { motion } from "framer-motion";
 import React from "react";
 
 export default function TavernItem() {
   return (
-    <Box padding="10px" borderRadius="10px" bg="#F2F4F7" as={m.div}
+    <Box padding="10px" borderRadius="10px" bg="#F2F4F7" as={motion.div}
       whileHover={Animate.whileHover}
       whileTap={Animate.whileTap}
       cursor="pointer"

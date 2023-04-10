@@ -8,7 +8,7 @@ import {
   Tag,
   Text,
 } from "@chakra-ui/react";
-import { m } from "framer-motion";
+import { motion } from "framer-motion";
 import React from "react";
 import { Animate } from "../../components/animations";
 
@@ -25,7 +25,7 @@ export default function DungeonItem({
 }: IProps) {
   return (
     <Flex
-      as={m.div}
+      as={motion.div}
       flex={1}
       w="full"
       flexDirection="column"
@@ -63,6 +63,7 @@ export default function DungeonItem({
           objectFit="contain"
           borderRadius="10px"
           mt="10px"
+          alt=""
         />
       </Flex>
       <Text variant="with-title" fontSize="18px">
@@ -76,7 +77,7 @@ export default function DungeonItem({
         sint. Velit officia consequat duis enim velit mollit.
       </Text>
       <HStack w="full">
-        <Image src="/gold.svg" />
+        <Image src="/gold.svg" alt="" />
         <Text variant="with-sub" ml="5px">
           + 100 gold
         </Text>
