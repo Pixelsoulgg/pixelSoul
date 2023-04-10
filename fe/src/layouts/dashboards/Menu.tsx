@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
-import { m } from "framer-motion";
+import { motion } from "framer-motion";
 import { useGlobal } from "../../contexts/Globals";
 import { MENUS, SETTING_MENU } from "./constants";
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -61,7 +61,7 @@ export default function Menu({ isExpand, ...props }: IProps) {
               my="5px"
               padding={{ base: "8px 12px", lg: "8px 0px" }}
               className={`menu-sidebar ${!isExpand ? 'fixed-content' : undefined} ${menuSelected === menu.name ? 'menu-sidebar-active' : ''}`}
-              as={m.div}
+              as={motion.div}
             >
               <Flex id="initial" w="25px" h="25px" bgImage={`/nav/${menu.icon}.svg`} objectFit="contain" bgRepeat="no-repeat" mr="10px" />
                 <Flex id="onhover" w="25px" h="25px" bgImage={`/nav/${menu.icon}-hover.svg`} objectFit="contain" bgRepeat="no-repeat" mr="10px" />

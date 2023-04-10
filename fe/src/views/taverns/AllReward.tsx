@@ -1,9 +1,8 @@
+import { Animate } from "@/components/animations";
 import { fonts } from "@/configs/constants";
 import {
   Button,
   Flex,
-  HStack,
-  Image,
   Table,
   Tbody,
   Td,
@@ -11,9 +10,8 @@ import {
   Th,
   Thead,
   Tr,
-  VStack,
 } from "@chakra-ui/react";
-import { m } from "framer-motion";
+import { motion } from "framer-motion";
 import React from "react";
 
 export default function AllReward() {
@@ -45,11 +43,8 @@ export default function AllReward() {
           {new Array(5).fill(0).map((d, index) => (
             <Tr
               key={String(index)}
-              as={m.tr}
-              whileHover={{
-                backgroundColor: "rgba(0,0,0, 0.05)",
-                cursor: "pointer",
-              }}
+              as={motion.tr}
+              whileHover={Animate.tableHover}
             >
               <Td>
                 <Text

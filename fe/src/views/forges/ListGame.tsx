@@ -1,3 +1,4 @@
+import { Animate } from "@/components/animations";
 import Tag from "@/components/dashboards/Tag";
 import { fonts } from "@/configs/constants";
 import {
@@ -13,11 +14,16 @@ import {
   Thead,
   Tr,
   VStack,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { m } from "framer-motion";
+import { m, motion } from "framer-motion";
 import React from "react";
 
-export default function ListGame() {
+interface IProps {
+  onModal?: () => void;
+} 
+
+export default function ListGame({onModal}: IProps) {
   return (
     <Flex
       w="full"
@@ -60,11 +66,9 @@ export default function ListGame() {
           {new Array(3).fill(0).map((d, index) => (
             <Tr
               key={String(index)}
-              as={m.tr}
-              whileHover={{
-                backgroundColor: "rgba(0,0,0, 0.05)",
-                cursor: "pointer",
-              }}
+              as={motion.tr}
+              whileHover={Animate.tableHover}
+              onClick={onModal}
             >
               <Td>
                 <Image src={`/forges/${index + 2}.png`} alt="" />

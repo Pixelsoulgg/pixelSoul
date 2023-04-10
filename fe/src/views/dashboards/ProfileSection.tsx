@@ -10,7 +10,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { m } from "framer-motion";
+import { motion } from "framer-motion";
 import React from "react";
 import ComingSoon from "../../components/ComingSoon";
 import { fonts } from "../../configs/constants";
@@ -129,7 +129,7 @@ export default function ProfileSection() {
             key={index.toString()}
             onClick={() =>onChangeAvatar && onChangeAvatar(`${index + 1}`)}
             cursor="pointer"
-            as={m.img}
+            as={motion.img}
             borderRadius="10px"
             objectFit="cover"
             whileHover={{boxShadow: "0px 4px 4px rgba(151, 71, 255, 0.35)",}}
