@@ -9,7 +9,7 @@ export class SteamStrategy extends PassportStrategy(Strategy) {
   constructor(private steamService: SteamService) {
     super(
       {
-        returnURL: `${DOMAIN}/api/v1/steam/auth`,
+        returnURL: `${DOMAIN}/my-souls`,
         realm: `${DOMAIN}`,
         apiKey: `${STEAM_API_KEY}`
       },

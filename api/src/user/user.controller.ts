@@ -3,7 +3,7 @@ import { UserDto } from './dto/user.dto'
 import { UserUpdateDto } from './dto/userUpdate.dto'
 import { UserService } from './user.service'
 
-@Controller('user')
+@Controller({ version: '1', path: 'user' })
 export class UserController {
   constructor(private readonly userService: UserService) {}
   @Post()
