@@ -8,11 +8,12 @@ import { UserUpdateDto } from './dto/userUpdate.dto'
 export class UserService {
   constructor(private prisma: PrismaService) {}
   async create(userDto: UserDto) {
-    const user = await this.prisma.users.findUnique({
-      where: { email: userDto.email }
+    const auth0User = await this.prisma.users.findUnique({
+      where: { auth0Sid: userDto.auth0Sid }
     })
-    if (user) {
-      const msg = `user.email [${user.email}] existed`
+
+    if (auth0User) {
+      const msg = `user.auth0Sid [${auth0User.auth0Sid}] existed`
       throw new HttpException(msg, HttpStatus.NOT_FOUND)
     }
     const data: Prisma.UsersUncheckedCreateInput = {
@@ -37,17 +38,45 @@ export class UserService {
       orderBy
     })
   }
+
+  async findOne(where: Prisma.UsersWhereUniqueInput) {
+    return await this.prisma.users.findUnique({
+      where
+    })
+  }
+
   async remove(where: Prisma.UsersWhereUniqueInput) {
     return await this.prisma.users.delete({ where })
   }
+
   async update(where: Prisma.UsersWhereUniqueInput, userUpdateDto: UserUpdateDto) {
-    const updateData: UserUpdateDto = {
+    const updateData: Prisma.UsersUpdateInput = {
       walletAddress: userUpdateDto.walletAddress,
       steamId: userUpdateDto.steamId,
-      imageUrl: userUpdateDto.imageUrl
+      imageUrl: userUpdateDto.imageUrl,
+      auth0Sid: userUpdateDto.auth0Sid,
+      auth0NickName: userUpdateDto.auth0NickName,
+      auth0Name: userUpdateDto.auth0Name,
+      auth0Sub: userUpdateDto.auth0Sub
     }
-    console.log(updateData)
-
+    return await this.prisma.users.update({
+      data: updateData,
+      where
+    })
+  }
+  async addWallet(where: Prisma.UsersWhereUniqueInput, wallet: string) {
+    const updateData: Prisma.UsersUpdateInput = {
+      walletAddress: wallet
+    }
+    return await this.prisma.users.update({
+      data: updateData,
+      where
+    })
+  }
+  async addSteamId(where: Prisma.UsersWhereUniqueInput, steamId: string) {
+    const updateData: Prisma.UsersUpdateInput = {
+      steamId: steamId
+    }
     return await this.prisma.users.update({
       data: updateData,
       where
