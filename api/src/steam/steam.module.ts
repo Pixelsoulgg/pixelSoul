@@ -6,7 +6,7 @@ import { PassportModule } from '@nestjs/passport'
 
 @Module({
   controllers: [SteamController],
-  providers: [SteamService, SteamStrategy],
+  providers: [SteamService, SteamStrategy, SteamService],
   imports: [PassportModule]
 })
 export class SteamModule {}
