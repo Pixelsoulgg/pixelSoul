@@ -3,16 +3,15 @@ import { PassportStrategy } from '@nestjs/passport'
 import { Injectable } from '@nestjs/common'
 import { SteamService } from './steam.service'
 import { SteamProfile } from './steam.interface'
-import * as dotenv from 'dotenv'
-dotenv.config()
+import { DOMAIN, STEAM_API_KEY } from '../app.settings'
 @Injectable()
 export class SteamStrategy extends PassportStrategy(Strategy) {
   constructor(private steamService: SteamService) {
     super(
       {
-        returnURL: `${process.env.DOMAIN}/api/v1/steam/auth`,
-        realm: `${process.env.DOMAIN}`,
-        apiKey: `${process.env.STEAM_API_KEY}`
+        returnURL: `${DOMAIN}/api/v1/steam/auth`,
+        realm: `${DOMAIN}`,
+        apiKey: `${STEAM_API_KEY}`
       },
       (
         _: string,

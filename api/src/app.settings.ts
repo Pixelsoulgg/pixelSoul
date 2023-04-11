@@ -5,6 +5,8 @@ export const MORALIS_API_KEY = process.env.MORALIS_API_KEY || ''
 export const OPENSEA_API_KEY = process.env.OPENSEA_API_KEY || ''
 export const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || ''
 export const PORT = process.env.PORT || ''
+export const DOMAIN = process.env.DOMAIN || ''
+export const STEAM_API_KEY = process.env.STEAM_API_KEY || ''
 export function setAppSetting(app: INestApplication) {
   app.setGlobalPrefix('api', {
     exclude: [{ path: 'health', method: RequestMethod.GET }]
