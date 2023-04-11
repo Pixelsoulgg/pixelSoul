@@ -10,5 +10,17 @@ export class UserDto {
   steamId: string
 
   @ApiProperty()
+  auth0Sid: string
+
+  @ApiProperty()
+  auth0NickName: string
+
+  @ApiProperty()
+  auth0Name: string
+
+  @ApiProperty()
+  auth0Sub: string
+
+  @ApiProperty()
   imageUrl: string
 }
