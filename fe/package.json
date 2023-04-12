@@ -6,7 +6,9 @@
     "dev": "next dev -p 3004",
     "build": "next build",
     "start": "next start -p 3004",
-    "lint": "next lint"
+    "lint": "next lint",
+    "clear-all": "rm -rf .next .swc _static node_modules",
+    "re-start": "rm -rf .next .swc _static node_modules && yarn install && yarn dev"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^2.4.0",
@@ -29,6 +31,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-redux": "^8.0.5",
+    "redux-persist": "^6.0.0",
     "typescript": "5.0.3",
     "web3modal": "^1.9.12"
   },

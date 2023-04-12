@@ -6,7 +6,7 @@ import { useAppSelector } from "../../reduxs/hooks";
 import SteamTable from "./SteamTable";
 
 export default function StreamGeneralData() {
-  const { steamInfo } = useAppSelector((state) => state.account);
+  const { steamInfo } = useAppSelector((state) => state.auth);
   return (
     <Flex w="full" flexDir="column" mt="30px">
       <Text variant="with-title" fontSize="18px" mb="10px">
@@ -14,7 +14,7 @@ export default function StreamGeneralData() {
       </Text>
       {!steamInfo && <Empty />}
       {steamInfo && (
-        <Flex w="full">
+        <Flex w="full" flexDirection="column">
           <SteamTable />
           <SimpleGrid
             columns={{ base: 1, lg: 2 }}
