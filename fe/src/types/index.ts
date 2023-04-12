@@ -1,10 +1,10 @@
+import { UserProfile } from "@auth0/nextjs-auth0/client";
 import { FLIP_TYPE } from "../contracts/types";
 
 export enum CHAIN_ID {
   TESTNET = 97,
   MAINNET = 56,
 }
-
 
 export interface IWalletInfo {
   bnbBalance: number;
@@ -23,9 +23,9 @@ export type Player = {
   requestId: number;
   result: number;
   transaction_id?: string;
-  playAt: number
+  playAt: number;
   isWin: boolean;
-}
+};
 
 export interface INftLabel {
   label: string;
@@ -55,10 +55,19 @@ export interface OpenIDData {
   "openid.signed": string;
 }
 
+export interface IAuth0Model extends UserProfile {
+  sid: string;
+}
+
 export interface IUser {
+  id?: number;
   email?: string;
   walletAddress?: string;
   steamId?: string;
+  auth0Sid: string;
+  auth0NickName: string;
+  auth0Name: string;
+  auth0Sub: string;
   imageUrl?: string;
 }
 
@@ -73,4 +82,3 @@ export interface IGame {
   socialDiscord: string;
   socialTelegram: string;
 }
-
