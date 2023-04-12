@@ -30,13 +30,21 @@ export default function LandingPage() {
   const [currentWindow, setCurrentWindow] = useState<Window>();
   const [accessToken, setAccessToken] = useState<string>();
 
-  const getAccessToken = useCallback(async () => {
+  const getAccessToken = useCallback(async (isRedirect = false) => {
     const response = await fetch("/api/check");
     const auth = await response.json();
     if (auth.accessToken) {
-      setAccessToken(auth.accessToken);
+      if (isRedirect) {
+        push('my-souls')
+      } else {
+        setAccessToken(auth.accessToken);
+      }      
     }
-  }, []);
+  }, [push]);
+
+  useEffect(() => {
+    getAccessToken(true);
+  }, [getAccessToken])
 
   const handleAuth = useCallback(() => {
     if (typeof window === "undefined") {
@@ -81,9 +89,9 @@ export default function LandingPage() {
     if (accessToken && authWindow) {
       authWindow.close();
       setAuthWindow(undefined);
-      if (currentWindow) currentWindow.location.reload();
+      push('/my-souls')
     }
-  }, [authWindow, accessToken, currentWindow]);
+  }, [authWindow, accessToken, currentWindow, push]);
 
   return (
     <Flex
