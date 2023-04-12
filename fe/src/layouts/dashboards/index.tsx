@@ -12,8 +12,8 @@ export interface IProps {
 }
 export default function DashboardLayout({ children }: IProps) {
   const {user} = useUser();
-  const router = useRouter();
-  
+  const router = useRouter();  
+
   const { pathname } = router;
 
   const isHideSearch = useMemo(() => {

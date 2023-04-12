@@ -7,6 +7,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { getScoreAction } from '@/reduxs/accounts/account.actions'
 import { useAppDispatch, useAppSelector } from '@/reduxs/hooks'
 import Layout from '@/layouts'
+import { useRouter } from 'next/router'
+import { OpenIDData } from '@/types'
+import { getSteamInfoAction, handleConnectMetamaskSuccess, setSteamInfoAction, steamAuthSuccess } from '@/reduxs/auths/auth.slices'
 
 
 MySoul.getLayout = function getLayout(page: React.ReactElement) {
@@ -15,18 +18,37 @@ MySoul.getLayout = function getLayout(page: React.ReactElement) {
 
 
 export default function MySoul() {
-  const { walletInfo } = useAppSelector((s) => s.account);
+  const router = useRouter();
   const dispatch = useAppDispatch();
 
+  const { walletInfo } = useAppSelector((s) => s.account);
+  const {auth0Info} = useAppSelector(s => s.auth);
+
+  const handleSteamAuth = useCallback(() => {
+    //@ts-ignore
+    const query: OpenIDData | undefined = router.query;
+    if (query && query["openid.identity"] !== undefined) {
+      if (auth0Info) {
+        dispatch(setSteamInfoAction(query))
+      }
+    }
+  }, [auth0Info, dispatch, router.query]);
+
+  useEffect(() => {
+    handleSteamAuth();  
+  }, [handleSteamAuth]);
+
   const fetchData = useCallback(async () => {
-    if (walletInfo && walletInfo.address) {
+    if (walletInfo && walletInfo.address && auth0Info && auth0Info.auth0Sid) {      
+      dispatch(handleConnectMetamaskSuccess({walletAddress: walletInfo.address, auth0Id: auth0Info.auth0Sid}))
       dispatch(getScoreAction());
     }
-  }, [dispatch, walletInfo]); 
+  }, [auth0Info, dispatch, walletInfo]); 
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+  
   return (
     <>
      <Flex flex={1} w="full" flexDirection={{ base: "column", lg: "row" }}>
@@ -78,8 +100,8 @@ export default function MySoul() {
             </SimpleGrid>
           </Flex>
           <StreamGeneralData />
-          <MyCollectibles />
-          <MyNFTs />
+           <MyCollectibles />
+         {/* <MyNFTs /> */}
         </Flex>
       </Flex>
     </>
