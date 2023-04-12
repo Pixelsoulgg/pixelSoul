@@ -7,9 +7,6 @@ export class UserUpdateDto {
   steamId: string
 
   @ApiProperty()
-  auth0Sid: string
-
-  @ApiProperty()
   auth0NickName: string
 
   @ApiProperty()
