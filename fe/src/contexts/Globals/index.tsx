@@ -1,4 +1,7 @@
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { getSteamInfoAction, handleAuth0LoginSuccess } from '@/reduxs/auths/auth.slices';
+import { useAppDispatch } from '@/reduxs/hooks';
+import { IAuth0Model } from '@/types';
+import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect } from 'react';
 
@@ -18,8 +21,8 @@ const GlobalContext = React.createContext<IGlobalContext>({
 });
 
 export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
-  const {pathname, push} = useRouter();
-  const {user} = useUser();
+  const {push} = useRouter();
+  const dispatch = useAppDispatch();
 
   const [menuSelected, setMenuSelected] = React.useState<string>('My Soul'); 
   const [avatar, setAvatar] = React.useState<string>(); 
@@ -27,12 +30,18 @@ export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
   const onMenuChange = (menu: string) => setMenuSelected(menu);
   const onChangeAvatar = useCallback((menu: string) => setAvatar(menu), []);
 
-
-  useEffect(() => {
-    if (!user) {
+  const handleInitialState= useCallback( async () => {
+    const me = (await axios.get('/api/auth/me')).data as IAuth0Model;
+    if (!me) {
       push('/')
     }
-  }, [push, user]);
+    dispatch(handleAuth0LoginSuccess(me));
+    dispatch(getSteamInfoAction());
+  }, [dispatch, push]);
+
+  useEffect(() => {  
+    handleInitialState();
+  }, [handleInitialState]);
 
   return (
     <GlobalContext.Provider
