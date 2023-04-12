@@ -74,7 +74,7 @@ export class UserService {
   }
   async addSteamId(where: Prisma.UsersWhereUniqueInput, steamId: string) {
     const updateData: Prisma.UsersUpdateInput = {
-      steamId: steamId
+      steamId
     }
     return await this.prisma.users.update({
       data: updateData,

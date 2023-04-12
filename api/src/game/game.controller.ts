@@ -1,6 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common'
 import { GameDto } from './dto/game.dto'
 import { GameService } from './game.service'
+import { ApiTags } from '@nestjs/swagger'
+@ApiTags('game')
 @Controller({
   path: 'game',
   version: '1'

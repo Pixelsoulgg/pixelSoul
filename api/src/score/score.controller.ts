@@ -1,6 +1,8 @@
 import { Controller, Get, Injectable, Param } from '@nestjs/common'
 import { ScoreService } from './score.service'
 import { ScoreData } from './score.types'
+import { ApiTags } from '@nestjs/swagger'
+@ApiTags('score')
 @Controller({
   version: '1',
   path: 'score'
