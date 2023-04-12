@@ -54,7 +54,6 @@ export class UserService {
       walletAddress: userUpdateDto.walletAddress,
       steamId: userUpdateDto.steamId,
       imageUrl: userUpdateDto.imageUrl,
-      auth0Sid: userUpdateDto.auth0Sid,
       auth0NickName: userUpdateDto.auth0NickName,
       auth0Name: userUpdateDto.auth0Name,
       auth0Sub: userUpdateDto.auth0Sub
