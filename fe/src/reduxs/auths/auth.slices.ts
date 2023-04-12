@@ -77,10 +77,10 @@ export const handleAuth0LoginSuccess = createAsyncThunk<void, IAuth0Model>(
 });
 
 export const handleConnectMetamaskSuccess = createAsyncThunk<void, {walletAddress: string; auth0Id: string}>(
-  "authentication/auth0LoginSuccess"
+  "authentication/connectMetamaskSuccess"
 , async(model) => { 
   const api = new AppApi();
   const {walletAddress, auth0Id} = model;
   const user: IUser = await api.addWallet(auth0Id, walletAddress);
-  store.dispatch(authSlice.actions.auth0LoginSuccess(user));
+  // store.dispatch(authSlice.actions.auth0LoginSuccess(user));
 });

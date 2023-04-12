@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '@/reduxs/hooks'
 import Layout from '@/layouts'
 import { useRouter } from 'next/router'
 import { OpenIDData } from '@/types'
-import { getSteamInfoAction, handleConnectMetamaskSuccess, setSteamInfoAction, steamAuthSuccess } from '@/reduxs/auths/auth.slices'
+import { handleConnectMetamaskSuccess, setSteamInfoAction, steamAuthSuccess } from '@/reduxs/auths/auth.slices'
 
 
 MySoul.getLayout = function getLayout(page: React.ReactElement) {
