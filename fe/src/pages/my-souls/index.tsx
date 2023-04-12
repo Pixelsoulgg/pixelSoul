@@ -7,6 +7,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { getScoreAction } from '@/reduxs/accounts/account.actions'
 import { useAppDispatch, useAppSelector } from '@/reduxs/hooks'
 import Layout from '@/layouts'
+import { useRouter } from 'next/router'
+import { OpenIDData } from '@/types'
+import { getSteamInfoAction, setSteamInfoAction, steamAuthSuccess } from '@/reduxs/auths/auth.slices'
 
 
 MySoul.getLayout = function getLayout(page: React.ReactElement) {
@@ -15,8 +18,23 @@ MySoul.getLayout = function getLayout(page: React.ReactElement) {
 
 
 export default function MySoul() {
-  const { walletInfo } = useAppSelector((s) => s.account);
+  const router = useRouter();
   const dispatch = useAppDispatch();
+
+  const { walletInfo } = useAppSelector((s) => s.account); 
+
+
+  const handleSteamAuth = useCallback(() => {
+    //@ts-ignore
+    const query: OpenIDData | undefined = router.query;
+    if (query && query["openid.identity"] !== undefined) {
+      dispatch(setSteamInfoAction(query))
+    }
+  }, [dispatch, router.query]);
+
+  useEffect(() => {
+    handleSteamAuth();  
+  }, [handleSteamAuth]);
 
   const fetchData = useCallback(async () => {
     if (walletInfo && walletInfo.address) {
@@ -27,6 +45,7 @@ export default function MySoul() {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+  
   return (
     <>
      <Flex flex={1} w="full" flexDirection={{ base: "column", lg: "row" }}>

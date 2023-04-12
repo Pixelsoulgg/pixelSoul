@@ -42,4 +42,35 @@ export interface INftDashboardItem {
   type: string;
 }
 
+export interface OpenIDData {
+  "openid.assoc_handle": string;
+  "openid.claimed_id": string;
+  "openid.identity": string;
+  "openid.mode": string;
+  "openid.ns": string;
+  "openid.op_endpoint": string;
+  "openid.response_nonce": string;
+  "openid.return_to": string;
+  "openid.sig": string;
+  "openid.signed": string;
+}
+
+export interface IUser {
+  email?: string;
+  walletAddress?: string;
+  steamId?: string;
+  imageUrl?: string;
+}
+
+export interface IGame {
+  id: number;
+  steamId: string;
+  name: string;
+  description: string;
+  gameUrl: string;
+  logo: string;
+  socialTwitter: string;
+  socialDiscord: string;
+  socialTelegram: string;
+}
 
