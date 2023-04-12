@@ -7,5 +7,14 @@ export class UserUpdateDto {
   steamId: string
 
   @ApiProperty()
+  auth0NickName: string
+
+  @ApiProperty()
+  auth0Name: string
+
+  @ApiProperty()
+  auth0Sub: string
+
+  @ApiProperty()
   imageUrl: string
 }
