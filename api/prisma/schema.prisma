@@ -31,6 +31,8 @@ model Games {
   socialTwitter  String? @db.VarChar(200)
   socialDiscord  String? @db.VarChar(200)
   socialTelegram String? @db.VarChar(200)
+  gameTypeId     Int?
+  appId          Int?
 }
 
 model Requirements {
@@ -42,15 +44,16 @@ model Requirements {
 }
 
 model Users {
-  id            Int     @id @default(autoincrement())
-  email         String? @unique(map: "email_UNIQUE") @db.VarChar(200)
-  walletAddress String? @unique(map: "walletAddress_UNIQUE") @db.VarChar(42)
-  steamId       String? @unique(map: "steamId_UNIQUE") @db.VarChar(100)
-  imageUrl      String? @db.VarChar(200)
-  auth0Sid      String? @unique(map: "auth0Id_UNIQUE") @db.VarChar(100)
-  auth0NickName String? @db.VarChar(45)
-  auth0Name     String? @db.VarChar(200)
-  auth0Sub      String? @db.VarChar(100)
+  id               Int       @id @default(autoincrement())
+  email            String?   @unique(map: "email_UNIQUE") @db.VarChar(200)
+  walletAddress    String?   @unique(map: "walletAddress_UNIQUE") @db.VarChar(42)
+  steamId          String?   @unique(map: "steamId_UNIQUE") @db.VarChar(100)
+  imageUrl         String?   @db.VarChar(200)
+  auth0Sid         String?   @unique(map: "auth0Id_UNIQUE") @db.VarChar(100)
+  auth0NickName    String?   @db.VarChar(45)
+  auth0Name        String?   @db.VarChar(200)
+  auth0Sub         String?   @db.VarChar(100)
+  steamTimeCreated DateTime? @db.Timestamp(6)
 
   @@index([auth0Sid], map: "fk_user_auth0_idx")
   @@index([steamId], map: "fk_user_steam_idx")
@@ -80,4 +83,10 @@ model SteamProfile {
   timeCreated              DateTime? @db.Timestamp(6)
   personaStateFlags        Int?
   displayName              String?   @db.VarChar(100)
+}
+
+model GameTypes {
+  id          Int     @id @default(autoincrement())
+  name        String? @db.VarChar(200)
+  description String? @db.VarChar(500)
 }
