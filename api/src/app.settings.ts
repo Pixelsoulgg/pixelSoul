@@ -15,7 +15,7 @@ export function setAppSetting(app: INestApplication) {
     type: VersioningType.URI
   })
   app.enableCors({
-    origin: ['http://localhost:3000', 'http://localhost:3004', '/.pixelsoul.gg$/'],
+    origin: ['http://localhost:3000', 'http://localhost:3004', /.pixelsoul.gg$/],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 204
