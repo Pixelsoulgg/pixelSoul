@@ -16,7 +16,7 @@ export interface SteamGeneralData {
   timeCreated: Date
   gameNumber: number
   games: OwnedGame[]
-  topGenre: OwnedGame[]
+  topGenre: any
   topGame: OwnedGame[]
 }
 export interface OwnedGame {
@@ -37,7 +37,11 @@ export interface OwnedGameResponse {
 export interface LevelResponse {
   response: { player_level?: number }
 }
-export interface TopGenre {
+export interface SupportGame {
+  appId: string
+  genre: number
+}
+export interface topGenre {
   genre: string
-  totalHours: number
+  hours: number
 }

@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { buildUrl } from './steam.utils'
 import { STEAM_API_HOST, STEAM_API_KEY } from 'src/app.settings'
 import axios from 'axios'
 import { GameService } from 'src/game/game.service'
-import { SteamGeneralData, OwnedGame, OwnedGameResponse } from './steam.interface'
+import { SteamGeneralData, OwnedGame, OwnedGameResponse, topGenre } from './steam.interface'
 import { UserService } from 'src/user/user.service'
 
 @Injectable()
@@ -38,7 +38,7 @@ export class SteamService {
       STEAM_API_HOST,
       `IPlayerService/GetOwnedGames/v0001?key=${STEAM_API_KEY}&steamid=${steamId}`
     )
-    const data: OwnedGameResponse = JSON.parse((await axios.get(url))?.data)
+    const data: OwnedGameResponse = (await axios.get(url))?.data
     return data
   }
   async recentlyPlayedGames(steamId: string) {
@@ -71,11 +71,15 @@ export class SteamService {
     let totalHours = 0
     let timeCreated: Date
     let steamLevel = 0
-    let sGames: OwnedGame[]
-    let topGenre: OwnedGame[]
+    const sGames: OwnedGame[] = []
 
     const games = await this.gameService.findAll({})
     const ownedGames = (await this.ownedGames(steamId)).response
+    if (!ownedGames?.game_count || ownedGames?.game_count < 1) {
+      const msg = `Id [${steamId}] don't has any game`
+      throw new HttpException(msg, HttpStatus.NOT_FOUND)
+    }
+
     games.forEach((g) => {
       const sGame = ownedGames.games.find((f) => f.appid == g.appId)
       if (sGame) {
@@ -83,14 +87,32 @@ export class SteamService {
         sGames.push(sGame)
       }
     })
+    if (sGames.length < 1) {
+      const msg = `Id [${steamId}] don't has any support game`
+      throw new HttpException(msg, HttpStatus.NOT_FOUND)
+    }
     steamLevel = (await this.playerLevel(steamId)).response.player_level
     const user = await this.userService.findOne({ steamId })
     if (user) timeCreated = user.steamTimeCreated
-    const topGame = sGames.sort((a, b) => b.playtime_forever - a.playtime_forever).slice(0, 2)
-    // const group = sGames.reduce((g, c) => {
-    //   const {}=g
-    //   g[genre]=
-    // })
+    const topGame = sGames.sort((a, b) => b.playtime_forever - a.playtime_forever).slice(0, 3)
+
+    const tmpTopGenre = {}
+    sGames.forEach((g) => {
+      const game = games.find((f) => f.appId == g.appid)
+      console.log(game?.gameTypes)
+      const genre = game?.gameTypes?.name
+      tmpTopGenre[genre] = tmpTopGenre[genre] || 0
+      tmpTopGenre[genre] += g.playtime_forever
+    })
+    const Genres: topGenre[] = []
+    Object.keys(tmpTopGenre).forEach((f) => {
+      const genre: topGenre = {
+        genre: f,
+        hours: tmpTopGenre[f]
+      }
+      Genres.push(genre)
+    })
+    const topGenre = Genres.sort((a, b) => b.hours - a.hours).slice(0, 3)
     const generalData: SteamGeneralData = {
       steamId,
       totalHours,

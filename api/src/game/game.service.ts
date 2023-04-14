@@ -40,8 +40,14 @@ export class GameService {
       take,
       cursor,
       where,
-      orderBy
+      orderBy,
+      include: {
+        gameTypes: true
+      }
     })
+  }
+  async findOne(where: Prisma.GamesWhereUniqueInput) {
+    return await this.prisma.games.findUnique({ where })
   }
   async remove(where: Prisma.GamesWhereUniqueInput) {
     return await this.prisma.games.delete({ where })
