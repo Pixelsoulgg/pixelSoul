@@ -2,12 +2,11 @@ import { Controller, Get, Injectable, Param, Request, UseGuards } from '@nestjs/
 import { SteamService } from './steam.service'
 import { AuthGuard } from '@nestjs/passport'
 import { ApiTags } from '@nestjs/swagger'
-import { GameService } from 'src/game/game.service'
 @ApiTags('steam')
 @Controller({ version: '1', path: 'steam' })
 @Injectable()
 export class SteamController {
-  constructor(private steamService: SteamService, private gameService: GameService) {}
+  constructor(private steamService: SteamService) {}
   @Get('auth')
   @UseGuards(AuthGuard('steam'))
   async login(@Request() req: any) {
@@ -41,15 +40,8 @@ export class SteamController {
   async ownedGames(@Param('steamId') steamId: string) {
     return this.steamService.ownedGames(steamId)
   }
-  @Get('general/:steamId')
+  @Get('playerGeneral/:steamId')
   async general(@Param('steamId') steamId: string) {
-    let totalHours: number
-
-    const games = await this.gameService.findAll({})
-    const ownedGames = await this.steamService.ownedGames(steamId)
-    // games.forEach((g) => {
-    //   if(ownedGames.find)
-    // })
-    return this.steamService.ownedGames(steamId)
+    return this.steamService.general(steamId)
   }
 }

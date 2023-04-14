@@ -22,17 +22,20 @@ model Challenges {
 }
 
 model Games {
-  id             Int     @id @default(autoincrement())
-  steamId        String? @unique(map: "steamId_UNIQUE") @db.VarChar(45)
-  name           String? @db.VarChar(45)
-  description    String? @db.VarChar(1000)
-  gameUrl        String? @db.VarChar(200)
-  logo           String? @db.VarChar(200)
-  socialTwitter  String? @db.VarChar(200)
-  socialDiscord  String? @db.VarChar(200)
-  socialTelegram String? @db.VarChar(200)
+  id             Int        @id @default(autoincrement())
+  steamId        String?    @unique(map: "steamId_UNIQUE") @db.VarChar(45)
+  name           String?    @db.VarChar(45)
+  description    String?    @db.VarChar(1000)
+  gameUrl        String?    @db.VarChar(200)
+  logo           String?    @db.VarChar(200)
+  socialTwitter  String?    @db.VarChar(200)
+  socialDiscord  String?    @db.VarChar(200)
+  socialTelegram String?    @db.VarChar(200)
   gameTypeId     Int?
   appId          Int?
+  gameTypes      GameTypes? @relation(fields: [gameTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_game_type")
+
+  @@index([gameTypeId], map: "fk_game_type_idx")
 }
 
 model Requirements {
@@ -89,4 +92,5 @@ model GameTypes {
   id          Int     @id @default(autoincrement())
   name        String? @db.VarChar(200)
   description String? @db.VarChar(500)
+  Games       Games[]
 }
