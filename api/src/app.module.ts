@@ -9,8 +9,7 @@ import { NftModule } from './nft/nft.module'
 import { SteamModule } from './steam/steam.module'
 
 @Module({
-  imports: [GameModule, ScoreModule, UserModule, NftModule],
-  imports: [GameModule, ScoreModule, UserModule, SteamModule],
+  imports: [GameModule, ScoreModule, UserModule, NftModule, SteamModule],
   controllers: [AppController],
   providers: [AppService, ConfigService]
 })
