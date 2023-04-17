@@ -202,6 +202,7 @@ interface Asset {
     instagram_username: string
     wiki_url: string
   }
+  stats: Stats
 }
 
 export interface AssetResponse {

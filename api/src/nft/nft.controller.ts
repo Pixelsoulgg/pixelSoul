@@ -3,7 +3,7 @@ import { NftService } from './nft.service'
 import { ApiTags } from '@nestjs/swagger'
 
 @ApiTags('nft')
-@Controller('nft')
+@Controller({ path: 'nft', version: '1' })
 export class NftController {
   constructor(private nftService: NftService) {}
   @Get(':address')
