@@ -71,7 +71,7 @@ export class SteamService {
     let totalHours = 0
     let timeCreated: Date
     let steamLevel = 0
-    const sGames: OwnedGame[] = []
+    let sGames: OwnedGame[] = []
 
     const games = await this.gameService.findAll({})
     const ownedGames = (await this.ownedGames(steamId)).response
@@ -80,17 +80,19 @@ export class SteamService {
       throw new HttpException(msg, HttpStatus.NOT_FOUND)
     }
 
-    games.forEach((g) => {
-      const sGame = ownedGames.games.find((f) => f.appid == g.appId)
-      if (sGame) {
-        totalHours += sGame.playtime_forever | 0
-        sGames.push(sGame)
-      }
-    })
-    if (sGames.length < 1) {
+    // games.forEach((g) => {
+    //   const sGame = ownedGames.games.find((f) => f.appid == g.appId)
+    //   if (sGame) {
+    //     totalHours += sGame.playtime_forever | 0
+    //     sGames.push(sGame)
+    //   }
+    // })
+    sGames = <OwnedGame[]>ownedGames.games
+    if (ownedGames.games.length < 1) {
       const msg = `Id [${steamId}] don't has any support game`
       throw new HttpException(msg, HttpStatus.NOT_FOUND)
     }
+
     steamLevel = (await this.playerLevel(steamId)).response.player_level
     const user = await this.userService.findOne({ steamId })
     if (user) timeCreated = user.steamTimeCreated
@@ -103,6 +105,7 @@ export class SteamService {
       const genre = game?.gameTypes?.name
       tmpTopGenre[genre] = tmpTopGenre[genre] || 0
       tmpTopGenre[genre] += g.playtime_forever
+      totalHours += g.playtime_forever | 0
     })
     const Genres: topGenre[] = []
     Object.keys(tmpTopGenre).forEach((f) => {
@@ -126,3 +129,4 @@ export class SteamService {
     return generalData
   }
 }
+//76561197960434622

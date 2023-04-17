@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import axios from 'axios'
 import { MORALIS_API_KEY } from '../app.settings'
-import { TokenBalance } from './moralis.types'
+import { TokenBalance } from './moralis.interface'
 @Injectable()
 export class MoralisService {
   api_host = `https://deep-index.moralis.io/api/v2/`
