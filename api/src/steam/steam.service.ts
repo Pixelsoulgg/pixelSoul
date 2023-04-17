@@ -67,6 +67,7 @@ export class SteamService {
     const data = (await axios.get(url))?.data
     return data
   }
+
   async general(steamId: string) {
     let totalHours = 0
     let timeCreated: Date
@@ -94,17 +95,19 @@ export class SteamService {
     }
 
     steamLevel = (await this.playerLevel(steamId)).response.player_level
-    const user = await this.userService.findOne({ steamId })
-    if (user) timeCreated = user.steamTimeCreated
+    const user = await this.playerSummaries(steamId)
+    if (user?.response?.players.length > 0) timeCreated = user?.response?.players[0].timecreated
     const topGame = sGames.sort((a, b) => b.playtime_forever - a.playtime_forever).slice(0, 3)
 
     const tmpTopGenre = {}
     sGames.forEach((g) => {
       const game = games.find((f) => f.appId == g.appid)
-      console.log(game?.gameTypes)
       const genre = game?.gameTypes?.name
-      tmpTopGenre[genre] = tmpTopGenre[genre] || 0
-      tmpTopGenre[genre] += g.playtime_forever
+      if (genre) {
+        tmpTopGenre[genre] = tmpTopGenre[genre] || 0
+        tmpTopGenre[genre] += g.playtime_forever
+      }
+
       totalHours += g.playtime_forever | 0
     })
     const Genres: topGenre[] = []
@@ -116,15 +119,21 @@ export class SteamService {
       Genres.push(genre)
     })
     const topGenre = Genres.sort((a, b) => b.hours - a.hours).slice(0, 3)
+    let point = sGames.length * 150
+    if (topGame.length > 0) point += topGame[0].playtime_forever * 0.05
+    if (steamLevel > 0) point += steamLevel * 100
+    const badges = await this.playerBadges(steamId)
+    if (badges.response?.badges?.length > 0) point += badges.response?.badges.length * 100
     const generalData: SteamGeneralData = {
       steamId,
       totalHours,
       level: steamLevel,
       timeCreated,
       gameNumber: sGames.length,
-      games: sGames,
       topGenre,
-      topGame
+      topGame,
+      point,
+      games: sGames
     }
     return generalData
   }
