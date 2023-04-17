@@ -36,7 +36,7 @@ export class SteamService {
   async ownedGames(steamId: string): Promise<OwnedGameResponse> {
     const url = buildUrl(
       STEAM_API_HOST,
-      `IPlayerService/GetOwnedGames/v0001?key=${STEAM_API_KEY}&steamid=${steamId}`
+      `IPlayerService/GetOwnedGames/v1?key=${STEAM_API_KEY}&steamid=${steamId}&include_appinfo=1`
     )
     const data: OwnedGameResponse = (await axios.get(url))?.data
     return data
@@ -73,6 +73,7 @@ export class SteamService {
     let timeCreated: Date
     let steamLevel = 0
     let sGames: OwnedGame[] = []
+    let steamProfile: any
 
     const games = await this.gameService.findAll({})
     const ownedGames = (await this.ownedGames(steamId)).response
@@ -96,7 +97,10 @@ export class SteamService {
 
     steamLevel = (await this.playerLevel(steamId)).response.player_level
     const user = await this.playerSummaries(steamId)
-    if (user?.response?.players.length > 0) timeCreated = user?.response?.players[0].timecreated
+    if (user?.response?.players.length > 0) {
+      timeCreated = user?.response?.players[0].timecreated
+      steamProfile = user?.response?.players[0]
+    }
     const topGame = sGames.sort((a, b) => b.playtime_forever - a.playtime_forever).slice(0, 3)
 
     const tmpTopGenre = {}
@@ -124,15 +128,17 @@ export class SteamService {
     if (steamLevel > 0) point += steamLevel * 100
     const badges = await this.playerBadges(steamId)
     if (badges.response?.badges?.length > 0) point += badges.response?.badges.length * 100
+    console.log('point', point)
     const generalData: SteamGeneralData = {
       steamId,
       totalHours,
       level: steamLevel,
       timeCreated,
+      point,
+      steamProfile,
       gameNumber: sGames.length,
       topGenre,
       topGame,
-      point,
       games: sGames
     }
     return generalData

@@ -19,6 +19,7 @@ export interface SteamGeneralData {
   topGenre: any
   topGame: OwnedGame[]
   point: number
+  steamProfile: any
 }
 export interface OwnedGame {
   appid: number
