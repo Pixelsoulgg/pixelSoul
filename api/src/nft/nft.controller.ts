@@ -1,6 +1,8 @@
 import { Controller, Get, Param } from '@nestjs/common'
 import { NftService } from './nft.service'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('nft')
 @Controller('nft')
 export class NftController {
   constructor(private nftService: NftService) {}
