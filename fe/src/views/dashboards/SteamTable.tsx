@@ -17,11 +17,13 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { fonts, NFTsData } from "../../configs/constants";
-import Tag from "../../components/dashboards/Tag";
+import { useAppSelector } from "@/reduxs/hooks";
+import { getYears, numberFormat } from "@/utils";
 
 interface IProps extends FlexProps {}
 
 export default function SteamTable({ ...props }: IProps) {
+  const {steamUser} = useAppSelector((p) => p.soul);
   return (
     <Flex
       w="full"
@@ -43,56 +45,47 @@ export default function SteamTable({ ...props }: IProps) {
             </Th>
             <Th w="10%" minW="150px">
             Steam Level
-            </Th>
-            <Th w="20%" minW="150px">
-            Total Hours
-            </Th>
+            </Th>           
             <Th w="20%" minW="200px">
-            Year
+            Age
             </Th>
             <Th w="10%" minW="150px">
             Games
             </Th>
           </Tr>
         </Thead>
-        <Tbody>
-          {new Array(1).fill(0).map((item, index) => (
-            <Tr key={index.toString()}>
+        <Tbody>     
+            <Tr>
               <Td>
                 <HStack>
-                  <Image src={`/steam-icon.svg`} mr="12px" />
+                  <Image src={`/steam-icon.svg`} mr="12px" alt="steam logo" />
                   <Text variant="with-sub" fontWeight="500" color="#101828">
-                    Gods Unchained
+                    {steamUser?.steamProfile.realname}
                   </Text>
                 </HStack>
               </Td>
               <Td>
                   <Text variant="with-sub" fontWeight="500" color="#101828">
-                    212
+                    {numberFormat(steamUser?.totalHours || 0)}
                   </Text>
               </Td>
               <Td>
                    <Text variant="with-sub" fontWeight="500" color="#101828">
-                    212
+                   {steamUser?.level}
                   </Text>
               </Td>
+              
               <Td>
                    <Text variant="with-sub" fontWeight="500" color="#101828">
-                    212
-                  </Text>
-              </Td>
-              <Td>
-                   <Text variant="with-sub" fontWeight="500" color="#101828">
-                    2 Y
+                   {getYears(steamUser?.timeCreated || 0)} Y
                   </Text> 
               </Td>
               <Td>
                   <Text variant="with-sub" fontWeight="500" color="#101828">
-                    2
+                   {steamUser?.gameNumber}
                   </Text>
               </Td>
-            </Tr>
-          ))}
+            </Tr>         
         </Tbody>
       </Table>
     </Flex>

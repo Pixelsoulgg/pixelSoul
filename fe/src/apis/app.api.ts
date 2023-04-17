@@ -1,10 +1,16 @@
 import { IGame, IUser } from "@/types";
 import axiosInstance from ".";
+import { NFT, NFTResponse } from "@/types/nft.type";
 
 export default class AppApi {
   private USER_URL:string ="user";
   private GAME_URL:string ="game";
+  private NFT_URL = "nft";
 
+
+  async getNfts(address: string): Promise<NFTResponse> {
+   return axiosInstance.get(`${this.NFT_URL}/${address}`);  
+  }
 
   async deleteUserById (id: string) {
     return axiosInstance.delete(`${this.USER_URL}/${id}`)
