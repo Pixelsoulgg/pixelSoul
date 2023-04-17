@@ -10,6 +10,7 @@ import Layout from '@/layouts'
 import { useRouter } from 'next/router'
 import { OpenIDData } from '@/types'
 import { handleConnectMetamaskSuccess, setSteamInfoAction, steamAuthSuccess } from '@/reduxs/auths/auth.slices'
+import { getNFTsAction, getSteamPlayerGeneralAction } from '@/reduxs/souls/soul.slices'
 
 
 MySoul.getLayout = function getLayout(page: React.ReactElement) {
@@ -39,9 +40,19 @@ export default function MySoul() {
   }, [handleSteamAuth]);
 
   const fetchData = useCallback(async () => {
-    if (walletInfo && walletInfo.address && auth0Info && auth0Info.auth0Sid) {      
-      dispatch(handleConnectMetamaskSuccess({walletAddress: walletInfo.address, auth0Id: auth0Info.auth0Sid}))
-      dispatch(getScoreAction());
+    try {    
+      if (walletInfo && walletInfo.address && auth0Info && auth0Info.auth0Sid) {      
+        dispatch(handleConnectMetamaskSuccess({walletAddress: walletInfo.address, auth0Id: auth0Info.auth0Sid}))
+        dispatch(getScoreAction());
+        dispatch(getNFTsAction(walletInfo.address));       
+      }
+
+      if (auth0Info && auth0Info.steamId) {
+        dispatch(getSteamPlayerGeneralAction(auth0Info.steamId));
+      }
+
+    } catch(er) {
+      console.log({er})
     }
   }, [auth0Info, dispatch, walletInfo]); 
 
@@ -99,9 +110,9 @@ export default function MySoul() {
               <WalletContainer />
             </SimpleGrid>
           </Flex>
-          <StreamGeneralData />
+           <StreamGeneralData />
            <MyCollectibles />
-         {/* <MyNFTs /> */}
+           <MyNFTs />
         </Flex>
       </Flex>
     </>

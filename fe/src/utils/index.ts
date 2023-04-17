@@ -43,7 +43,6 @@ export function formatDate(date: Date) {
   return moment(date).format(DATE_TIME_FORMAT);
 }
 
-
 export const endDate = (date: Date, days: number) => {
  return moment(date).add(days, 'days').format(DATE_TIME_FORMAT);
 }
@@ -111,3 +110,8 @@ export const timer = (ms: number) => new Promise(res => setTimeout(res, ms));
 
 
 export const fromNow = (time: number) => moment(time).fromNow();
+
+export const getYears = (time: number) => {  
+  const years = moment().diff(time * 1000, "years")
+  return years;
+}
