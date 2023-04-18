@@ -31,7 +31,7 @@ export default function MyNFTs() {
 
   return (
     <Flex w="full" flexDir="column" mt="30px">
-      <Text variant="with-title" fontSize="18px" mb="10px">
+      <Text variant="with-title" fontSize="24px" mb="10px">
         My NFTs
       </Text>
       {!walletInfo && <Empty />}
@@ -48,7 +48,7 @@ export default function MyNFTs() {
                     key={String(index)}
                   >
                     <HStack>
-                      <Text>{p.label}</Text>
+                      <Text fontFamily={fonts.Inter} fontSize="16px">{p.label}</Text>
                     </HStack>
                   </Th>
                 ))}
@@ -68,7 +68,7 @@ export default function MyNFTs() {
                       />
                       <VStack alignItems="flex-start">
                         <Text
-                          fontSize="14px"
+                          fontSize="16px"
                           color="#101828"
                           lineHeight="20px"
                           fontWeight="500"
@@ -82,7 +82,7 @@ export default function MyNFTs() {
                   </Td>
                   <Td>
                     <Text
-                      fontSize="14px"
+                      fontSize="16px"
                       color="#101828"
                       lineHeight="20px"
                       fontWeight="400"

@@ -86,7 +86,7 @@ export default function DashboardLayout({ children }: IProps) {
                   <Image src="/back.svg" alt="back" />
                 </Button>
               )}
-              <Text variant="with-title">{getTitle}</Text>
+              <Text variant="with-title" fontSize="40px">{getTitle}</Text>
             </HStack>
             {!isHideSearch && <GoldButton />}
             {isHideSearch && (

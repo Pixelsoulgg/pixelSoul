@@ -7,8 +7,7 @@ import React, { useCallback, useEffect } from 'react';
 
 interface IGlobalContext {
  menuSelected: string;
- onMenuChange?: (menu: string) => void;
- avatar?: string;
+ onMenuChange?: (menu: string) => void; 
  onChangeAvatar?:(v: string) => void;
 }
 
@@ -25,10 +24,7 @@ export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
   const dispatch = useAppDispatch();
 
   const [menuSelected, setMenuSelected] = React.useState<string>('My Soul'); 
-  const [avatar, setAvatar] = React.useState<string>(); 
-
   const onMenuChange = (menu: string) => setMenuSelected(menu);
-  const onChangeAvatar = useCallback((menu: string) => setAvatar(menu), []);
 
   const handleInitialState= useCallback( async () => {
     const me = (await axios.get('/api/auth/me')).data as IAuth0Model;
@@ -45,7 +41,7 @@ export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
 
   return (
     <GlobalContext.Provider
-      value={{menuSelected, onMenuChange, onChangeAvatar, avatar}}>
+      value={{menuSelected, onMenuChange}}>
       {children}
     </GlobalContext.Provider>
   );

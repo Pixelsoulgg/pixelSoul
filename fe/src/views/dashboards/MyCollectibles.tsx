@@ -26,7 +26,7 @@ export default function MyCollectibles() {
 
   return (
     <Flex w="full" flexDir="column" mt="30px">
-      <Text variant="with-title" fontSize="18px" mb="10px">
+      <Text variant="with-title" fontSize="24px" mb="10px">
         My Collectibles
       </Text>
       {!walletInfo && <Empty />}

@@ -30,20 +30,20 @@ export default function NFTItem({ item }: IProps) {
           bgSize="cover"
           borderRadius="20px"
           padding="10px"
-          flexDirection="column"
+          flexDirection="column"          
         />
 
-        <Text variant="with-title" fontSize="18px" mt="10px" color="#101828">
+        <Text variant="with-title" fontSize="24px" mt="10px" color="#101828">
           {item.name}
         </Text>
       </Link>
-      <Text variant="with-sub" fontSize="15px" mt="10px" color="#101828">
+      <Text variant="with-sub" fontSize="18px" mt="10px" color="#101828">
         ID: {item.id}
       </Text>
-      <Text variant="with-sub" fontSize="15px" my="10px" color="#101828">
+      <Text variant="with-sub" fontSize="18px" my="10px" color="#101828">
         Description
       </Text>
-      <Text variant="with-sub" fontSize="15px" color="#101828">
+      <Text variant="with-sub" fontSize="18px" color="#101828">
         {item.description}
       </Text>
 
@@ -51,7 +51,7 @@ export default function NFTItem({ item }: IProps) {
         <Image src="/gold.svg" mr="5px" alt="gold" />
         <Text
           variant="with-sub"
-          fontSize="15px"
+          fontSize="18px"
           my="10px"
           color="#000"
           fontWeight="500"
@@ -59,7 +59,7 @@ export default function NFTItem({ item }: IProps) {
           0 Gold
         </Text>
         <Spacer />
-        <Button variant="normal" bg="#7F56D9" w="118px" color="white" isDisabled>
+        <Button variant="normal" bg="bg.hover" w="118px" color="white" isDisabled>
           Sell
         </Button>
       </HStack>
