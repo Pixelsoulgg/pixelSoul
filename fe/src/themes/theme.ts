@@ -23,6 +23,7 @@ const colors = {
     action: "#7F56D9",
     arena: "#F63D68",
     white: "#ffffff",
+    hover: "#4691FF",
   },
   color: {
     white: "#ffffff",
@@ -86,11 +87,11 @@ const Button: ComponentStyleConfig = {
     active: {
       padding: "10px 16px",
       bg: "white",
-      border: "2px solid #444CE7",
-      boxShadow: "0px 4px 4px rgba(151, 71, 255, 0.35)",
+      border: "2px solid #4691FF",
+      boxShadow: "0px 4px 4px rgba(75, 255, 255, 0.5)",
       borderRadius: "8px",
-      fontSize: "16px",
-      fontWeight: "600",
+      fontSize: "20px",
+      fontWeight: "400",
       fontFamily: fonts.Inter,
       color: "#344054",
       minW: "90px"
@@ -101,8 +102,8 @@ const Button: ComponentStyleConfig = {
       border: "1px solid #D0D5DD",
       boxShadow: "0px 1px 2px rgba(16, 24, 40, 0.05)",
       borderRadius: "8px",
-      fontSize: "16px",
-      fontWeight: "600",
+      fontSize: "20px",
+      fontWeight: "400",
       fontFamily: fonts.Inter,
       color: "#344054",
       minW: "90px"

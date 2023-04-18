@@ -84,7 +84,7 @@ export default function MySoul() {
                   size="md"
                   fontFamily={fonts.Inter}
                   color="#101828"
-                  fontSize="18px"
+                  fontSize="24px"
                   fontWeight="600"
                   lineHeight="28px"
                 >
@@ -92,7 +92,7 @@ export default function MySoul() {
                 </Heading>
                 <Text
                   color="#475467"
-                  fontSize="14px"
+                  fontSize="18px"
                   fontWeight="400"
                   fontFamily={fonts.Inter}
                   mt="4px"

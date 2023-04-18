@@ -24,6 +24,10 @@ export default class AppApi {
     return axiosInstance.patch(`${this.USER_URL}/${id}`, user);
   }
 
+  async updateUserAvatar(id: string, imageUrl: string): Promise<IUser> {
+    return axiosInstance.patch(`${this.USER_URL}/${id}`, {imageUrl});
+  }
+
   async getUserById(id: string): Promise<IUser> {
     return axiosInstance.get(`${this.USER_URL}/${id}`);
   }

@@ -39,13 +39,13 @@ export default function WalletContainer() {
         <StatCard
           title="InvestScore"
           value={score?.investorLevel}
-          percent={10}
+          percent={0}
           isUp        
         />
         <StatCard
           title="CollectorScore"
           value={score?.collectorLevel}
-          percent={50}
+          percent={0}
           isUp={false}
         />
       </SimpleGrid>
