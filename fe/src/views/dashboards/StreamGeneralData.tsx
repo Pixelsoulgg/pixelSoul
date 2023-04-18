@@ -4,12 +4,14 @@ import { Empty } from "../../components";
 import StatCard from "../../components/dashboards/StatCard";
 import { useAppSelector } from "../../reduxs/hooks";
 import SteamTable from "./SteamTable";
+import { numberFormat } from "@/utils";
 
 export default function StreamGeneralData() {
   const { steamInfo } = useAppSelector((state) => state.auth);
+  const { steamUser } = useAppSelector((state) => state.soul);
   return (
     <Flex w="full" flexDir="column" mt="30px">
-      <Text variant="with-title" fontSize="18px" mb="10px">
+      <Text variant="with-title" fontSize="24px" mb="10px">
         Steam General Data
       </Text>
       {!steamInfo && <Empty />}
@@ -26,27 +28,30 @@ export default function StreamGeneralData() {
               <Text variant="with-title" fontSize="16px" fontWeight="500">
                 Top Played Genres
               </Text>
-              <StatCard title="Genre Game" value="999" percent={10} isUp />
-              <StatCard
-                title="Genre Game"
-                value="999"
-                percent={2}
-                isUp={false}
-              />
-              <StatCard title="Genre Game" value="999" percent={10} isUp />
+              {steamUser?.topGenre.map((p) => (
+                <StatCard
+                  title={p.genre}
+                  value={numberFormat(p.hours)}
+                  percent={0}
+                  isUp
+                  key={p.genre}
+                />
+              ))}
             </Flex>
             <Flex w="full" flexDirection="column">
               <Text variant="with-title" fontSize="16px" fontWeight="500">
                 Top Played Games
               </Text>
-              <StatCard title="Genre Game" value="999" percent={10} isUp />
-              <StatCard
-                title="Genre Game"
-                value="999"
-                percent={2}
-                isUp={false}
-              />
-              <StatCard title="Genre Game" value="999" percent={10} isUp />
+
+              {steamUser?.topGame.map((p, index) => (
+                <StatCard
+                  title={p.name}
+                  value={numberFormat(p.playtime_forever)}
+                  percent={0}
+                  isUp={index % 2 === 0}
+                  key={p.name}
+                />
+              ))}
             </Flex>
           </SimpleGrid>
         </Flex>

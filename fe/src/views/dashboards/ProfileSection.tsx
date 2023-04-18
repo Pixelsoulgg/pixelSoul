@@ -11,15 +11,24 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import React from "react";
-import ComingSoon from "../../components/ComingSoon";
+import React, { useCallback, useState } from "react";
 import { fonts } from "../../configs/constants";
 import UserAvatar from "@/components/dashboards/UserAvatar";
-import { useGlobal } from "@/contexts/Globals";
+import { updateUserAvatarAction } from "@/reduxs/auths/auth.slices";
+import { useAppDispatch, useAppSelector } from "@/reduxs/hooks";
 
 export default function ProfileSection() {
-  const {avatar, onChangeAvatar} = useGlobal();
+  const dispatch = useAppDispatch();
+  const {auth0Info} = useAppSelector((p) => p.auth);
   const [available, setAvailable] = React.useState<string>("STEAM_PROFILE");
+  const [avatarChoose, setAvatarChoose] = useState<string>();
+
+  const handleOnOk = useCallback(async() => {
+    if (avatarChoose) {      
+      await dispatch(updateUserAvatarAction(avatarChoose)).unwrap();
+      setAvatarChoose(undefined);
+    }
+  }, [avatarChoose, dispatch]);
 
   return (
     <Flex
@@ -35,7 +44,7 @@ export default function ProfileSection() {
             size="md"
             fontFamily={fonts.Inter}
             color="#101828"
-            fontSize="18px"
+            fontSize="24px"
             fontWeight="600"
             lineHeight="28px"
           >
@@ -43,7 +52,7 @@ export default function ProfileSection() {
           </Heading>
           <Text
             color="#475467"
-            fontSize="14px"
+            fontSize="18px"
             fontWeight="400"
             fontFamily={fonts.Inter}
             mt="4px"
@@ -53,7 +62,7 @@ export default function ProfileSection() {
         </VStack>
       </HStack>
 
-      <UserAvatar avatar={avatar} />
+      <UserAvatar avatar={avatarChoose || auth0Info?.imageUrl} />
 
       <HStack
         w="full"
@@ -67,7 +76,7 @@ export default function ProfileSection() {
             size="md"
             fontFamily={fonts.Inter}
             color="#101828"
-            fontSize="18px"
+            fontSize="24px"
             fontWeight="600"
             lineHeight="28px"
           >
@@ -84,7 +93,7 @@ export default function ProfileSection() {
             <Flex
               p="10px 16px"
               color="#1D2939"
-              fontSize="14px"
+              fontSize="20px"
               fontFamily={fonts.Inter}
               fontWeight="600"
               cursor="pointer"
@@ -100,7 +109,7 @@ export default function ProfileSection() {
               flex={1}
               p="10px 16px"
               color="#1D2939"
-              fontSize="14px"
+              fontSize="20px"
               fontFamily={fonts.Inter}
               fontWeight="600"
               cursor="pointer"
@@ -127,21 +136,33 @@ export default function ProfileSection() {
           <Image
             src={`/avatar/${index + 1}.svg`}
             key={index.toString()}
-            onClick={() =>onChangeAvatar && onChangeAvatar(`${index + 1}`)}
+            onClick={() => {
+              setAvatarChoose(`${index + 1}`);
+            }}
             cursor="pointer"
             as={motion.img}
             borderRadius="10px"
             objectFit="cover"
-            whileHover={{boxShadow: "0px 4px 4px rgba(151, 71, 255, 0.35)",}}
-            whileTap={{border: "2px solid #444CE7"}}
+            whileHover={{ boxShadow: "0px 4px 4px rgba(151, 71, 255, 0.35)" }}
+            whileTap={{ border: "2px solid #444CE7" }}
             alt="profile"
           />
         ))}
       </SimpleGrid>
       <Flex w="full" mt="15px" px="20px">
         <Spacer />
-        <Button variant="normal">Cancel</Button>
-        <Button variant="active" ml="10px">
+        <Button variant="normal" onClick={() => setAvatarChoose(undefined)}
+          isDisabled={!avatarChoose}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant={`${avatarChoose ? "active" : "normal"}`}
+          ml="10px"
+          disabled={!avatarChoose}
+          onClick={handleOnOk}
+          isDisabled={!avatarChoose}
+        >
           Ok
         </Button>
       </Flex>

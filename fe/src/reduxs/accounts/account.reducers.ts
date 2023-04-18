@@ -12,7 +12,6 @@ export interface AccountState {
   web3Provider?: ethers.providers.Web3Provider;
   walletInfo?: IWalletInfo; 
   steamInfo?: OpenIDData;
-
   score?: any;
 }
 
