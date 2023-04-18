@@ -34,7 +34,6 @@ export class ScoreService {
     try {
       const result = await this.moralisService.getAllBalances(wallet, chain)
       const stableCoins = getStableCoinList(chain)
-      console.log(stableCoins, 'statble coins:', chain)
       const rsfilter = result.filter((f) => stableCoins.includes(f.address))
       return rsfilter
     } catch (er: any) {
@@ -117,7 +116,6 @@ export class ScoreService {
         stableCoins: stableValues.filter((f) => f),
         totalHolding: totalHoldingValue
       }
-      console.log(finalResult)
       return finalResult
     } catch (error) {
       console.log(error)
@@ -170,7 +168,6 @@ export class ScoreService {
         totalNftsInUsd: totalNftsInUsd,
         nfts: nftsValue.filter((f) => f).length > 0 ? nftsValue.filter((f) => f) : []
       }
-      console.log(nftData)
       return nftData
     } catch (error) {
       console.log('get_total_nft', error)
@@ -204,7 +201,6 @@ export class ScoreService {
         collectorLevel: collectorLevel
       }
 
-      console.log(data)
       return data
     } catch (error) {
       console.log('get_score', error)
