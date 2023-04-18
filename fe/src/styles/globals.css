@@ -1,5 +1,6 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap'); */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lexend:wght@400;500;600;700;800;900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lexend:wght@400;500;600;700;800;900&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 html,
 body {
   padding: 0;
@@ -30,22 +31,25 @@ a {
 .nft-table tr > th, 
 .nft-table tr > td {
   padding: 16px 0px !important;
-  margin: 0px !important;
+  margin: 0px !important;  
+ 
 } 
 
-.game-table tr >th {
+.game-table tr > th {
   background: #F9FAFB;
   text-transform: capitalize;
   border-bottom: 1px solid #EAECF0;
-  font-size: 12px;
   font-weight: 500;
+  font-size: 16px;
+  font-family: "VT323";
 }
 
 .game-table tr > td {
   border-bottom: 1px solid #EAECF0;
-  font-size: 12px;
   font-weight: 500;
   padding: 16px 24px;
+  font-size: 16px;
+  font-family: "VT323";
 }
 
 .menu-sidebar {  
@@ -54,10 +58,7 @@ a {
 }
 
 
-.menu-sidebar:hover {
-  background-color: #475467 !important;
-  border-radius: 6px;
-}
+
 .menu-sidebar:hover > p {
   color: white
 }
@@ -76,7 +77,7 @@ a {
 }
 
 .menu-sidebar-active {
-  background-color: #475467 !important;
+  background-color: #4691FF!important;
   border-radius: 6px;
 }
 .menu-sidebar-active > div[id="initial"] {
@@ -100,8 +101,8 @@ a {
   padding: 10px;
   gap: 10px;
   background: #F9FAFB;
-  border: 2px solid #6938EF;
-  box-shadow: 0px 4px 4px rgba(151, 71, 255, 0.35);
+  border: 2px solid #4691FF;
+  box-shadow: 0px 4px 4px rgba(75, 255, 255, 0.5);
   border-radius: 20px 0px 0px 20px;
   flex: none;
   order: 0;
@@ -114,8 +115,8 @@ a {
   padding: 10px;
   background: #F9FAFB;
   border-left: 2px solid;
-  border: 2px solid #6938EF;
-  box-shadow: 0px 4px 4px rgba(151, 71, 255, 0.35);
+  border: 2px solid #4691FF;
+  box-shadow: 0px 4px 4px rgba(75, 255, 255, 0.5);
   border-radius: 0px 20px 20px 0px;
 }
 

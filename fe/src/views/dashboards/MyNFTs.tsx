@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import React from "react";
+import React, { useMemo } from "react";
 import { Empty } from "../../components";
 import { fonts, NFTsData } from "../../configs/constants";
 import { useAppSelector } from "../../reduxs/hooks";
@@ -22,10 +22,16 @@ import { Animate } from "@/components/animations";
 
 export default function MyNFTs() {
   const { walletInfo } = useAppSelector((state) => state.account);
+  const {nfts} = useAppSelector((state) => state.soul);
+
+  const data = useMemo(() => {
+    if (!nfts) return [];
+    return nfts.assets.slice(0, 3);
+  }, [nfts]);
 
   return (
     <Flex w="full" flexDir="column" mt="30px">
-      <Text variant="with-title" fontSize="18px" mb="10px">
+      <Text variant="with-title" fontSize="24px" mb="10px">
         My NFTs
       </Text>
       {!walletInfo && <Empty />}
@@ -42,21 +48,27 @@ export default function MyNFTs() {
                     key={String(index)}
                   >
                     <HStack>
-                      <Text>{p.label}</Text>
+                      <Text fontFamily={fonts.Inter} fontSize="16px">{p.label}</Text>
                     </HStack>
                   </Th>
                 ))}
               </Tr>
             </Thead>
             <Tbody>
-              {NFTsData.data.map((d, index) => (
+              {data.map((d, index) => (
                 <Tr key={String(index)} as={motion.tr} whileHover={Animate.tableHover}>
                   <Td>
+                    <Link href={d.permalink} target="_blank">
                     <HStack>
-                      <Image src={`/nfts/nft${index + 1}.svg`} alt="nft" />
+                      <Image src={d.image_preview_url} alt={d.name} 
+                        h="50px"
+                        w="83px"
+                        objectFit="cover"
+                        borderRadius="5px"                        
+                      />
                       <VStack alignItems="flex-start">
                         <Text
-                          fontSize="14px"
+                          fontSize="16px"
                           color="#101828"
                           lineHeight="20px"
                           fontWeight="500"
@@ -66,16 +78,17 @@ export default function MyNFTs() {
                         </Text>
                       </VStack>
                     </HStack>
+                    </Link>
                   </Td>
                   <Td>
                     <Text
-                      fontSize="14px"
+                      fontSize="16px"
                       color="#101828"
                       lineHeight="20px"
                       fontWeight="400"
                       fontFamily={fonts.Inter}
                     >
-                      {d.amount}
+                      {d.stats.floor_price}
                     </Text>
                   </Td>
                   <Td>
@@ -89,9 +102,7 @@ export default function MyNFTs() {
                 </Tr>
               ))}
             </Tbody>
-          </Table>
-
-         
+          </Table>         
             <Box
               as="a"
               mt="20px"

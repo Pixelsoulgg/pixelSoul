@@ -43,8 +43,8 @@ export default function SteamContainer() {
       )}
       {isAuth && (
         <SimpleGrid w="full" columns={{ base: 1, lg: 2 }} columnGap="24px">
-          <StatCard title="SoulScore" value="999" percent={10} isUp />
-          <StatCard title="GamerScore" value="999" percent={50} isUp={false} />
+          <StatCard title="SoulScore" value="0" percent={0} isUp />
+          <StatCard title="GamerScore" value="0" percent={0} isUp={false} />
         </SimpleGrid>
       )}
     </Flex>
