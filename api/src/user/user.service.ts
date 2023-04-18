@@ -67,6 +67,12 @@ export class UserService {
     const updateData: Prisma.UsersUpdateInput = {
       walletAddress: wallet
     }
+    const user = await this.findOne({ walletAddress: wallet })
+    if (user)
+      throw new HttpException(
+        `wallet address [${user.walletAddress}] existed`,
+        HttpStatus.NOT_FOUND
+      )
     return await this.prisma.users.update({
       data: updateData,
       where
@@ -76,6 +82,8 @@ export class UserService {
     const updateData: Prisma.UsersUpdateInput = {
       steamId
     }
+    const user = await this.findOne({ steamId })
+    if (user) throw new HttpException(`steam id [${user.steamId}] existed`, HttpStatus.NOT_FOUND)
     return await this.prisma.users.update({
       data: updateData,
       where
