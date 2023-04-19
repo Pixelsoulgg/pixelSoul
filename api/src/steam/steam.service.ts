@@ -4,11 +4,11 @@ import { STEAM_API_HOST, STEAM_API_KEY } from 'src/app.settings'
 import axios from 'axios'
 import { GameService } from 'src/game/game.service'
 import { SteamGeneralData, OwnedGame, OwnedGameResponse, topGenre } from './steam.interface'
-import { UserService } from 'src/user/user.service'
+import { ScoreService } from 'src/score/score.service'
 
 @Injectable()
 export class SteamService {
-  constructor(private gameService: GameService, private userService: UserService) {}
+  constructor(private gameService: GameService, private scoreService: ScoreService) {}
   async playerSummaries(steamId: string) {
     const url = buildUrl(
       STEAM_API_HOST,
@@ -18,12 +18,17 @@ export class SteamService {
     return data
   }
   async playerAchievements(steamId: string, appId: string) {
-    const url = buildUrl(
-      STEAM_API_HOST,
-      `ISteamUserStats/GetPlayerAchievements/v0001/?appid=${appId}&key=${STEAM_API_KEY}&steamid=${steamId}`
-    )
-    const data = (await axios.get(url))?.data
-    return data
+    try {
+      const url = buildUrl(
+        STEAM_API_HOST,
+        `ISteamUserStats/GetPlayerAchievements/v0001/?appid=${appId}&key=${STEAM_API_KEY}&steamid=${steamId}`
+      )
+      const data = (await axios.get(url))?.data
+      return data
+    } catch (error) {
+      console.log(error)
+      return undefined
+    }
   }
   async userStatsForGame(steamId: string, appId: string) {
     const url = buildUrl(
@@ -104,16 +109,26 @@ export class SteamService {
     const topGame = sGames.sort((a, b) => b.playtime_forever - a.playtime_forever).slice(0, 3)
 
     const tmpTopGenre = {}
-    sGames.forEach((g) => {
-      const game = games.find((f) => f.appId == g.appid)
-      const genre = game?.gameTypes?.name
-      if (genre) {
-        tmpTopGenre[genre] = tmpTopGenre[genre] || 0
-        tmpTopGenre[genre] += g.playtime_forever
-      }
+    let point = sGames.length * 3
+    await Promise.all(
+      sGames.map(async (g) => {
+        const game = games.find((f) => f.appId == g.appid)
 
-      totalHours += g.playtime_forever | 0
-    })
+        totalHours += (g.playtime_forever | 0) / 60
+        point += (g.playtime_forever | 0) / 60 / 10
+        if (game) {
+          const genre = game?.gameTypes?.name
+          tmpTopGenre[genre] = tmpTopGenre[genre] || 0
+          tmpTopGenre[genre] += (g.playtime_forever || 0) / 60
+          const achievements = await this.playerAchievements(steamId, g.appid.toString())
+          achievements?.playerstats?.achievements?.forEach((a: any) => {
+            if (a.unlocktime > 0) point += 1
+          })
+        }
+
+        return g
+      })
+    )
     const Genres: topGenre[] = []
     Object.keys(tmpTopGenre).forEach((f) => {
       const genre: topGenre = {
@@ -123,12 +138,11 @@ export class SteamService {
       Genres.push(genre)
     })
     const topGenre = Genres.sort((a, b) => b.hours - a.hours).slice(0, 3)
-    let point = sGames.length * 150
-    if (topGame.length > 0) point += topGame[0].playtime_forever * 0.05
-    if (steamLevel > 0) point += steamLevel * 100
-    const badges = await this.playerBadges(steamId)
-    if (badges.response?.badges?.length > 0) point += badges.response?.badges.length * 100
-    console.log('point', point)
+    //if (topGame.length > 0) point += topGame[0].playtime_forever * 0.05
+    //if (steamLevel > 0) point += steamLevel * 100
+    // const badges = await this.playerBadges(steamId)
+    // if (badges.response?.badges?.length > 0) point += badges.response?.badges.length * 100
+
     const generalData: SteamGeneralData = {
       steamId,
       totalHours,

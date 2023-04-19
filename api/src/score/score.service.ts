@@ -5,7 +5,13 @@ import { OpenseaService } from 'src/opensea/opensea.service'
 import { TokenBalance } from '../moralis/moralis.interface'
 import { NTFCollectionGeneral, Stats } from '../opensea/opensea.interface'
 import { NFT, NFTHolding, ScoreData, StableCoinsHolding, TokenHolding } from './score.interface'
-import { getStableCoinList, getSlugBySymbol, getLevel, getChainList } from './utils/score.utils'
+import {
+  getStableCoinList,
+  getSlugBySymbol,
+  getLevel,
+  getChainList,
+  nftPoint
+} from './utils/score.utils'
 
 @Injectable()
 export class ScoreService {
@@ -130,6 +136,7 @@ export class ScoreService {
       const ethPrice = await this.coinMarketCapService.getExchangeRate('ethereum')
       let totalNftsAmount = 0
       let totalNftsInUsd = 0
+      let point = 1
 
       const price = ethPrice?.quote.USD.price || 0
       const nftsValue = await Promise.all(
@@ -150,6 +157,7 @@ export class ScoreService {
             priceInUSD = floorPriceETH * price
             totalNftsAmount += amount
             totalNftsInUsd += totalUSD
+            point += nftPoint(totalUSD)
           }
           const ntfData: NFT = {
             slug: nft.slug,
@@ -166,7 +174,8 @@ export class ScoreService {
       const nftData: NFTHolding = {
         totalNftsAmount: totalNftsAmount,
         totalNftsInUsd: totalNftsInUsd,
-        nfts: nftsValue.filter((f) => f).length > 0 ? nftsValue.filter((f) => f) : []
+        nfts: nftsValue.filter((f) => f).length > 0 ? nftsValue.filter((f) => f) : [],
+        nftPoint: point
       }
       return nftData
     } catch (error) {
