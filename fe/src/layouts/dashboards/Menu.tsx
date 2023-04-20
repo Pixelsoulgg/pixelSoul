@@ -37,12 +37,12 @@ export default function Menu({ isExpand, ...props }: IProps) {
                 className={`menu-sidebar ${menuSelected === menu.name ? 'menu-sidebar-active' : ''} ${!isExpand ? 'fixed-content' : undefined}`}   
                 onClick={() => onMenuChange && onMenuChange(menu.name)}        
                 role="group"     
-                _hover={{bg: '#475467', borderRadius: "6px"}}
+                _hover={{bg: 'bg.hover', borderRadius: "6px"}}
               >
                 <Flex id="initial" w="25px" h="25px" bgImage={`/nav/${menu.icon}.svg`} objectFit="contain" bgRepeat="no-repeat" />
                 <Flex id="onhover" w="25px" h="25px" bgImage={`/nav/${menu.icon}-hover.svg`} objectFit="contain" bgRepeat="no-repeat" />
                 {isExpand && (
-                  <Text variant="with-title" fontSize="16px" ml="12px" color={menuSelected === menu.name ? 'white' : '#101828'}
+                  <Text variant="with-title" fontSize="20px" ml="12px" color={menuSelected === menu.name ? 'white' : '#101828'}
                   >
                     {menu.name}
                   </Text>
@@ -62,11 +62,12 @@ export default function Menu({ isExpand, ...props }: IProps) {
               padding={{ base: "8px 12px", lg: "8px 0px" }}
               className={`menu-sidebar ${!isExpand ? 'fixed-content' : undefined} ${menuSelected === menu.name ? 'menu-sidebar-active' : ''}`}
               as={motion.div}
+              _hover={{bg: 'bg.hover', borderRadius: "6px"}}
             >
-              <Flex id="initial" w="25px" h="25px" bgImage={`/nav/${menu.icon}.svg`} objectFit="contain" bgRepeat="no-repeat" mr="10px" />
+                <Flex id="initial" w="25px" h="25px" bgImage={`/nav/${menu.icon}.svg`} objectFit="contain" bgRepeat="no-repeat" mr="10px" />
                 <Flex id="onhover" w="25px" h="25px" bgImage={`/nav/${menu.icon}-hover.svg`} objectFit="contain" bgRepeat="no-repeat" mr="10px" />
                 {isExpand && (
-                  <Text variant="with-title" fontSize="16px" ml="12px" color={menuSelected === menu.name ? 'white' : '#101828'} >
+                  <Text variant="with-title" fontSize="20px" ml="12px" color={menuSelected === menu.name ? 'white' : '#101828'} >
                     {menu.name}
                   </Text>
                 )}
@@ -87,7 +88,7 @@ export default function Menu({ isExpand, ...props }: IProps) {
                 <>
                   <Text
                     variant="with-title"
-                    fontSize="14px"
+                    fontSize="20px"
                     color="#475467"
                     fontWeight="normal"
                   >

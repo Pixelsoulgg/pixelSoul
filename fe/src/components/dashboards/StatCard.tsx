@@ -40,12 +40,12 @@ export default function StatCard({
         <Text
           color="#475467"
           fontWeight="500"
-          fontSize="14px"
+          fontSize="20px"
           fontFamily={fonts.Inter}
         >
           {title}
         </Text>
-        <Image src="/three-dot.svg" />
+        <Image src="/three-dot.svg" alt="" />
       </HStack>
       {!comingSoon && (
         <HStack w="full">
@@ -53,7 +53,7 @@ export default function StatCard({
             color="#101828"
             fontFamily={fonts.Inter}
             fontWeight="600"
-            fontSize="30px"
+            fontSize="40px"
             lineHeight="38px"
           >
             {value}
@@ -69,7 +69,7 @@ export default function StatCard({
             justifyContent="center"
             alignItems="center"
           >
-            <Image w="12px" src={`/arrow-${icon}.svg`} />
+            <Image w="12px" src={`/arrow-${icon}.svg`} alt="up and down" />
             <Text
               color={color}
               fontWeight="bold"

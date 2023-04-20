@@ -4,6 +4,7 @@ import { getProfile } from "../../apis";
 import { IWalletInfo } from "../../types";
 
 export const logoutAction = createAction("account/logoutAction");
+export const disconnectMetamaskAction = createAction("account/disconnectMetamaskAction");
 
 export const setProvider = createAction<ethers.providers.Web3Provider>(
   "account/setProvider"
