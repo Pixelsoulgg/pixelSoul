@@ -1,4 +1,4 @@
-import { Flex, HStack, Heading, Spacer, Text, VStack, Image, SimpleGrid } from '@chakra-ui/react'
+import { Flex, HStack, Heading, Spacer, Text, VStack, Image, SimpleGrid, useDisclosure } from '@chakra-ui/react'
 import { MyCollectibles, MyNFTs, ProfileSection, StreamGeneralData } from '@/views/dashboards'
 import { fonts } from '@/configs/constants'
 import WalletContainer from '@/views/dashboards/WalletContainer'
@@ -7,6 +7,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { getScoreAction } from '@/reduxs/accounts/account.actions'
 import { useAppDispatch, useAppSelector } from '@/reduxs/hooks'
 import Layout from '@/layouts'
+import { useRouter } from 'next/router'
+import { OpenIDData } from '@/types'
+import { handleConnectMetamaskSuccess, setSteamInfoAction, steamAuthSuccess } from '@/reduxs/auths/auth.slices'
+import { getNFTsAction, getSteamPlayerGeneralAction } from '@/reduxs/souls/soul.slices'
 
 
 MySoul.getLayout = function getLayout(page: React.ReactElement) {
@@ -15,18 +19,45 @@ MySoul.getLayout = function getLayout(page: React.ReactElement) {
 
 
 export default function MySoul() {
-  const { walletInfo } = useAppSelector((s) => s.account);
+  const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const fetchData = useCallback(async () => {
-    if (walletInfo && walletInfo.address) {
-      dispatch(getScoreAction());
+  const { walletInfo } = useAppSelector((s) => s.account);
+  const {auth0Info} = useAppSelector(s => s.auth);
+
+  const handleSteamAuth = useCallback(() => {
+    //@ts-ignore
+    const query: OpenIDData | undefined = router.query;
+    if (query && query["openid.identity"] !== undefined) {
+      if (auth0Info) {
+        dispatch(setSteamInfoAction(query))
+      }
     }
-  }, [dispatch, walletInfo]); 
+  }, [auth0Info, dispatch, router.query]);
+
+  useEffect(() => {
+    handleSteamAuth();  
+  }, [handleSteamAuth]);
+
+  const fetchData = useCallback(async () => {
+    try {    
+      if (walletInfo && walletInfo.address && auth0Info && auth0Info.auth0Sid) {      
+        dispatch(handleConnectMetamaskSuccess({walletAddress: walletInfo.address, auth0Id: auth0Info.auth0Sid}))
+        dispatch(getScoreAction());
+        dispatch(getNFTsAction(walletInfo.address));       
+      }
+      if (auth0Info && auth0Info.steamId) {
+        dispatch(getSteamPlayerGeneralAction(auth0Info.steamId));
+      }
+    } catch(er) {
+      console.log({er})
+    }
+  }, [auth0Info, dispatch, walletInfo]); 
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+  
   return (
     <>
      <Flex flex={1} w="full" flexDirection={{ base: "column", lg: "row" }}>
@@ -51,7 +82,7 @@ export default function MySoul() {
                   size="md"
                   fontFamily={fonts.Inter}
                   color="#101828"
-                  fontSize="18px"
+                  fontSize="24px"
                   fontWeight="600"
                   lineHeight="28px"
                 >
@@ -59,7 +90,7 @@ export default function MySoul() {
                 </Heading>
                 <Text
                   color="#475467"
-                  fontSize="14px"
+                  fontSize="18px"
                   fontWeight="400"
                   fontFamily={fonts.Inter}
                   mt="4px"
@@ -77,11 +108,11 @@ export default function MySoul() {
               <WalletContainer />
             </SimpleGrid>
           </Flex>
-          <StreamGeneralData />
-          <MyCollectibles />
-          <MyNFTs />
+           <StreamGeneralData />
+           <MyCollectibles />
+           <MyNFTs />
         </Flex>
-      </Flex>
+      </Flex>     
     </>
   )
 }

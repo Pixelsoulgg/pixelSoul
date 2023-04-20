@@ -1,58 +1,69 @@
 import { Button, Flex, HStack, Image, Spacer, Text } from "@chakra-ui/react";
-import {m} from 'framer-motion'
+import { motion } from "framer-motion";
 import React from "react";
 import { Animate } from "../../components/animations";
+import { NFT } from "@/types/nft.type";
+import Link from "next/link";
 
-export default function NFTItem() {
+interface IProps {
+  item: NFT;
+}
+
+export default function NFTItem({ item }: IProps) {
   return (
-    <Flex flex={1} 
-    flexDir="column" 
-    as={m.div}
-    whileHover={Animate.whileHover}
-    whileTap={Animate.whileTap}
-    borderRadius="20px"
-    padding="10px"
-    cursor="pointer"
-  >
-    <Flex      
-      bgImage="/collectibles/2.png"
-      bgRepeat="no-repeat"
-      h="402px"
-      w="full"
-      bgSize="cover"
+    <Flex
+      flex={1}
+      flexDir="column"
+      as={motion.div}
+      whileHover={Animate.whileHover}
+      whileTap={Animate.whileTap}
       borderRadius="20px"
       padding="10px"
-      flexDirection="column"
+      cursor="pointer"
     >
-    </Flex>
-    <Text variant="with-title" fontSize="18px" mt="10px" color="#101828">
-      Name NFT
-    </Text>
-    <Text variant="with-sub" fontSize="15px" mt="10px" color="#101828">
-      ID: 12345678910
-    </Text>
-    <Text variant="with-sub" fontSize="15px" my="10px" color="#101828">
-      Description
-    </Text>
-    <Text variant="with-sub" fontSize="15px" color="#101828">
-    Description
-  Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.
-    </Text>
+      <Link href={item.permalink} target="_blank">
+        <Flex
+          bgImage={item.image_preview_url || item.image_thumbnail_url || '/placeholder.svg'}
+          bgRepeat="no-repeat"
+          minH="402px"
+          w="full"
+          bgSize="cover"
+          borderRadius="20px"
+          padding="10px"
+          flexDirection="column"
+          backgroundPosition="center"          
+        />
 
-    <HStack w="full" mt="15px">
-      <Image src="/gold.svg" mr="5px" />
-      <Text
-        variant="with-sub"
-        fontSize="15px"
-        my="10px"
-        color="#000"
-        fontWeight="500"
-      >
-       + 100 Gold
+        <Text variant="with-title" fontSize="24px" mt="10px" color="#101828">
+          {item.name}
+        </Text>
+      </Link>
+      <Text variant="with-sub" fontSize="18px" mt="10px" color="#101828">
+        ID: {item.id}
       </Text>
-      <Spacer />
-      <Button variant="normal" bg="#7F56D9" w="118px" color="white">Sell</Button>
-    </HStack>
-  </Flex>
-  )
+      <Text variant="with-sub" fontSize="18px" my="10px" color="#101828">
+        Description
+      </Text>
+      <Text variant="with-sub" fontSize="18px" color="#101828">
+        {item.description}
+      </Text>
+
+      <HStack w="full" mt="15px">
+        <Image src="/gold.svg" mr="5px" alt="gold" />
+        <Text
+          variant="with-sub"
+          fontSize="18px"
+          my="10px"
+          color="#000"
+          fontWeight="500"
+        >
+          0 Gold
+        </Text>
+        <Spacer />
+        <Button variant="normal" bg="bg.hover" w="118px" color="white" isDisabled>
+          Sell
+        </Button>
+      </HStack>
+    </Flex>
+  );
 }

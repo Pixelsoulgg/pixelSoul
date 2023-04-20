@@ -9,8 +9,11 @@ export const user = {
 }
 
 export const fonts = {
-  Inter: "Inter",
-  Lexend: "Lexend",
+  // Inter: "Inter",
+  // Lexend: "Lexend",
+  Inter: "VT323",
+  Lexend: "VT323",
+  VT323: "VT323"
 };
 
 export const layouts = {

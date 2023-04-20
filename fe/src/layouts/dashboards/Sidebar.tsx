@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { layouts } from "../../configs/constants";
 import Menu from "./Menu";
 import { AnimatePresence, m } from "framer-motion";
+import PixelSouldLogo from "@/components/PixelSould";
 
 interface IProps extends FlexProps {}
 
@@ -61,8 +62,9 @@ export default function Sidebar({ ...props }: IProps) {
           cursor="pointer"
           onClick={handleClick}
         >
-          <Image src="/logo.svg" sizes="content" alt="pixelSoul" />
-          {isExpand && <Text variant="with-title" fontSize="24px">{layouts.title}</Text>}
+          {/* <Image src="/logo.svg" sizes="content" alt="pixelSoul" /> */}
+          <PixelSouldLogo isExpand={isExpand} />
+          {/* {isExpand && <Text variant="with-title" fontSize="24px">{layouts.title}</Text>} */}
         </HStack>
         <Menu mt="25px" isExpand={isExpand} />
       </Flex>
