@@ -1,4 +1,4 @@
-import { Flex, HStack, Heading, Spacer, Text, VStack, Image, SimpleGrid } from '@chakra-ui/react'
+import { Flex, HStack, Heading, Spacer, Text, VStack, Image, SimpleGrid, useDisclosure } from '@chakra-ui/react'
 import { MyCollectibles, MyNFTs, ProfileSection, StreamGeneralData } from '@/views/dashboards'
 import { fonts } from '@/configs/constants'
 import WalletContainer from '@/views/dashboards/WalletContainer'
@@ -46,11 +46,9 @@ export default function MySoul() {
         dispatch(getScoreAction());
         dispatch(getNFTsAction(walletInfo.address));       
       }
-
       if (auth0Info && auth0Info.steamId) {
         dispatch(getSteamPlayerGeneralAction(auth0Info.steamId));
       }
-
     } catch(er) {
       console.log({er})
     }
@@ -114,7 +112,7 @@ export default function MySoul() {
            <MyCollectibles />
            <MyNFTs />
         </Flex>
-      </Flex>
+      </Flex>     
     </>
   )
 }

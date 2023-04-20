@@ -4,6 +4,7 @@ import { Empty } from "../../components";
 import StatCard from "../../components/dashboards/StatCard";
 import { useAppSelector } from "../../reduxs/hooks";
 import {connectToWalletConnect, connectToMetamask} from '../../contracts/interfaces/EthersConnect';
+import { numberFormat } from "@/utils";
 
 export default function WalletContainer() {
   const { walletInfo, score } = useAppSelector((state) => state.account);
@@ -38,13 +39,13 @@ export default function WalletContainer() {
       <SimpleGrid w="full" columns={{ base: 1, lg: 2 }} columnGap="24px">
         <StatCard
           title="InvestScore"
-          value={score?.investorLevel}
+          value={numberFormat(score?.investorLevel || 0)}
           percent={0}
           isUp        
         />
         <StatCard
           title="CollectorScore"
-          value={score?.collectorLevel}
+          value={numberFormat(score?.collectorLevel || 0)}
           percent={0}
           isUp={false}
         />

@@ -12,18 +12,16 @@ import {
   Text,
   Th,
   Thead,
-  Tooltip,
   Tr,
-  VStack,
 } from "@chakra-ui/react";
-import { fonts, NFTsData } from "../../configs/constants";
 import { useAppSelector } from "@/reduxs/hooks";
 import { getYears, numberFormat } from "@/utils";
 
 interface IProps extends FlexProps {}
 
 export default function SteamTable({ ...props }: IProps) {
-  const {steamUser} = useAppSelector((p) => p.soul);
+  const {steamUser} = useAppSelector((p) => p.soul);  
+
   return (
     <Flex
       w="full"
@@ -66,7 +64,7 @@ export default function SteamTable({ ...props }: IProps) {
               </Td>
               <Td>
                   <Text variant="with-sub" fontWeight="500" color="#101828">
-                    {numberFormat(steamUser?.totalHours || 0)}
+                    {numberFormat((steamUser?.totalHours || 0) / 60)} 
                   </Text>
               </Td>
               <Td>

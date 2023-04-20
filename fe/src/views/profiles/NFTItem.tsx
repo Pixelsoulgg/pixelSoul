@@ -25,12 +25,13 @@ export default function NFTItem({ item }: IProps) {
         <Flex
           bgImage={item.image_preview_url || item.image_thumbnail_url || '/placeholder.svg'}
           bgRepeat="no-repeat"
-          h="402px"
+          minH="402px"
           w="full"
           bgSize="cover"
           borderRadius="20px"
           padding="10px"
-          flexDirection="column"          
+          flexDirection="column"
+          backgroundPosition="center"          
         />
 
         <Text variant="with-title" fontSize="24px" mt="10px" color="#101828">
