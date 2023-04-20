@@ -27,6 +27,7 @@ export interface NFTHolding {
   nfts: (NFT | undefined)[]
   totalNftsAmount: number
   totalNftsInUsd: number
+  nftPoint: number
 }
 export interface ScoreData {
   tokenHolding: (TokenHolding | undefined)[]
