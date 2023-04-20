@@ -1,4 +1,4 @@
-import { Flex, HStack, Heading, Spacer, Text, VStack, Image, SimpleGrid } from '@chakra-ui/react'
+import { Flex, HStack, Heading, Spacer, Text, VStack, Image, SimpleGrid, useDisclosure } from '@chakra-ui/react'
 import { MyCollectibles, MyNFTs, ProfileSection, StreamGeneralData } from '@/views/dashboards'
 import { fonts } from '@/configs/constants'
 import WalletContainer from '@/views/dashboards/WalletContainer'
@@ -114,7 +114,7 @@ export default function MySoul() {
            <MyCollectibles />
            <MyNFTs />
         </Flex>
-      </Flex>
+      </Flex>     
     </>
   )
 }
