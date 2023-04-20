@@ -4,7 +4,8 @@ import { UserUpdateDto } from './dto/userUpdate.dto'
 import { UserService } from './user.service'
 import { UserAddSteamIdDto } from './dto/userAddSteamId.dto'
 import { UserAddWalletDto } from './dto/userAddWallet.dto'
-
+import { ApiTags } from '@nestjs/swagger'
+@ApiTags('user')
 @Controller({ version: '1', path: 'user' })
 export class UserController {
   constructor(private readonly userService: UserService) {}

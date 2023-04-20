@@ -2,10 +2,16 @@ import { Injectable } from '@nestjs/common'
 import { CoinMarketCapService } from 'src/coin-market-cap/coin-market-cap.service'
 import { MoralisService } from 'src/moralis/moralis.service'
 import { OpenseaService } from 'src/opensea/opensea.service'
-import { TokenBalance } from '../moralis/moralis.types'
-import { NTFCollectionGeneral, Stats } from '../opensea/opensea.types'
-import { NFT, NFTHolding, ScoreData, StableCoinsHolding, TokenHolding } from './score.types'
-import { getStableCoinList, getSlugBySymbol, getLevel, getChainList } from './utils/score.utils'
+import { TokenBalance } from '../moralis/moralis.interface'
+import { NTFCollectionGeneral, Stats } from '../opensea/opensea.interface'
+import { NFT, NFTHolding, ScoreData, StableCoinsHolding, TokenHolding } from './score.interface'
+import {
+  getStableCoinList,
+  getSlugBySymbol,
+  getLevel,
+  getChainList,
+  nftPoint
+} from './utils/score.utils'
 
 @Injectable()
 export class ScoreService {
@@ -34,7 +40,6 @@ export class ScoreService {
     try {
       const result = await this.moralisService.getAllBalances(wallet, chain)
       const stableCoins = getStableCoinList(chain)
-      console.log(stableCoins, 'statble coins:', chain)
       const rsfilter = result.filter((f) => stableCoins.includes(f.address))
       return rsfilter
     } catch (er: any) {
@@ -117,7 +122,6 @@ export class ScoreService {
         stableCoins: stableValues.filter((f) => f),
         totalHolding: totalHoldingValue
       }
-      console.log(finalResult)
       return finalResult
     } catch (error) {
       console.log(error)
@@ -132,6 +136,7 @@ export class ScoreService {
       const ethPrice = await this.coinMarketCapService.getExchangeRate('ethereum')
       let totalNftsAmount = 0
       let totalNftsInUsd = 0
+      let point = 1
 
       const price = ethPrice?.quote.USD.price || 0
       const nftsValue = await Promise.all(
@@ -152,6 +157,7 @@ export class ScoreService {
             priceInUSD = floorPriceETH * price
             totalNftsAmount += amount
             totalNftsInUsd += totalUSD
+            point += nftPoint(totalUSD)
           }
           const ntfData: NFT = {
             slug: nft.slug,
@@ -168,9 +174,9 @@ export class ScoreService {
       const nftData: NFTHolding = {
         totalNftsAmount: totalNftsAmount,
         totalNftsInUsd: totalNftsInUsd,
-        nfts: nftsValue.filter((f) => f).length > 0 ? nftsValue.filter((f) => f) : []
+        nfts: nftsValue.filter((f) => f).length > 0 ? nftsValue.filter((f) => f) : [],
+        nftPoint: point
       }
-      console.log(nftData)
       return nftData
     } catch (error) {
       console.log('get_total_nft', error)
@@ -204,7 +210,6 @@ export class ScoreService {
         collectorLevel: collectorLevel
       }
 
-      console.log(data)
       return data
     } catch (error) {
       console.log('get_score', error)

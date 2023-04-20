@@ -7,6 +7,8 @@ export const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || ''
 export const PORT = process.env.PORT || ''
 export const DOMAIN = process.env.DOMAIN || ''
 export const STEAM_API_KEY = process.env.STEAM_API_KEY || ''
+export const STEAM_API_HOST = process.env.STEAM_API_HOST || ''
+
 export function setAppSetting(app: INestApplication) {
   app.setGlobalPrefix('api', {
     exclude: [{ path: 'health', method: RequestMethod.GET }]
@@ -15,7 +17,11 @@ export function setAppSetting(app: INestApplication) {
     type: VersioningType.URI
   })
   app.enableCors({
+<<<<<<< HEAD
+    origin: ['http://localhost:3000', 'http://localhost:3004', /\.pixelsoul.gg$/],
+=======
     origin: ['http://localhost:3000', 'http://localhost:3004', /.pixelsoul.gg$/],
+>>>>>>> main
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 204

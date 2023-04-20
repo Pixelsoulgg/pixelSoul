@@ -41,51 +41,58 @@ const STABLE_COINS_FANTOM = [
 
 //scoring definition
 
-export function getLevel(valueUsd: number): number {
+export function getLevel(usdValue: number): number {
   try {
-    if (valueUsd <= 0) {
+    if (usdValue <= 0) {
       return 0
     }
-    if (valueUsd >= 1 && valueUsd <= 250) {
+    if (usdValue >= 1 && usdValue <= 250) {
       return 1
     }
-    if (valueUsd >= 251 && valueUsd <= 1000) {
+    if (usdValue >= 251 && usdValue <= 1000) {
       return 2
     }
-    if (valueUsd >= 1001 && valueUsd <= 4000) {
+    if (usdValue >= 1001 && usdValue <= 4000) {
       return 3
     }
-    if (valueUsd >= 4001 && valueUsd <= 10000) {
+    if (usdValue >= 4001 && usdValue <= 10000) {
       return 4
     }
-    if (valueUsd >= 10001 && valueUsd <= 25000) {
+    if (usdValue >= 10001 && usdValue <= 25000) {
       return 5
     }
-    if (valueUsd >= 25001 && valueUsd <= 50000) {
+    if (usdValue >= 25001 && usdValue <= 50000) {
       return 6
     }
-    if (valueUsd >= 50001 && valueUsd <= 100000) {
+    if (usdValue >= 50001 && usdValue <= 100000) {
       return 7
     }
-    if (valueUsd >= 100001 && valueUsd <= 250000) {
+    if (usdValue >= 100001 && usdValue <= 250000) {
       return 8
     }
-    if (valueUsd >= 250001 && valueUsd <= 500000) {
+    if (usdValue >= 250001 && usdValue <= 500000) {
       return 9
     }
-    if (valueUsd >= 500001 && valueUsd <= 1000000) {
+    if (usdValue >= 500001 && usdValue <= 1000000) {
       return 10
     }
-    if (valueUsd >= 1000001 && valueUsd <= 10000000) {
+    if (usdValue >= 1000001 && usdValue <= 10000000) {
       return 11
     }
-    if (valueUsd >= 10000001) {
+    if (usdValue >= 10000001) {
       return 12
     }
   } catch (error) {
     console.log('get_level', error)
   }
   return 0
+}
+
+export function nftPoint(usdValue: number) {
+  if (usdValue < 10) return 1
+  if (usdValue < 250) return 5
+  if (usdValue < 1000) return 10
+  return 1
 }
 
 export function getSlugBySymbol(slug: string): string {
