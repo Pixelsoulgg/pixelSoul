@@ -4,6 +4,7 @@ import {OpenIDData, IWalletInfo} from '@/types'
 
 
 import {disconnectMetamaskAction, generateContract, getScoreAction, logoutAction, setProvider } from "./account.actions";
+import { IScore } from "@/types/score.types";
 
 
 export const DEFAULT_MES = 'Something error!';
@@ -12,7 +13,7 @@ export interface AccountState {
   web3Provider?: ethers.providers.Web3Provider;
   walletInfo?: IWalletInfo; 
   steamInfo?: OpenIDData;
-  score?: any;
+  score?: IScore;
 }
 
 const initialState: AccountState = {};

@@ -46,11 +46,9 @@ export default function MySoul() {
         dispatch(getScoreAction());
         dispatch(getNFTsAction(walletInfo.address));       
       }
-
       if (auth0Info && auth0Info.steamId) {
         dispatch(getSteamPlayerGeneralAction(auth0Info.steamId));
       }
-
     } catch(er) {
       console.log({er})
     }
