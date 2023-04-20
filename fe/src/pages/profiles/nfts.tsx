@@ -39,7 +39,7 @@ export default function Nfts() {
         </Button>
       </Flex>
 
-      <SimpleGrid w="full" columns={{ base: 1, lg: 4 }} gap="30px" mt="20px">
+      <SimpleGrid w="full" columns={{ base: 1, md: 2, '2xl': 4 }} gap="30px" mt="20px">
         {nfts?.assets.map((item, index) => (
           <NFTItem key={index} item={item} />
         ))}

@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 import {OpenIDData, IWalletInfo} from '@/types'
 
 
-import {generateContract, getScoreAction, logoutAction, setProvider } from "./account.actions";
+import {disconnectMetamaskAction, generateContract, getScoreAction, logoutAction, setProvider } from "./account.actions";
 
 
 export const DEFAULT_MES = 'Something error!';
@@ -34,4 +34,10 @@ export const accountReducer = createReducer(initialState, (builder) => {
   builder.addCase(logoutAction, (state) => {
     Object.assign(state, initialState);
   });
-});
+  builder.addCase(disconnectMetamaskAction, (state) => {
+    state.walletInfo = undefined;
+    state.web3Provider = undefined;
+  });
+}
+
+);

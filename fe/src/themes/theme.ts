@@ -79,6 +79,31 @@ const Text: ComponentStyleConfig = {
       color: "color.secondary",
       fontFeatureSettings: "'salt' on, 'liga' off"
     },
+    "with-24": {
+      fontFamily: fonts.VT323,
+      fontSize: "24px",
+      fontWeight: "400",
+      lineHeight: "24px",
+      color: "#101828",
+      fontStyle: "normal"
+    },
+    "with-18": {
+      fontFamily: fonts.VT323,
+      fontSize: "18px",
+      fontWeight: "400",
+      lineHeight: "24px",
+      color: "#475467",
+      fontStyle: "normal"
+    },
+    "with-14": {
+      fontFamily: fonts.VT323,
+      fontSize: "14px",
+      fontWeight: "400",
+      lineHeight: "24px",
+      color: "#475467",
+      fontStyle: "normal"
+    }
+
   },
 };
 
@@ -129,9 +154,83 @@ const Button: ComponentStyleConfig = {
       fontWeight: "400",
       fontSize: "15px",
       fontFamily: fonts.Lexend,
-    }
+    },
+    "with-hl-blue": {
+      bgColor: "#4691FF",
+      color: "#fff",
+      minW: "160px",
+      minH: "36px",
+      justifyContent: "center",
+      alignItems: "center",
+      fontFamily: fonts.VT323,
+      border: "3px solid #4691FF",
+      boxShadow: "0px 1px 2px rgba(16, 24, 40, 0.05)",
+      borderRadius: "6px",
+      fontSize: "20px",
+    },
+    "with-hl-green": {
+      bgColor: "#12B76A",
+      color: "#fff",
+      minW: "160px",
+      minH: "36px",
+      justifyContent: "center",
+      alignItems: "center",
+      fontFamily: fonts.VT323,
+      border: "3px solid #12B76A",
+      boxShadow: "0px 1px 2px rgba(16, 24, 40, 0.05)",
+      borderRadius: "6px",
+      fontSize: "20px",
+    },
+    "with-default": {
+      bgColor: "#FFFFFF",
+      minW: "160px",
+      minH: "36px",
+      justifyContent: "center",
+      alignItems: "center",
+      fontFamily: fonts.VT323,
+      border: "1px solid #D0D5DD",
+      boxShadow: "0px 1px 2px rgba(16, 24, 40, 0.05)",
+      borderRadius: "6px",
+      color: "#344054",
+      fontSize: "20px",
+    },
+    "with-hover": {
+      bgColor: "#F2F4F7",
+      color: "#344054",
+      minW: "160px",
+      minH: "36px",
+      justifyContent: "center",
+      alignItems: "center",
+      fontFamily: fonts.VT323,
+      border: "1px solid #D0D5DD",
+      boxShadow: "0px 1px 2px rgba(16, 24, 40, 0.05)",
+      borderRadius: "6px",
+      fontSize: "20px",
+    },
+    "with-active": {
+      bgColor: "#FFFFFF",
+      color: "#344054",
+      minW: "160px",
+      minH: "36px",
+      justifyContent: "center",
+      alignItems: "center",
+      fontFamily: fonts.VT323,
+      border: "2px solid #4691FF",
+      boxShadow: "0px 4px 4px rgba(75, 255, 255, 0.5)",
+      borderRadius: "6px",
+      fontSize: "20px",
+    },
   },
 };
+
+export const ButtonVariants = {
+  WITH_DEFAULT: "with-default",
+  WITH_HIGHLIGHT_GREEN: "with-hl-green",
+  WITH_HIGHLIGHT_BLUE: "with-hl-blue",
+  WITH_HOVER: "with-hover",
+  WITH_ACTIVE: "with-active",
+
+}
 
 const Input: ComponentStyleConfig = {
   variants: {},
