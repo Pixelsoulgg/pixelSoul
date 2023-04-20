@@ -16,6 +16,7 @@ import { fonts } from "../../configs/constants";
 import UserAvatar from "@/components/dashboards/UserAvatar";
 import { updateUserAvatarAction } from "@/reduxs/auths/auth.slices";
 import { useAppDispatch, useAppSelector } from "@/reduxs/hooks";
+import AccountInfo from "./AccountInfo";
 
 export default function ProfileSection() {
   const dispatch = useAppDispatch();
@@ -38,7 +39,9 @@ export default function ProfileSection() {
       flexDirection="column"
       w="full"
     >
-      <HStack w="full" pb="21px" borderBottom="1px solid #EAECF0" mb="10px">
+      <AccountInfo />
+
+      <HStack w="full" pb="21px" borderBottom="1px solid #EAECF0" mb="10px" mt="30px">
         <VStack alignItems="flex-start">
           <Heading
             size="md"

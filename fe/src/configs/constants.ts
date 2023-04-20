@@ -13,6 +13,7 @@ export const fonts = {
   // Lexend: "Lexend",
   Inter: "VT323",
   Lexend: "VT323",
+  VT323: "VT323"
 };
 
 export const layouts = {
