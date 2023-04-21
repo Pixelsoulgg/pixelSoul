@@ -31,7 +31,7 @@ export default function ChallangesTable({ ...props }: IProps) {
       bg="white"
       overflowX="auto"
       flexDirection="column"
-      display="none"
+     
       {...props}
     >
       <Table w="full" className="game-table">
