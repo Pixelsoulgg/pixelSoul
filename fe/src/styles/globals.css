@@ -161,3 +161,15 @@ a {
   font-weight: 500;
   text-transform: none;
 }
+.slider-1 .slick-list .slick-track >.slick-slide  {
+  margin-right: 25px;
+}
+
+.challenge-table > thead > tr > th {
+  background-color: transparent;
+  padding: 10px 0px;
+}
+
+.challenge-table > tbody > tr > td {
+  padding: 12px 0px
+} 

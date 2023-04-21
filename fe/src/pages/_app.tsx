@@ -8,7 +8,6 @@ import Head from "next/head";
 import { Provider } from "react-redux";
 import { NextPage } from 'next';
 import { ReactElement, ReactNode } from 'react';
-import { MotionLazyContainer } from '@/components/animations';
 
 
 type NextPageWithLayout = NextPage & {
@@ -33,6 +32,8 @@ export default function App({ Component, pageProps }: MyAppProps) {
                 name="viewport"
                 content="width=device-width, initial-scale=1.0"
               />
+               <link rel="stylesheet" type="text/css" charSet="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" /> 
+               <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
             </Head>           
             {getLayout(<Component {...pageProps} />)}
         </UserProvider>

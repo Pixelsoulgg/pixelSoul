@@ -107,6 +107,14 @@ const Text: ComponentStyleConfig = {
   },
 };
 
+export const TextVariants = {  
+  WITH_24: "with-24",
+  WITH_18: "with-18",
+  WITH_14: "with-14",
+  WITH_SUB: "with-sub",
+  WITH_TITLE: "with-title",
+}
+
 const Button: ComponentStyleConfig = {
   variants: {
     active: {
