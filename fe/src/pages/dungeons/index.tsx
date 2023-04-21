@@ -1,21 +1,23 @@
 import { DungeonContent } from "@/views/dungeons";
-import { Button, Flex, Text } from "@chakra-ui/react";
+import { Button, Container, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 
 import Layout from '@/layouts'
+import DungeonCarousel from "@/views/dungeons/DungeonCarousel";
 
 index.getLayout = function getLayout(page: React.ReactElement) {
   return <Layout variant="dashboard">{page}</Layout>;
 };
 
+
 export default function index() {
   return (
     <Flex flex={1} w="full" flexDirection="column">
       <DungeonContent
-        type="Action"
-        borderBottom="1.5px solid #E4E7EC"
+        type="Action"       
         sortBy="Game"
       >
+        <Text variant="with-24" w="115px">Genres</Text>
         <Button variant="active" w="160px">
           All Game
         </Button>
@@ -25,16 +27,7 @@ export default function index() {
         <Button variant="normal" w="160px">
           Arena
         </Button>
-      </DungeonContent>
-
-
-      <DungeonContent
-        type="Arena"
-        mt="20px"
-        sortBy="Gold"
-      >
-        <Text variant="with-title">To the TOP</Text>
-      </DungeonContent>
+      </DungeonContent>       
     </Flex>
   );
 }

@@ -10,7 +10,6 @@ interface IProps extends FlexProps {}
 const KEY_EXPAND = "SIDEBAR_COLLAPSE";
 
 export default function Sidebar({ ...props }: IProps) {
-
   const [isExpand, setIsExpand] = useState<boolean>(true);
 
   useEffect(() => {
@@ -31,43 +30,40 @@ export default function Sidebar({ ...props }: IProps) {
 
   return (
     <Flex
-       as={m.div}
-      flexDirection="column"      
-      pl="16px"     
+      as={m.div}
+      flexDirection="column"
+      pl="16px"
       flex={1}
       position="relative"
       mr={`${isExpand ? 240 : 100}px`}
-      animate={{width: 280}}
-      initial={{width: 100}}
-      exit={{width: 100}}
-      transition='0.3s linear'
+      animate={{ width: 280 }}
+      initial={{ width: 100 }}
+      exit={{ width: 100 }}
+      transition="0.3s linear"
       {...props}
     >
       <AnimatePresence>
-      <Flex 
-        h="full" 
-        flexDirection="column" 
-        position="fixed"        
-        borderRight="1px solid #EAECF0"
-        bg="white"       
-        // animate={{width: 280}}
-        // initial={{width: 100}}
-        // exit={{width: 100}}
-      >
-        <HStack
-          w="full"
-          py="32px"
-          ml="10px"
-          pr="26px"
-          cursor="pointer"
-          onClick={handleClick}
+        <Flex
+          h="full"
+          flexDirection="column"
+          position="fixed"
+          borderRight="1px solid #EAECF0"
+          bg="white"
         >
-          {/* <Image src="/logo.svg" sizes="content" alt="pixelSoul" /> */}
-          <PixelSouldLogo isExpand={isExpand} />
-          {/* {isExpand && <Text variant="with-title" fontSize="24px">{layouts.title}</Text>} */}
-        </HStack>
-        <Menu mt="25px" isExpand={isExpand} />
-      </Flex>
+          <HStack
+            w="full"
+            py="32px"
+            ml="10px"
+            pr="26px"
+            cursor="pointer"
+            onClick={handleClick}
+          >
+            {/* <Image src="/logo.svg" sizes="content" alt="pixelSoul" /> */}
+            <PixelSouldLogo isExpand={isExpand} />
+            {/* {isExpand && <Text variant="with-title" fontSize="24px">{layouts.title}</Text>} */}
+          </HStack>
+          <Menu mt="25px" isExpand={isExpand} />
+        </Flex>
       </AnimatePresence>
     </Flex>
   );

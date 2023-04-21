@@ -70,6 +70,7 @@ export default function DashboardLayout({ children }: IProps) {
         minH="100vh"
         justifyContent="flex-start"
         alignItems="center"
+        overflowX="hidden"
       >
         {isHideHeader && (
           <Flex
