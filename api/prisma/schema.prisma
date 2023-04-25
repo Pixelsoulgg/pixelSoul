@@ -7,6 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Auth0Profile {
+  id       Int     @id @default(autoincrement())
+  auth0Sid String? @db.VarChar(100)
+  nickName String? @db.VarChar(200)
+  name     String? @db.VarChar(200)
+  sub      String? @db.VarChar(100)
+}
+
 model Bundles {
   id     Int      @id @default(autoincrement())
   name   String?  @db.VarChar(200)
@@ -14,16 +22,32 @@ model Bundles {
   gameId Int?
 }
 
-model Challenges {
-  id            Int     @id @default(autoincrement())
-  name          String? @db.VarChar(200)
-  gameId        Int?
-  requirementId Int?
+model Challenge {
+  id                    Int                    @id @default(autoincrement())
+  name                  String?                @db.VarChar(200)
+  gameId                Int?                   @unique(map: "gameId_UNIQUE")
+  description           String?                @db.VarChar(1000)
+  goldReward            Int?
+  requirementId         Int?
+  playedTimeRequirement PlayedTimeRequirement? @relation(fields: [requirementId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_challenge_detail")
+  challenge             Challenge?             @relation("ChallengeToChallenge", fields: [gameId], references: [gameId], onDelete: NoAction, onUpdate: NoAction, map: "fk_game_challenge")
+  other_Challenge       Challenge?             @relation("ChallengeToChallenge")
+  userChallenge         UserChallenge[]
+
+  @@index([gameId], map: "game_challenge_idx")
+  @@index([requirementId], map: "fk_challenge_detail_idx")
+}
+
+model GameTypes {
+  id          Int     @id @default(autoincrement())
+  name        String? @db.VarChar(200)
+  description String? @db.VarChar(500)
+  games       Games[]
 }
 
 model Games {
   id             Int        @id @default(autoincrement())
-  steamId        String?    @unique(map: "steamId_UNIQUE") @db.VarChar(45)
+  steamId        Int?       @unique(map: "steamId_UNIQUE")
   name           String?    @db.VarChar(45)
   description    String?    @db.VarChar(1000)
   gameUrl        String?    @db.VarChar(200)
@@ -38,59 +62,40 @@ model Games {
   @@index([gameTypeId], map: "fk_game_type_idx")
 }
 
-model Requirements {
-  id          Int       @id @default(autoincrement())
-  description String?   @db.VarChar(1000)
-  typeId      Int?
-  playedTime  DateTime? @db.Timestamp(6)
-  reward      String?   @db.VarChar(45)
+model PlayedTimeRequirement {
+  id          Int         @id @default(autoincrement())
+  description String?     @db.VarChar(1000)
+  playedTime  Int?
+  reward      Int?
+  challenge   Challenge[]
+}
+
+model UserChallenge {
+  userSteamId String    @db.VarChar(100)
+  challengeId Int
+  status      Int?      @default(0)
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "challenge")
+  users       Users     @relation(fields: [userSteamId], references: [steamId], onDelete: NoAction, onUpdate: NoAction, map: "user_challenge")
+
+  @@id([challengeId, userSteamId])
+  @@index([challengeId], map: "challenge_game_idx")
+  @@index([userSteamId], map: "user_challenge_idx")
 }
 
 model Users {
-  id               Int       @id @default(autoincrement())
-  email            String?   @unique(map: "email_UNIQUE") @db.VarChar(200)
-  walletAddress    String?   @unique(map: "walletAddress_UNIQUE") @db.VarChar(42)
-  steamId          String?   @unique(map: "steamId_UNIQUE") @db.VarChar(100)
-  imageUrl         String?   @db.VarChar(200)
-  auth0Sid         String?   @unique(map: "auth0Id_UNIQUE") @db.VarChar(100)
-  auth0NickName    String?   @db.VarChar(45)
-  auth0Name        String?   @db.VarChar(200)
-  auth0Sub         String?   @db.VarChar(100)
-  steamTimeCreated DateTime? @db.Timestamp(6)
+  id               Int             @id @default(autoincrement())
+  email            String?         @unique(map: "email_UNIQUE") @db.VarChar(200)
+  walletAddress    String?         @unique(map: "walletAddress_UNIQUE") @db.VarChar(42)
+  steamId          String?         @unique(map: "steamId_UNIQUE") @db.VarChar(100)
+  imageUrl         String?         @db.VarChar(200)
+  auth0Sid         String?         @unique(map: "auth0Id_UNIQUE") @db.VarChar(100)
+  auth0NickName    String?         @db.VarChar(45)
+  auth0Name        String?         @db.VarChar(200)
+  auth0Sub         String?         @db.VarChar(100)
+  steamTimeCreated DateTime?       @db.Timestamp(6)
+  gold             Int?
+  userChallenge    UserChallenge[]
 
   @@index([auth0Sid], map: "fk_user_auth0_idx")
   @@index([steamId], map: "fk_user_steam_idx")
-}
-
-model Auth0Profile {
-  id       Int     @id @default(autoincrement())
-  auth0Sid String? @db.VarChar(100)
-  nickName String? @db.VarChar(200)
-  name     String? @db.VarChar(200)
-  sub      String? @db.VarChar(100)
-}
-
-model SteamProfile {
-  id                       Int       @id @default(autoincrement())
-  steamId                  String    @db.VarChar(45)
-  communityVisibilityState Int?
-  profileState             Int?
-  personaName              String?   @db.VarChar(500)
-  profileUrl               String?   @db.VarChar(500)
-  avatar                   String?   @db.VarChar(500)
-  avatarMedium             String?   @db.VarChar(500)
-  avatarFull               String?   @db.VarChar(500)
-  avatarHash               String?   @db.VarChar(45)
-  personaState             Int?
-  primaryClanId            String?   @db.VarChar(45)
-  timeCreated              DateTime? @db.Timestamp(6)
-  personaStateFlags        Int?
-  displayName              String?   @db.VarChar(100)
-}
-
-model GameTypes {
-  id          Int     @id @default(autoincrement())
-  name        String? @db.VarChar(200)
-  description String? @db.VarChar(500)
-  Games       Games[]
 }

@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 export class GameDto {
   @ApiProperty()
-  steamId: string
+  steamId: number
 
   @ApiProperty()
   name: string
