@@ -13,6 +13,7 @@ export default function GoldButton({gold = 0}: IProps) {
       display="flex"
       alignItems="center"
       px="14px"
+      minW="131px"
       borderRadius="8px"
       border="1px solid #FD853A"
       boxShadow="0px 1px 2px rgba(16, 24, 40, 0.25)"

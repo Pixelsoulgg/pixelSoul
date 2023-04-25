@@ -96,7 +96,7 @@ export default function ProfileSection() {
             <Flex
               p="10px 16px"
               color="#1D2939"
-              fontSize="20px"
+              fontSize={{base: "16px", lg: "20px"}}
               fontFamily={fonts.Inter}
               fontWeight="600"
               cursor="pointer"
@@ -112,7 +112,7 @@ export default function ProfileSection() {
               flex={1}
               p="10px 16px"
               color="#1D2939"
-              fontSize="20px"
+              fontSize={{base: "16px", lg: "20px"}}
               fontFamily={fonts.Inter}
               fontWeight="600"
               cursor="pointer"

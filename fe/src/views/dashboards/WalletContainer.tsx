@@ -3,19 +3,16 @@ import React from "react";
 import { Empty } from "../../components";
 import StatCard from "../../components/dashboards/StatCard";
 import { useAppSelector } from "../../reduxs/hooks";
-import {connectToWalletConnect, connectToMetamask} from '../../contracts/interfaces/EthersConnect';
+import {
+  connectToWalletConnect,
+  connectToMetamask,
+} from "../../contracts/interfaces/EthersConnect";
 import { numberFormat } from "@/utils";
 
 export default function WalletContainer() {
   const { walletInfo, score } = useAppSelector((state) => state.account);
   return (
-    <Flex w="full" flexDir="column">
-      {/* <Empty
-        h="50px"
-        imageStyle={{ w: "30px", h: "45px", mr: "7px" }}
-        flexDirection="row"
-        bg="transparent"
-      /> */}
+    <Flex w="full" flexDir="column" mt={{ base: "10px", lg: "0px" }}>
       {!walletInfo && (
         <Box
           cursor="pointer"
@@ -28,6 +25,7 @@ export default function WalletContainer() {
           alignSelf="center"
           borderRadius="8px"
           px="16px"
+          ml={{base: "-100px", lg: "0px"}}
           onClick={connectToMetamask}
         >
           <Text variant="with-title" fontSize="16px" color="white">
@@ -35,22 +33,22 @@ export default function WalletContainer() {
           </Text>
         </Box>
       )}
-      {walletInfo && 
-      <SimpleGrid w="full" columns={{ base: 1, lg: 2 }} columnGap="24px">
-        <StatCard
-          title="InvestScore"
-          value={numberFormat(score?.investorLevel || 0)}
-          percent={0}
-          isUp        
-        />
-        <StatCard
-          title="CollectorScore"
-          value={numberFormat(score?.collectorLevel || 0)}
-          percent={0}
-          isUp={false}
-        />
-      </SimpleGrid>
-      }
+      {walletInfo && (
+        <SimpleGrid w="full" columns={{ base: 1, lg: 2 }} columnGap="24px">
+          <StatCard
+            title="InvestScore"
+            value={numberFormat(score?.investorLevel || 0)}
+            percent={0}
+            isUp
+          />
+          <StatCard
+            title="CollectorScore"
+            value={numberFormat(score?.collectorLevel || 0)}
+            percent={0}
+            isUp={false}
+          />
+        </SimpleGrid>
+      )}
     </Flex>
   );
 }
