@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { SteamService } from './steam.service'
 import { PrismaService } from '../prisma.service'
 import { PrismaClient } from '@prisma/client'
-import { GameService } from 'src/game/game.service'
+import { GameService } from '../game/game.service'
 
 describe('SteamService', () => {
   let service: SteamService
