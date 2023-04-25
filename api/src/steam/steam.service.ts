@@ -1,14 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { buildUrl } from './steam.utils'
-import { STEAM_API_HOST, STEAM_API_KEY } from 'src/app.settings'
+import { STEAM_API_HOST, STEAM_API_KEY } from '../app.settings'
 import axios from 'axios'
-import { GameService } from 'src/game/game.service'
+import { GameService } from '../game/game.service'
 import { SteamGeneralData, OwnedGame, OwnedGameResponse, topGenre } from './steam.interface'
-import { ScoreService } from 'src/score/score.service'
 
 @Injectable()
 export class SteamService {
-  constructor(private gameService: GameService, private scoreService: ScoreService) {}
+  constructor(private gameService: GameService) {}
   async playerSummaries(steamId: string) {
     const url = buildUrl(
       STEAM_API_HOST,
