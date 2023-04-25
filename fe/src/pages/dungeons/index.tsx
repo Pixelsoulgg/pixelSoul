@@ -1,33 +1,68 @@
 import { DungeonContent } from "@/views/dungeons";
 import { Button, Container, Flex, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 
-import Layout from '@/layouts'
-import DungeonCarousel from "@/views/dungeons/DungeonCarousel";
+import Layout from "@/layouts";
+import { useAppDispatch, useAppSelector } from "@/reduxs/hooks";
+import {
+  changeGameTypeAction,
+  getChallengesAction,
+  getGamesAction,
+} from "@/reduxs/dungeons/dungeon.slices";
+import { DungeonGameType } from "@/types/dungeon.types";
 
-index.getLayout = function getLayout(page: React.ReactElement) {
+Index.getLayout = function getLayout(page: React.ReactElement) {
   return <Layout variant="dashboard">{page}</Layout>;
 };
 
+export default function Index() {
+  const dispatch = useAppDispatch();
+  const { auth0Info } = useAppSelector((p) => p.auth);
+  const { gameType } = useAppSelector((p) => p.dungeon);
 
-export default function index() {
+  const fetchChallenges = useCallback(async () => {
+    if (auth0Info && auth0Info.steamId) {
+      dispatch(getChallengesAction(auth0Info.steamId));
+    }
+  }, [auth0Info]);
+
+  useEffect(() => {
+    dispatch(getGamesAction());
+  }, []);
+
+  useEffect(() => {
+    fetchChallenges();
+  }, [fetchChallenges]);
+
   return (
     <Flex flex={1} w="full" flexDirection="column">
-      <DungeonContent
-        type="Action"       
-        sortBy="Game"
-      >
-        <Text variant="with-24" w="115px">Genres</Text>
-        <Button variant="active" w="160px">
+      <DungeonContent type="Action" sortBy="Game">
+        <Text variant="with-24" w="115px">
+          Genres
+        </Text>
+        <Button
+          variant={gameType === DungeonGameType.All ? "active" : "normal"}
+          onClick={() => dispatch(changeGameTypeAction(DungeonGameType.All))}
+          w="160px"
+        >
           All Game
         </Button>
-        <Button variant="normal" w="160px" mx="10px">
+        <Button
+          variant={gameType === DungeonGameType.Action ? "active" : "normal"}
+          onClick={() => dispatch(changeGameTypeAction(DungeonGameType.Action))}
+          w="160px"
+          mx="10px"
+        >
           Action
         </Button>
-        <Button variant="normal" w="160px">
+        <Button
+          w="160px"
+          variant={gameType === DungeonGameType.Arena ? "active" : "normal"}
+          onClick={() => dispatch(changeGameTypeAction(DungeonGameType.Arena))}
+        >
           Arena
         </Button>
-      </DungeonContent>       
+      </DungeonContent>
     </Flex>
   );
 }

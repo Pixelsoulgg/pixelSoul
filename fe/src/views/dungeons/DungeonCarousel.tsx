@@ -3,13 +3,16 @@ import {
   Flex,
   Text,
   IconButton,
-  useBreakpointValue,
   Image,
+  Tooltip,
 } from "@chakra-ui/react";
 import Slider from "react-slick";
-import React from "react";
+import React, { useCallback, useMemo } from "react";
+import { useAppDispatch, useAppSelector } from "@/reduxs/hooks";
+import { chooseGameId } from "@/reduxs/dungeons/dungeon.slices";
+import { DungeonGameType } from "@/types/dungeon.types";
+import CarouselLoading from "./CarouselLoading";
 
-const cards = [2,3,4,5,6,7];
 
 const settings = {
   className: "slider-1 variable-width",
@@ -42,9 +45,20 @@ const settings = {
 };
 
 export default function DungeonCarousel() {
+  const dispatch = useAppDispatch();
+  const { games, gameType } = useAppSelector((p) => p.dungeon);
   const [slider, setSlider] = React.useState<Slider | null>(null);
-  const top = useBreakpointValue({ base: "90%", md: "50%" });
-  const side = useBreakpointValue({ base: "30%", md: "40px" });
+
+  const handleChooseGame = useCallback((gameId: number) => {dispatch(chooseGameId(gameId))}, [])
+
+  const gameList = useMemo(() => {
+    if (gameType === DungeonGameType.Action)
+      return games.filter(p => p.gameTypes.name === 'Action');
+    if (gameType === DungeonGameType.Arena)
+      return games.filter(p => p.gameTypes.name === 'Arena');
+
+    return games;
+  }, [gameType, games]);
 
   return (
     <Box position="relative" w="full" maxW="1300px" alignSelf="center">
@@ -74,22 +88,23 @@ export default function DungeonCarousel() {
       </IconButton>
 
       <Slider {...settings} ref={(slider) => setSlider(slider)}>
-        {cards.map((card, index) => (
+        {gameList.length < 1 && new Array(8).fill(1).map((_, index) => <CarouselLoading key={index} />)}
+        {gameList.map((game, index) => (
           <div style={{ width: "190px" }} key={`${index}`}>
-            <Flex
-              w="full"
-              bgImage={`/dungeons/${card}.png`}
-              objectFit="cover"
-              margin="10px"
-              h="115px"
-              justifyContent="center"
-              alignItems="center"
-              borderRadius={10}
-              cursor="pointer"
-              onClick={() => alert(index)}
-            >
-              <Text variant="with-24">{index}</Text>
-            </Flex>
+            <Tooltip>
+              <Flex
+                w="full"
+                bgImage={game.gameUrl || game.logo}
+                objectFit="cover"
+                margin="10px"
+                h="115px"
+                justifyContent="center"
+                alignItems="center"
+                borderRadius={10}
+                cursor="pointer"
+                onClick={() => handleChooseGame(game.appId)}
+              ></Flex>
+            </Tooltip>
           </div>
         ))}
       </Slider>

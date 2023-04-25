@@ -24,6 +24,7 @@ const colors = {
     arena: "#F63D68",
     white: "#ffffff",
     hover: "#4691FF",
+    notstarted: "#FFF4ED",
   },
   color: {
     white: "#ffffff",
@@ -33,6 +34,7 @@ const colors = {
     dining: "#C11574",
     uncategorized: "#344054",
     inprogress: "#027A48",
+    notstarted: "#B93815",
   },
 };
 

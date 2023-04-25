@@ -10,6 +10,7 @@ import {
 import React, { ReactNode } from "react";
 import DungeonCarousel from "./DungeonCarousel";
 import Challenges from "./Challenges";
+import { useAppSelector } from "@/reduxs/hooks";
 
 interface IProps extends FlexProps {
   type: "Action" | "Arena";
