@@ -1,11 +1,16 @@
+import { Empty } from "@/components";
 import Tag from "@/components/dashboards/Tag";
 import { CHALLANGES_DATA } from "@/configs/mockup.data";
+import {
+  activeChallengeAction,
+  checkChallengeStatusAction,
+} from "@/reduxs/dungeons/dungeon.slices";
+import { useAppDispatch, useAppSelector } from "@/reduxs/hooks";
 import { ButtonVariants } from "@/themes/theme";
 import {
   Button,
   Flex,
-  HStack,
-  Image,
+  Spinner,
   Table,
   Tbody,
   Td,
@@ -15,11 +20,52 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 
 export default function Challenges() {
+  const dispatch = useAppDispatch();
+  const { auth0Info } = useAppSelector((p) => p.auth);
+  const { challenges, gameId, games, isSubmit } = useAppSelector(
+    (p) => p.dungeon
+  );
+  const filterChallengesByGameId = useMemo(() => {
+    return challenges.filter((p) => p.challenge.gameId === gameId);
+  }, [gameId, challenges]);
+
+  const getStatusLabel = (status: number) => {
+    switch (status) {
+      case 0:
+        return "Not Started";
+      case 1:
+        return "In Progress";
+      case 2:
+        return "Completed";
+      default:
+        return "";
+    }
+  };
+
+  const handleCheckOrActive = (challengeId: number, status: number) => {
+    try {
+      if (auth0Info?.steamId) {
+        if (status === 0) {
+          dispatch(activeChallengeAction({steamId: auth0Info?.steamId, challengeId})).unwrap();
+        }else {
+          dispatch(checkChallengeStatusAction({ steamId: auth0Info?.steamId, challengeId})).unwrap();
+        }
+      } 
+    } catch (er) {}
+  }
+   
+
   return (
-    <Flex w="full" flexDirection="column" mt="30px">
+    <Flex
+      w="full"
+      flexDirection="column"
+      maxW="1600px"
+      alignSelf="center"
+      mt="30px"
+    >
       <Text variant="with-24" mb="15px">
         All Challenges
       </Text>
@@ -42,54 +88,63 @@ export default function Challenges() {
           </Tr>
         </Thead>
         <Tbody>
-          {CHALLANGES_DATA.map((item, index) => (
+          {filterChallengesByGameId.map((item, index) => (
             <Tr key={index.toString()}>
               <Td>
                 <VStack w="full" alignItems="flex-start">
                   <Text variant="with-sub" fontWeight="500" color="#039855">
-                    Challenge_name_1_hour
+                    {item.challenge.name}
                   </Text>
-
                   <Text
                     variant="with-sub"
                     fontSize="14px"
                     fontWeight="400"
                     color="#101828"
                   >
-                    Challenge_description
+                    {item.challenge.description}
                   </Text>
                 </VStack>
               </Td>
               <Td>
-                <Text variant="with-18">Game name</Text>
-              </Td>
-              <Td>
                 <Text variant="with-18">
-                  Reward_amount, reward_type (ex. 10 Gold)
+                  {games.find((p) => p.appId === item.challenge.gameId)?.name}
                 </Text>
               </Td>
               <Td>
+                <Text variant="with-18">{item.challenge.goldReward} Gold</Text>
+              </Td>
+              <Td>
                 <Tag
-                  label={item.status}
-                  type={item.status.toLocaleLowerCase().replace(" ", "")}
+                  label={getStatusLabel(item.status)}
+                  type={getStatusLabel(item.status).replace(" ", "")}
                 />
               </Td>
               <Td>
                 <Button
-                  w="175px"
+                  minW="175px"
                   variant={
-                    index === CHALLANGES_DATA.length - 1
+                    item.status === 0
                       ? ButtonVariants.WITH_HIGHLIGHT_BLUE
                       : ButtonVariants.WITH_HIGHLIGHT_GREEN
                   }
+                  isDisabled={isSubmit}
+                  onClick={() =>
+                    handleCheckOrActive(item.challengeId, item.status)
+                  }
                 >
-                  {index === CHALLANGES_DATA.length - 1
-                    ? "Accept"
-                    : "Check Eligibility"}
+                  {isSubmit && <Spinner />}
+                  {item.status === 0 ? " Accept" : " Check Eligibility"}
                 </Button>
               </Td>
             </Tr>
           ))}
+          {filterChallengesByGameId.length < 1 && (
+            <Tr>
+              <Td colSpan={5}>
+                <Empty />
+              </Td>
+            </Tr>
+          )}
         </Tbody>
       </Table>
     </Flex>
