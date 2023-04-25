@@ -73,7 +73,6 @@ model PlayedTimeRequirement {
 model UserChallenge {
   userSteamId String    @db.VarChar(100)
   challengeId Int
-  actived     Int?      @default(0)
   status      Int?      @default(0)
   challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "challenge")
   users       Users     @relation(fields: [userSteamId], references: [steamId], onDelete: NoAction, onUpdate: NoAction, map: "user_challenge")

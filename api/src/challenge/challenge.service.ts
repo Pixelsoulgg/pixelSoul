@@ -20,7 +20,7 @@ export class ChallengeService {
   async checkEligibility(eligibilityDto: EligibilityDto): Promise<boolean> {
     const { challengeId, steamId } = eligibilityDto
     const userChallenge = await this.prismaService.userChallenge.findFirst({
-      where: { userSteamId: steamId, challengeId, actived: 1, status: 0 }
+      where: { userSteamId: steamId, challengeId, status: 1 }
     })
     if (!userChallenge)
       throw new HttpException(`challenge [${challengeId}] is not available`, HttpStatus.NOT_FOUND)
@@ -45,7 +45,7 @@ export class ChallengeService {
       })
       await this.prismaService.userChallenge.update({
         where: { challengeId_userSteamId: { challengeId, userSteamId: steamId } },
-        data: { status: 1 }
+        data: { status: 2 }
       })
     }
     return completed
@@ -53,7 +53,7 @@ export class ChallengeService {
   async activeChallenge(challengeId: number, steamId: string) {
     return await this.prismaService.userChallenge.update({
       where: { challengeId_userSteamId: { userSteamId: steamId, challengeId } },
-      data: { actived: 1 }
+      data: { status: 1 }
     })
   }
 }
