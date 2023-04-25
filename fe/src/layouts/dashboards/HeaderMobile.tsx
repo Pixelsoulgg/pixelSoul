@@ -1,26 +1,18 @@
 import {
   Button,
   Drawer,
-  DrawerBody,
   DrawerCloseButton,
   DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
   DrawerOverlay,
   Flex,
   FlexProps,
   HStack,
   Image,
-  Link,
   Spacer,
-  Text,
   useDisclosure,
-  VStack,
 } from "@chakra-ui/react";
 import React from "react";
 import Search from "../../components/Search";
-import { layouts } from "../../configs/constants";
-import { MENUS, SETTING_MENU } from "./constants";
 import Menu from "./Menu";
 
 interface IProps extends FlexProps {}
@@ -54,7 +46,7 @@ function HeaderMobile({ ...props }: IProps) {
         <DrawerContent>
           <DrawerCloseButton />
           <Search mt="50px" />
-          <Menu />
+          <Menu isExpand mt="10px" />
         </DrawerContent>
       </Drawer>
     </Flex>
