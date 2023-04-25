@@ -23,19 +23,19 @@ model Bundles {
 }
 
 model Challenge {
-  id                    Int                     @id @default(autoincrement())
-  name                  String?                 @db.VarChar(200)
-  gameId                Int?                    @unique(map: "gameId_UNIQUE")
-  description           String?                 @db.VarChar(1000)
+  id                    Int                    @id @default(autoincrement())
+  name                  String?                @db.VarChar(200)
+  gameId                Int?                   @unique(map: "gameId_UNIQUE")
+  description           String?                @db.VarChar(1000)
   goldReward            Int?
-  RequrementId          String?                 @db.VarChar(45)
-  actived               Int?                    @default(0)
-  challenge             Challenge?              @relation("ChallengeToChallenge", fields: [gameId], references: [gameId], onDelete: NoAction, onUpdate: NoAction, map: "fk_game_challenge")
-  other_Challenge       Challenge?              @relation("ChallengeToChallenge")
-  playedTimeRequirement PlayedTimeRequirement[]
+  requirementId         Int?
+  playedTimeRequirement PlayedTimeRequirement? @relation(fields: [requirementId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_challenge_detail")
+  challenge             Challenge?             @relation("ChallengeToChallenge", fields: [gameId], references: [gameId], onDelete: NoAction, onUpdate: NoAction, map: "fk_game_challenge")
+  other_Challenge       Challenge?             @relation("ChallengeToChallenge")
   userChallenge         UserChallenge[]
 
   @@index([gameId], map: "game_challenge_idx")
+  @@index([requirementId], map: "fk_challenge_detail_idx")
 }
 
 model GameTypes {
@@ -63,23 +63,22 @@ model Games {
 }
 
 model PlayedTimeRequirement {
-  id          Int        @id @default(autoincrement())
-  description String?    @db.VarChar(1000)
+  id          Int         @id @default(autoincrement())
+  description String?     @db.VarChar(1000)
   playedTime  Int?
   reward      Int?
-  challengeId Int?
-  challenge   Challenge? @relation(fields: [challengeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "type_challenge")
-
-  @@index([challengeId], map: "type_challenge_idx")
+  challenge   Challenge[]
 }
 
 model UserChallenge {
-  id          Int        @id @default(autoincrement())
-  userSteamId String?    @db.VarChar(100)
-  challengeId Int?
-  challenge   Challenge? @relation(fields: [challengeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "challenge")
-  users       Users?     @relation(fields: [userSteamId], references: [steamId], onDelete: NoAction, onUpdate: NoAction, map: "user_challenge")
+  userSteamId String    @db.VarChar(100)
+  challengeId Int
+  actived     Int?      @default(0)
+  status      Int?      @default(0)
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "challenge")
+  users       Users     @relation(fields: [userSteamId], references: [steamId], onDelete: NoAction, onUpdate: NoAction, map: "user_challenge")
 
+  @@id([challengeId, userSteamId])
   @@index([challengeId], map: "challenge_game_idx")
   @@index([userSteamId], map: "user_challenge_idx")
 }
