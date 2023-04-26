@@ -1,7 +1,7 @@
 export enum DungeonGameType {
   All,
   Action,
-  Arena
+  Arena,
 }
 
 export interface IGameDungeon {
@@ -22,7 +22,6 @@ export interface IGameDungeon {
     description: string | null;
   };
 }
-
 
 export interface ChallengeObject {
   id: number;
@@ -46,4 +45,9 @@ export interface UserChallengeObject extends IChallenge {
   actived: number;
   status: number;
   challenge: ChallengeObject;
+}
+
+export interface IDungeonCheckResponse {
+  complete: boolean;
+  message: string;
 }
