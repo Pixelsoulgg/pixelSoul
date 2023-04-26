@@ -17,14 +17,14 @@ Index.getLayout = function getLayout(page: React.ReactElement) {
 
 export default function Index() {
   const dispatch = useAppDispatch();
-  const { auth0Info } = useAppSelector((p) => p.auth);
+  const { steamId } = useAppSelector((p) => p.auth);
   const { gameType } = useAppSelector((p) => p.dungeon);
 
   const fetchChallenges = useCallback(async () => {
-    if (auth0Info && auth0Info.steamId) {
-      dispatch(getChallengesAction(auth0Info.steamId));
+    if (steamId) {
+      dispatch(getChallengesAction(steamId));
     }
-  }, [auth0Info]);
+  }, [steamId]);
 
   useEffect(() => {
     dispatch(getGamesAction());
