@@ -1,6 +1,11 @@
 import { UserProfile } from "@auth0/nextjs-auth0/client";
 import { FLIP_TYPE } from "../contracts/types";
 
+export interface IDropdownItem {
+  lable: string;
+  value: string | number;
+}
+
 export enum CHAIN_ID {
   TESTNET = 97,
   MAINNET = 56,
