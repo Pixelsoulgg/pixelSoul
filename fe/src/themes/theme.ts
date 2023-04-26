@@ -35,6 +35,7 @@ const colors = {
     uncategorized: "#344054",
     inprogress: "#027A48",
     notstarted: "#B93815",
+    success: "#12B76A",
   },
 };
 

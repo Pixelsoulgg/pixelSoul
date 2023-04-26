@@ -1,13 +1,7 @@
-import AppApi from "@/apis/app.api";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { NFTResponse } from "@/types/nft.type";
-import { SteamUser } from "@/types/steam.type";
-import SteamApi from "@/apis/steam.api";
-import { IGame } from "@/types";
 import GameApi from "@/apis/game.api";
 import { DungeonGameType, IChallenge, IGameDungeon, UserChallengeObject } from "@/types/dungeon.types";
 import ChallengeApi from "@/apis/challenge.api";
-import store from "../store";
 
 interface DungeonState {
   games: IGameDungeon[];
@@ -130,10 +124,10 @@ export const activeChallengeAction = createAsyncThunk<
 });
 
 export const checkChallengeStatusAction = createAsyncThunk<
-  {result: boolean, challengeId: number},
+  {result: boolean, challengeId: number, msg?: string},
   { steamId: string; challengeId: number }
 >("dungeon/checkChallengeStatusAction", async ({steamId, challengeId}) => {
   const challengeApi = new ChallengeApi();
   const rp = await challengeApi.checkChallenge(steamId, challengeId);
-  return {result: rp, challengeId};
+  return {result: rp.complete, challengeId, msg: rp.message};
 });

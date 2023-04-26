@@ -27,7 +27,7 @@ export default function AccountInfo() {
 
   const dispatch = useAppDispatch();
 
-  const { steamInfo } = useAppSelector((p) => p.auth);
+  const { steamInfo, steamId } = useAppSelector((p) => p.auth);
   const { walletInfo } = useAppSelector((p) => p.account);
 
   const handleDisconnectMetamask = useCallback(async () => {
@@ -54,7 +54,7 @@ export default function AccountInfo() {
           variant="with-18"
           color={steamInfo?.["openid.sig"] ? "#475467" : "#98A2B3"}
         >
-          {steamInfo?.["openid.sig"] || DEFAULT_MESSAGE}
+          {steamId || DEFAULT_MESSAGE}
         </Text>
         <VStack w="full" alignItems="flex-start" my="30px">
           <Text variant="with-24">Wallet ID</Text>
