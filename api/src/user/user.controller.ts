@@ -17,27 +17,27 @@ export class UserController {
   async findAll() {
     return await this.userService.findAll({})
   }
-  @Get(':auth0Sid')
-  async findOne(@Param('auth0Sid') auth0Sid: string) {
-    return await this.userService.findOne({ auth0Sid })
+  @Get(':auth0Sub')
+  async findOne(@Param('auth0Sub') auth0Sub: string) {
+    return await this.userService.findOne({ auth0Sub })
   }
-  @Patch(':auth0Sid')
-  async update(@Param('auth0Sid') auth0Sid: string, @Body() userUpdateDto: UserUpdateDto) {
-    return await this.userService.update({ auth0Sid }, userUpdateDto)
+  @Patch(':auth0Sub')
+  async update(@Param('auth0Sub') auth0Sub: string, @Body() userUpdateDto: UserUpdateDto) {
+    return await this.userService.update({ auth0Sub }, userUpdateDto)
   }
-  @Post('addSteamId/:auth0Sid')
+  @Post('addSteamId/:auth0Sub')
   async addSteamId(
-    @Param('auth0Sid') auth0Sid: string,
+    @Param('auth0Sub') auth0Sub: string,
     @Body() userAddSteamIdDto: UserAddSteamIdDto
   ) {
-    return await this.userService.addSteamId({ auth0Sid }, userAddSteamIdDto.steamId)
+    return await this.userService.addSteamId({ auth0Sub }, userAddSteamIdDto.steamId)
   }
-  @Post('addWallet/:auth0Sid')
-  async addWallet(@Param('auth0Sid') auth0Sid: string, @Body() userAddWalletDto: UserAddWalletDto) {
-    return await this.userService.addWallet({ auth0Sid }, userAddWalletDto.walletAddress)
+  @Post('addWallet/:auth0Sub')
+  async addWallet(@Param('auth0Sub') auth0Sub: string, @Body() userAddWalletDto: UserAddWalletDto) {
+    return await this.userService.addWallet({ auth0Sub }, userAddWalletDto.walletAddress)
   }
-  @Delete(':auth0Sid')
-  async remove(@Param('auth0Sid') auth0Sid: string) {
-    return await this.userService.remove({ auth0Sid })
+  @Delete(':auth0Sub')
+  async remove(@Param('auth0Sub') auth0Sub: string) {
+    return await this.userService.remove({ auth0Sub })
   }
 }
