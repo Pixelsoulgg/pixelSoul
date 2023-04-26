@@ -90,8 +90,8 @@ export default function DungeonCarousel() {
       <Slider {...settings} ref={(slider) => setSlider(slider)}>
         {gameList.length < 1 && new Array(8).fill(1).map((_, index) => <CarouselLoading key={index} />)}
         {gameList.map((game, index) => (
-          <div style={{ width: "190px" }} key={`${index}`}>
-            <Tooltip>
+          <div style={{ width: "190px" }} key={`${index}`}>      
+              <Text variant="with-18" fontSize="20px" textAlign="center" textTransform="uppercase">{game.name.substring(0, 15)}</Text>     
               <Flex
                 w="full"
                 bgImage={game.gameUrl || game.logo}
@@ -103,8 +103,7 @@ export default function DungeonCarousel() {
                 borderRadius={10}
                 cursor="pointer"
                 onClick={() => handleChooseGame(game.appId)}
-              ></Flex>
-            </Tooltip>
+              />           
           </div>
         ))}
       </Slider>
