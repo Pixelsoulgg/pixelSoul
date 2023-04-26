@@ -1,8 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
-import { Prisma } from '@prisma/client'
 import { PrismaService } from '../prisma.service'
 import { SteamService } from '../steam/steam.service'
 import { EligibilityDto } from './dto/eligibility.dto'
+import { ResEligibility } from './challenge.interface'
+import { OwnedGame } from 'src/steam/steam.interface'
 
 @Injectable()
 export class ChallengeService {
@@ -17,7 +18,7 @@ export class ChallengeService {
 
     return challenges
   }
-  async checkEligibility(eligibilityDto: EligibilityDto): Promise<boolean> {
+  async checkEligibility(eligibilityDto: EligibilityDto): Promise<ResEligibility> {
     const { challengeId, steamId } = eligibilityDto
     const userChallenge = await this.prismaService.userChallenge.findFirst({
       where: { userSteamId: steamId, challengeId, status: 1 }
@@ -34,9 +35,14 @@ export class ChallengeService {
     const games = await this.steamService.ownedGames(steamId)
 
     let completed = false
+    let msg = ''
+    let challengeGame: OwnedGame
     if (games) {
       const g = games.response.games.find((f) => f.appid == challenge.gameId)
-      if (g) completed = g.playtime_forever >= requirement.playedTime
+      if (g) {
+        completed = g.playtime_forever >= requirement.playedTime
+        challengeGame = g
+      }
     }
     if (completed) {
       await this.prismaService.users.update({
@@ -47,8 +53,15 @@ export class ChallengeService {
         where: { challengeId_userSteamId: { challengeId, userSteamId: steamId } },
         data: { status: 2 }
       })
+      msg = `You have completed challenge and get ${requirement.reward} golds`
+    } else {
+      msg = `You have played ${challengeGame.playtime_forever} minutes. But the requirement is ${requirement.playedTime}`
     }
-    return completed
+    const result: ResEligibility = {
+      complete: completed,
+      message: msg
+    }
+    return result
   }
   async activeChallenge(challengeId: number, steamId: string) {
     return await this.prismaService.userChallenge.update({
