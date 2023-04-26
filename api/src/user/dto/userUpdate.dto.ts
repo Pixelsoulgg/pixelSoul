@@ -13,7 +13,7 @@ export class UserUpdateDto {
   auth0Name: string
 
   @ApiProperty()
-  auth0Sub: string
+  auth0Sid: string
 
   @ApiProperty()
   imageUrl: string

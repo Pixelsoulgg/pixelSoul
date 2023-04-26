@@ -9,7 +9,7 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
   async create(userDto: UserDto) {
     const auth0User = await this.prisma.users.findUnique({
-      where: { auth0Sid: userDto.auth0Sid }
+      where: { auth0Sub: userDto.auth0Sub }
     })
 
     if (auth0User) {
@@ -56,7 +56,7 @@ export class UserService {
       imageUrl: userUpdateDto.imageUrl,
       auth0NickName: userUpdateDto.auth0NickName,
       auth0Name: userUpdateDto.auth0Name,
-      auth0Sub: userUpdateDto.auth0Sub
+      auth0Sid: userUpdateDto.auth0Sid
     }
     return await this.prisma.users.update({
       data: updateData,
