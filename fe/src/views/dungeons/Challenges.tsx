@@ -1,7 +1,6 @@
 import { Empty } from "@/components";
 import InfoModal from "@/components/InfoModal";
 import Tag from "@/components/dashboards/Tag";
-import { CHALLANGES_DATA } from "@/configs/mockup.data";
 import {
   activeChallengeAction,
   checkChallengeStatusAction,
@@ -25,7 +24,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useMemo, useState } from "react";
 
-enum ChallengeType {
+enum ChallengeType {     
   All,
   Accepted,
 }

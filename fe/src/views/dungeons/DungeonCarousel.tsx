@@ -67,24 +67,32 @@ export default function DungeonCarousel() {
         variant="ghost"
         position="absolute"
         left={{ base: "-15px", lg: "-50px" }}
-        top="70px"
+        top="80px"
         transform={"translate(0%, -50%)"}
         zIndex={2}
+        w="24px"
+        h="100px"
+        border="1px solid #98A2B3"
+        borderRadius="4px"
         onClick={() => slider?.slickPrev()}
       >
-        <Image src="/expand-left.svg" />
+        <Image src="/arrow.svg" />
       </IconButton>
       <IconButton
         aria-label="right-arrow"
         variant="ghost"
         position="absolute"
         right={{ base: "-15px", lg: "-50px" }}
-        top="70px"
+        top="80px"
         transform={"translate(0%, -50%) rotate(180deg)"}
         zIndex={2}
+        w="24px"
+        h="100px"
+        border="1px solid #98A2B3"
+        borderRadius="4px"
         onClick={() => slider?.slickNext()}
       >
-        <Image src="/expand-left.svg" />
+        <Image src="/arrow.svg" />
       </IconButton>
 
       <Slider {...settings} ref={(slider) => setSlider(slider)}>
