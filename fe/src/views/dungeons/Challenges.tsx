@@ -1,4 +1,5 @@
 import { Empty } from "@/components";
+import Dropdown from "@/components/Dropdown";
 import InfoModal from "@/components/InfoModal";
 import Tag from "@/components/dashboards/Tag";
 import {
@@ -7,10 +8,12 @@ import {
 } from "@/reduxs/dungeons/dungeon.slices";
 import { useAppDispatch, useAppSelector } from "@/reduxs/hooks";
 import { ButtonVariants } from "@/themes/theme";
+import { IDropdownItem } from "@/types";
 import {
   Button,
   Flex,
   HStack,
+  Spacer,
   Spinner,
   Table,
   Tbody,
@@ -22,12 +25,20 @@ import {
   VStack,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
-enum ChallengeType {     
+enum ChallengeType {
   All,
   Accepted,
 }
+
+const SortDatasource: IDropdownItem[] = [
+  { lable: "All", value: -1 },
+  { lable: "Gold (high-low)", value: 0 },
+  { lable: "Gold (low-high)", value: 1 },
+  { lable: "Game (A-Z)", value: 2 },
+  { lable: "Game (Z-A)", value: 3 },
+];
 
 export default function Challenges() {
   const dispatch = useAppDispatch();
@@ -45,10 +56,34 @@ export default function Challenges() {
     ChallengeType.All
   );
 
+  const [sortBy, setSortBy] = useState<number>();
+
   const filterChallengesByGameId = useMemo(() => {
     const status = challengeType === ChallengeType.All ? -1 : 1;
-    return challenges.filter((p) => p.challenge.gameId === gameId && (status === -1 || p.status === status));
-  }, [gameId, challenges, challengeType]);
+    const data = challenges.filter(
+      (p) =>
+        p.challenge.gameId === gameId && (status === -1 || p.status === status)
+    );
+    switch (sortBy) {
+      case 0:
+      case 1: {
+        const dataRender = data.sort((a, b) => {
+          if (a.challenge.goldReward === b.challenge.goldReward) return 0;
+          return a.challenge.goldReward > b.challenge.goldReward ? 1 : -1;
+        });
+        return sortBy === 1 ? dataRender.reverse() : dataRender;
+      }
+      case 2:
+      case 3: {
+        const dataRender = data.sort((a, b) => {
+          if (a.challenge.name === b.challenge.name) return 0;
+          return a.challenge.name > b.challenge.name ? 1 : -1;
+        });
+        return sortBy === 3 ? dataRender.reverse() : dataRender;
+      }
+      default: return data;
+    }
+  }, [gameId, challenges, challengeType, sortBy]);
 
   const getStatusLabel = (status: number) => {
     switch (status) {
@@ -79,7 +114,7 @@ export default function Challenges() {
           ).unwrap();
           setResult({
             type: rs.result ? "success" : "info",
-            msg: rs.msg || ''
+            msg: rs.msg || "",
           });
           onOpen();
         }
@@ -128,13 +163,15 @@ export default function Challenges() {
               Accepted
             </Button>
           </HStack>
+          <Spacer />
+          <Dropdown
+            defaultLable="Sort"
+            value={sortBy}
+            data={SortDatasource}
+            onChange={(val) => setSortBy(val as number)}
+          />
         </Flex>
-        <Flex
-          w="full"
-          overflow="hidden"
-          bg="white"
-          overflowX="auto"
-        >
+        <Flex w="full" overflow="hidden" bg="white" overflowX="auto">
           <Table w="full" className="game-table challenge-table">
             <Thead>
               <Tr>
