@@ -1,5 +1,5 @@
 import axiosInstance from ".";
-import { IChallenge, UserChallengeObject } from "@/types/dungeon.types";
+import { IChallenge, IDungeonCheckResponse, UserChallengeObject } from "@/types/dungeon.types";
 
 export default class ChallengeApi {
   private USER_URL:string ="challenge"; 
@@ -12,7 +12,7 @@ export default class ChallengeApi {
     return axiosInstance.patch(`${this.USER_URL}/active`, {steamId, challengeId});
   }
 
-  async checkChallenge(steamId: string, challengeId: number): Promise<boolean> {
+  async checkChallenge(steamId: string, challengeId: number): Promise<IDungeonCheckResponse> {
     return axiosInstance.post(`${this.USER_URL}/check`, {steamId, challengeId});
   }
 }

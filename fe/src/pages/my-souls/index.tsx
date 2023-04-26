@@ -23,7 +23,7 @@ export default function MySoul() {
   const dispatch = useAppDispatch();
 
   const { walletInfo } = useAppSelector((s) => s.account);
-  const {auth0Info} = useAppSelector(s => s.auth);
+  const {auth0Info, auth0Sub, steamId} = useAppSelector(s => s.auth);
 
   const handleSteamAuth = useCallback(() => {
     //@ts-ignore
@@ -41,18 +41,18 @@ export default function MySoul() {
 
   const fetchData = useCallback(async () => {
     try {    
-      if (walletInfo && walletInfo.address && auth0Info && auth0Info.auth0Sid) {      
-        dispatch(handleConnectMetamaskSuccess({walletAddress: walletInfo.address, auth0Id: auth0Info.auth0Sid}))
+      if (walletInfo && walletInfo.address && auth0Sub) {      
+        dispatch(handleConnectMetamaskSuccess({walletAddress: walletInfo.address}))
         dispatch(getScoreAction());
         dispatch(getNFTsAction(walletInfo.address));       
       }
-      if (auth0Info && auth0Info.steamId) {
-        dispatch(getSteamPlayerGeneralAction(auth0Info.steamId));
+      if (steamId) {
+        dispatch(getSteamPlayerGeneralAction(steamId));
       }
     } catch(er) {
       console.log({er})
     }
-  }, [auth0Info, dispatch, walletInfo]); 
+  }, [dispatch, walletInfo, steamId, auth0Sub]); 
 
   useEffect(() => {
     fetchData();

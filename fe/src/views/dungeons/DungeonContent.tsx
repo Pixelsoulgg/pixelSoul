@@ -25,20 +25,20 @@ export default function DungeonContent({
   ...props
 }: IProps) {
   return (
-    <Flex w="full" flexDirection="column" {...props}>
-      <Flex
-        w="full"
-        px="20px"
-        flexDir={{ base: "column", lg: "row" }}
-        borderBottom="1.5px solid #E4E7EC"
-        paddingBottom="30px"
-        mb="20px"
-      >
-        <HStack>{children}</HStack>
-        <Spacer />        
+      <Flex w="full" flexDirection="column" {...props}>
+        <Flex
+          w="full"
+          px="20px"
+          flexDir={{ base: "column", lg: "row" }}
+          borderBottom="1.5px solid #E4E7EC"
+          paddingBottom="30px"
+          mb="20px"
+        >
+          <HStack>{children}</HStack>
+          <Spacer />
+        </Flex>
+        <DungeonCarousel />
+        <Challenges />
       </Flex>
-      <DungeonCarousel />
-      <Challenges />
-    </Flex>
   );
 }
