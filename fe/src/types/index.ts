@@ -58,6 +58,7 @@ export interface OpenIDData {
   "openid.return_to": string;
   "openid.sig": string;
   "openid.signed": string;
+  steamId?: string;
 }
 
 export interface IAuth0Model extends UserProfile {
