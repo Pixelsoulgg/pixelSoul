@@ -57,10 +57,14 @@ export default function Challenges() {
   );
 
   const [sortBy, setSortBy] = useState<number>();
+  const [selectedChallengeId, setSelectedChallengeId] = useState<number>();
 
   const filterChallengesByGameId = useMemo(() => {
     const status = challengeType === ChallengeType.All ? -1 : 1;
-    const data = challenges.filter((p) => (!gameId || p.challenge.gameId === gameId) && (status === -1 || p.status === status)
+    const data = challenges.filter(
+      (p) =>
+        (!gameId || p.challenge.gameId === gameId) &&
+        (status === -1 || p.status === status)
     );
     switch (sortBy) {
       case 0:
@@ -79,7 +83,8 @@ export default function Challenges() {
         });
         return sortBy === 3 ? dataRender.reverse() : dataRender;
       }
-      default: return data;
+      default:
+        return data;
     }
   }, [gameId, challenges, challengeType, sortBy]);
 
@@ -97,6 +102,7 @@ export default function Challenges() {
   };
 
   const handleCheckOrActive = async (challengeId: number, status: number) => {
+    setSelectedChallengeId(challengeId);
     try {
       if (auth0Info?.steamId) {
         if (status === 0) {
@@ -233,13 +239,19 @@ export default function Challenges() {
                           ? ButtonVariants.WITH_HIGHLIGHT_BLUE
                           : ButtonVariants.WITH_HIGHLIGHT_GREEN
                       }
-                      isDisabled={isSubmit}
+                      isDisabled={isSubmit && selectedChallengeId === item.challengeId}
                       onClick={() =>
                         handleCheckOrActive(item.challengeId, item.status)
                       }
                     >
-                      {isSubmit && <Spinner />}
-                      {item.status === 0 ? " Accept" : " Check Eligibility"}
+                      {isSubmit && selectedChallengeId === item.challengeId && (
+                        <Spinner />
+                      )}
+                      {isSubmit && selectedChallengeId === item.challengeId ? undefined :
+                        <Text variant="with-18" fontSize="20px" color="#fff">
+                          {item.status === 0 ? " Accept" : " Check Eligibility"}
+                        </Text>
+                     }
                     </Button>
                   </Td>
                 </Tr>
