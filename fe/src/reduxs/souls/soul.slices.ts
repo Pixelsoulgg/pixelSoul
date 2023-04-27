@@ -4,8 +4,6 @@ import { NFTResponse } from "@/types/nft.type";
 import { SteamUser } from "@/types/steam.type";
 import SteamApi from "@/apis/steam.api";
 
-const STEAM_ADDRESS = '76561197960434622';
-
 interface SoulState {
   nfts?: NFTResponse;
   isFetchingNft: boolean;
@@ -56,10 +54,9 @@ export default soulSlice.reducer;
 
 export const getNFTsAction = createAsyncThunk<NFTResponse, string>(
   "my-soul/getNFTAction",
-  async (address) => {
-    const strAddress = '0xdAC17F958D2ee523a2206206994597C13D831ec7' || address; //address
+  async (address) => {  
     const appApi = new AppApi();
-    const rs = await appApi.getNfts(strAddress);
+    const rs = await appApi.getNfts(address);
     return rs;
   }
 );
@@ -68,7 +65,7 @@ export const getSteamPlayerGeneralAction = createAsyncThunk<SteamUser, string>(
   "my-soul/getSteamPlayerGeneralAction",
   async (address) => {   
     const steamApi = new SteamApi();
-    const rs = await steamApi.getPlayerGeneral(STEAM_ADDRESS || address);
+    const rs = await steamApi.getPlayerGeneral(address);
     return rs;
   }
 );
