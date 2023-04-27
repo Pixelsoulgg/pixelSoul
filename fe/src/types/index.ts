@@ -76,7 +76,7 @@ export interface IUser {
   auth0Sub: string;
   imageUrl?: string;
   steamTimeCreated?: number;
-  gold: number;
+  gold?: number;
   
 }
 
