@@ -88,10 +88,10 @@ model Users {
   walletAddress    String?         @unique(map: "walletAddress_UNIQUE") @db.VarChar(42)
   steamId          String?         @unique(map: "steamId_UNIQUE") @db.VarChar(100)
   imageUrl         String?         @db.VarChar(200)
-  auth0Sid         String?         @unique(map: "auth0Id_UNIQUE") @db.VarChar(100)
+  auth0Sid         String?         @db.VarChar(100)
   auth0NickName    String?         @db.VarChar(45)
   auth0Name        String?         @db.VarChar(200)
-  auth0Sub         String?         @db.VarChar(100)
+  auth0Sub         String?         @unique(map: "auth0Sub_UNIQUE") @db.VarChar(100)
   steamTimeCreated DateTime?       @db.Timestamp(6)
   gold             Int?
   userChallenge    UserChallenge[]
