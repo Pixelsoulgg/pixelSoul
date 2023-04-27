@@ -3,7 +3,6 @@ import { PrismaService } from '../prisma.service'
 import { SteamService } from '../steam/steam.service'
 import { EligibilityDto } from './dto/eligibility.dto'
 import { ResEligibility } from './challenge.interface'
-import { OwnedGame } from 'src/steam/steam.interface'
 import { Challenge, Prisma, UserChallenge } from '@prisma/client'
 
 @Injectable()
@@ -14,15 +13,15 @@ export class ChallengeService {
     if (!ownedGames?.response?.games) {
       throw new HttpException(`Not found any games with id [${userSteamId}]`, HttpStatus.NOT_FOUND)
     }
-    const ownedGameIds = ownedGames.response.games.map((m) => m.appid)
+    //const ownedGameIds = ownedGames.response.games.map((m) => m.appid)
     const allChallenges = await this.prismaService.challenge.findMany({
-      where: {
-        gameId: { in: ownedGameIds }
-      }
+      // where: {
+      //   gameId: { in: ownedGameIds }
+      // }
     })
 
     const challenges = await this.prismaService.userChallenge.findMany({
-      where: { userSteamId, status: { not: 2 } },
+      where: { userSteamId },
       include: { challenge: true }
     })
     const userChallenges = allChallenges.map((m) => {
@@ -35,7 +34,7 @@ export class ChallengeService {
       }
       return challs
     })
-    return userChallenges
+    return userChallenges.filter((m) => m.status != 2)
   }
   async checkEligibility(eligibilityDto: EligibilityDto): Promise<ResEligibility> {
     const { challengeId, steamId } = eligibilityDto
@@ -63,13 +62,13 @@ export class ChallengeService {
       completed = challengeGame.playtime_forever >= requirement.playedTime
       msg = `You have played ${challengeGame.playtime_forever} minutes. But the requirement is ${requirement.playedTime}`
       if (completed) {
-        await this.prismaService.users.update({
-          where: { steamId },
-          data: { gold: { increment: requirement.reward } }
-        })
         await this.prismaService.userChallenge.update({
           where: { challengeId_userSteamId: { challengeId, userSteamId: steamId } },
           data: { status: 2 }
+        })
+        await this.prismaService.users.update({
+          where: { steamId },
+          data: { gold: { increment: requirement.reward } }
         })
         msg = `You have completed challenge and get ${requirement.reward} golds`
       }
