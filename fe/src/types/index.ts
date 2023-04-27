@@ -75,6 +75,9 @@ export interface IUser {
   auth0Name: string;
   auth0Sub: string;
   imageUrl?: string;
+  steamTimeCreated?: number;
+  gold: number;
+  
 }
 
 export interface IGame {
