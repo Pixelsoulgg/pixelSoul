@@ -60,9 +60,7 @@ export default function Challenges() {
 
   const filterChallengesByGameId = useMemo(() => {
     const status = challengeType === ChallengeType.All ? -1 : 1;
-    const data = challenges.filter(
-      (p) =>
-        p.challenge.gameId === gameId && (status === -1 || p.status === status)
+    const data = challenges.filter((p) => (!gameId || p.challenge.gameId === gameId) && (status === -1 || p.status === status)
     );
     switch (sortBy) {
       case 0:

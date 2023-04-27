@@ -3,7 +3,6 @@ import { IAuth0Model, IUser, OpenIDData } from "@/types";
 import StorageHelpers from "@/utils/localstore.helpers";
 import {
   PayloadAction,
-  createAction,
   createAsyncThunk,
   createSlice,
 } from "@reduxjs/toolkit";

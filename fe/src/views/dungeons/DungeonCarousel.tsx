@@ -46,10 +46,12 @@ const settings = {
 
 export default function DungeonCarousel() {
   const dispatch = useAppDispatch();
-  const { games, gameType } = useAppSelector((p) => p.dungeon);
+  const { games, gameType, gameId } = useAppSelector((p) => p.dungeon);
   const [slider, setSlider] = React.useState<Slider | null>(null);
 
-  const handleChooseGame = useCallback((gameId: number) => {dispatch(chooseGameId(gameId))}, [])
+  const handleChooseGame =(id: number) => {
+    dispatch(chooseGameId(id === gameId ? undefined : id));
+  }
 
   const gameList = useMemo(() => {
     if (gameType === DungeonGameType.Action)
@@ -110,6 +112,7 @@ export default function DungeonCarousel() {
                 alignItems="center"
                 borderRadius={10}
                 cursor="pointer"
+                className={`${gameId === game.appId ? 'pixel-active' : ''}`}
                 onClick={() => handleChooseGame(game.appId)}
               />           
           </div>
