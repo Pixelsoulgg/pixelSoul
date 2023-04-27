@@ -4,19 +4,38 @@ import { SteamService } from '../steam/steam.service'
 import { EligibilityDto } from './dto/eligibility.dto'
 import { ResEligibility } from './challenge.interface'
 import { OwnedGame } from 'src/steam/steam.interface'
+import { Challenge, Prisma, UserChallenge } from '@prisma/client'
 
 @Injectable()
 export class ChallengeService {
   constructor(private prismaService: PrismaService, private steamService: SteamService) {}
   async findMany(userSteamId: string) {
-    const challenges = await this.prismaService.userChallenge.findMany({
-      where: { userSteamId },
-      include: {
-        challenge: true
+    const ownedGames = await this.steamService.ownedGames(userSteamId)
+    if (!ownedGames?.response?.games) {
+      throw new HttpException(`Not found any games with id [${userSteamId}]`, HttpStatus.NOT_FOUND)
+    }
+    const ownedGameIds = ownedGames.response.games.map((m) => m.appid)
+    const allChallenges = await this.prismaService.challenge.findMany({
+      where: {
+        gameId: { in: ownedGameIds }
       }
     })
 
-    return challenges
+    const challenges = await this.prismaService.userChallenge.findMany({
+      where: { userSteamId, status: { not: 2 } },
+      include: { challenge: true }
+    })
+    const userChallenges = allChallenges.map((m) => {
+      const activeChallenge = challenges.find((f) => f.challengeId == m.id)
+      const challs: UserChallenge & { challenge: Challenge } = {
+        userSteamId,
+        status: activeChallenge?.status || 0,
+        challengeId: m.id,
+        challenge: m
+      }
+      return challs
+    })
+    return userChallenges
   }
   async checkEligibility(eligibilityDto: EligibilityDto): Promise<ResEligibility> {
     const { challengeId, steamId } = eligibilityDto
@@ -36,26 +55,24 @@ export class ChallengeService {
 
     let completed = false
     let msg = ''
-    let challengeGame: OwnedGame
-    if (games) {
-      const g = games.response.games.find((f) => f.appid == challenge.gameId)
-      if (g) {
-        completed = g.playtime_forever >= requirement.playedTime
-        challengeGame = g
-      }
-    }
-    if (completed) {
-      await this.prismaService.users.update({
-        where: { steamId },
-        data: { gold: { increment: requirement.reward } }
-      })
-      await this.prismaService.userChallenge.update({
-        where: { challengeId_userSteamId: { challengeId, userSteamId: steamId } },
-        data: { status: 2 }
-      })
-      msg = `You have completed challenge and get ${requirement.reward} golds`
+    const challengeGame = games?.response?.games?.find((f) => f.appid == challenge.gameId)
+
+    if (!challengeGame) {
+      msg = `You have played 0 minutes. But the requirement is ${requirement.playedTime}`
     } else {
+      completed = challengeGame.playtime_forever >= requirement.playedTime
       msg = `You have played ${challengeGame.playtime_forever} minutes. But the requirement is ${requirement.playedTime}`
+      if (completed) {
+        await this.prismaService.users.update({
+          where: { steamId },
+          data: { gold: { increment: requirement.reward } }
+        })
+        await this.prismaService.userChallenge.update({
+          where: { challengeId_userSteamId: { challengeId, userSteamId: steamId } },
+          data: { status: 2 }
+        })
+        msg = `You have completed challenge and get ${requirement.reward} golds`
+      }
     }
     const result: ResEligibility = {
       complete: completed,
@@ -64,9 +81,13 @@ export class ChallengeService {
     return result
   }
   async activeChallenge(challengeId: number, steamId: string) {
-    return await this.prismaService.userChallenge.update({
-      where: { challengeId_userSteamId: { userSteamId: steamId, challengeId } },
-      data: { status: 1 }
+    const data: Prisma.UserChallengeUncheckedCreateInput = {
+      userSteamId: steamId,
+      challengeId,
+      status: 1
+    }
+    return await this.prismaService.userChallenge.create({
+      data
     })
   }
 }
