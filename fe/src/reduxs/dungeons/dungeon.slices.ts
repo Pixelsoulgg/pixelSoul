@@ -26,7 +26,7 @@ export const dungeonSlice = createSlice({
   name: "dungeons",
   initialState,
   reducers: {
-    chooseGameId: (state, { payload }: PayloadAction<number>) => {
+    chooseGameId: (state, { payload }: PayloadAction<number | undefined>) => {
       state.gameId = payload;
     },
     changeGameTypeAction: (state, { payload }: PayloadAction<DungeonGameType>) => {
@@ -37,9 +37,9 @@ export const dungeonSlice = createSlice({
     builder.addCase(getGamesAction.fulfilled, (state, { payload }) => {
       state.games = payload;
       state.isFetchingGame = false;
-      if (payload.length > 0) {
-        state.gameId = payload[0].appId;
-      }
+      // if (payload.length > 0) {
+      //   state.gameId = payload[0].appId;
+      // }
     });
     builder.addCase(getGamesAction.pending, (state) => {
       state.isFetchingGame = true;

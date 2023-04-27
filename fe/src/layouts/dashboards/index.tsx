@@ -1,11 +1,12 @@
 import { Button, Flex, HStack, Image, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React, { ReactNode, useMemo, useState } from "react";
+import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import GoldButton from "../../components/dashboards/GoldButton";
 import Search from "../../components/Search";
 import HeaderMobile from "./HeaderMobile";
 import Sidebar from "./Sidebar";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { useGlobal } from "@/contexts/Globals";
 
 export interface IProps {
   children: ReactNode;
@@ -13,6 +14,8 @@ export interface IProps {
 export default function DashboardLayout({ children }: IProps) {
   const {user} = useUser();
   const router = useRouter();  
+
+  const {onMenuChange} = useGlobal();
 
   const { pathname } = router;
 
@@ -51,6 +54,10 @@ export default function DashboardLayout({ children }: IProps) {
         return "";
     }
   }, [pathname, user?.name]);
+
+  useEffect(() => {
+    onMenuChange && onMenuChange(router.pathname);
+  }, [router.pathname]);
 
   return (
     <Flex
