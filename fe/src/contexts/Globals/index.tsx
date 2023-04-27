@@ -23,7 +23,7 @@ export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
   const {push} = useRouter();
   const dispatch = useAppDispatch();
 
-  const [menuSelected, setMenuSelected] = React.useState<string>('My Soul'); 
+  const [menuSelected, setMenuSelected] = React.useState<string>('/my-souls'); 
   const onMenuChange = (menu: string) => setMenuSelected(menu);
 
   const handleInitialState= useCallback( async () => {

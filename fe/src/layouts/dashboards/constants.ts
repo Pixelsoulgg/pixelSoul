@@ -13,6 +13,6 @@ export const MENUS: INavigationItem[] = [
 ]
 
 export const SETTING_MENU: INavigationItem[] = [
-  {name: 'Support', nav: '/my-souls', icon: 'support'},
-  {name: 'Settings', nav: '/my-souls', icon: 'setting'},
+  {name: 'Support', nav: '/supports', icon: 'support'},
+  {name: 'Settings', nav: '/settings', icon: 'setting'},
 ]

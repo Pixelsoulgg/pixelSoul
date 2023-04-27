@@ -34,15 +34,15 @@ export default function Menu({ isExpand, ...props }: IProps) {
                 mx="15px"
                 my="5px"
                 padding={{ base: "8px 12px", lg: "8px 0px" }}
-                className={`menu-sidebar ${menuSelected === menu.name ? 'menu-sidebar-active' : ''} ${!isExpand ? 'fixed-content' : undefined}`}   
-                onClick={() => onMenuChange && onMenuChange(menu.name)}        
+                className={`menu-sidebar ${menuSelected === menu.nav ? 'menu-sidebar-active' : ''} ${!isExpand ? 'fixed-content' : undefined}`}   
+                // onClick={() => onMenuChange && onMenuChange(menu.name)}        
                 role="group"     
                 _hover={{bg: 'bg.hover', borderRadius: "6px"}}
               >
                 <Flex id="initial" w="25px" h="25px" bgImage={`/nav/${menu.icon}.svg`} objectFit="contain" bgRepeat="no-repeat" />
                 <Flex id="onhover" w="25px" h="25px" bgImage={`/nav/${menu.icon}-hover.svg`} objectFit="contain" bgRepeat="no-repeat" />
                 {isExpand && (
-                  <Text variant="with-title" fontSize="20px" ml="12px" color={menuSelected === menu.name ? 'white' : '#101828'}
+                  <Text variant="with-title" fontSize="20px" ml="12px" color={menuSelected === menu.nav ? 'white' : '#101828'}
                   >
                     {menu.name}
                   </Text>
@@ -60,14 +60,14 @@ export default function Menu({ isExpand, ...props }: IProps) {
               mx="15px"
               my="5px"
               padding={{ base: "8px 12px", lg: "8px 0px" }}
-              className={`menu-sidebar ${!isExpand ? 'fixed-content' : undefined} ${menuSelected === menu.name ? 'menu-sidebar-active' : ''}`}
+              className={`menu-sidebar ${!isExpand ? 'fixed-content' : undefined} ${menuSelected === menu.nav ? 'menu-sidebar-active' : ''}`}
               as={motion.div}
               _hover={{bg: 'bg.hover', borderRadius: "6px"}}
             >
                 <Flex id="initial" w="25px" h="25px" bgImage={`/nav/${menu.icon}.svg`} objectFit="contain" bgRepeat="no-repeat" mr="10px" />
                 <Flex id="onhover" w="25px" h="25px" bgImage={`/nav/${menu.icon}-hover.svg`} objectFit="contain" bgRepeat="no-repeat" mr="10px" />
                 {isExpand && (
-                  <Text variant="with-title" fontSize="20px" ml="12px" color={menuSelected === menu.name ? 'white' : '#101828'} >
+                  <Text variant="with-title" fontSize="20px" ml="12px" color={menuSelected === menu.nav ? 'white' : '#101828'} >
                     {menu.name}
                   </Text>
                 )}
