@@ -7,6 +7,7 @@ import HeaderMobile from "./HeaderMobile";
 import Sidebar from "./Sidebar";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useGlobal } from "@/contexts/Globals";
+import { useAppSelector } from "@/reduxs/hooks";
 
 export interface IProps {
   children: ReactNode;
@@ -14,6 +15,7 @@ export interface IProps {
 export default function DashboardLayout({ children }: IProps) {
   const {user} = useUser();
   const router = useRouter();  
+  const {auth0Info} = useAppSelector((p) => p.auth);
 
   const {onMenuChange} = useGlobal();
 
@@ -96,7 +98,7 @@ export default function DashboardLayout({ children }: IProps) {
               )}
               <Text variant="with-title" fontSize="40px">{getTitle}</Text>
             </HStack>
-            {!isHideSearch && <GoldButton />}
+            {!isHideSearch && <GoldButton gold={auth0Info?.gold} />}
             {isHideSearch && (
               <Search
                 paddingY="0px"

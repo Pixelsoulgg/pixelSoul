@@ -2,6 +2,7 @@ import { UserAvatar } from '@/components/dashboards'
 import { useGlobal } from '@/contexts/Globals'
 import Layout from '@/layouts'
 import { useAppSelector } from '@/reduxs/hooks'
+import { numberFormat } from '@/utils'
 import AllReward from '@/views/taverns/AllReward'
 import TopReward from '@/views/taverns/TopReward'
 import { Flex, HStack, Text, Image, Button } from '@chakra-ui/react'
@@ -18,7 +19,7 @@ export default function Tavern() {
             <Text variant="with-title" fontSize="18px">Your Gold Balance</Text>
             <HStack w="full" py="30px" borderBottom="1.5px solid #E4E7EC">
               <Image src="/gold.svg" alt="your gold" />
-              <Text variant="with-title" color="#667085">40,026.00</Text>
+              <Text variant="with-title" color="#667085">{numberFormat(auth0Info?.gold || 0)}</Text>
             </HStack>
             <UserAvatar avatar={auth0Info?.imageUrl} disableViewMore />
             <Button bgColor="#7F56D9" color="white" mt="30px" h="36px !important" borderRadius="8px">Get Gold</Button>
