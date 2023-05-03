@@ -9,7 +9,6 @@ import { MoralisService } from '../moralis/moralis.service'
 import { OpenseaService } from '../opensea/opensea.service'
 describe('ChallengeService', () => {
   let service: ChallengeService
-  let prisma
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -26,7 +25,6 @@ describe('ChallengeService', () => {
     }).compile()
 
     service = module.get<ChallengeService>(ChallengeService)
-    prisma = module.get<PrismaService>(PrismaService)
   })
 
   it('should be defined', () => {
