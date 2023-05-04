@@ -1,7 +1,5 @@
 import ConfirmModal from "@/components/ConfirmModal";
-import { disconnectMetaMask } from "@/contracts/interfaces/EthersConnect";
-import { disconnectMetamaskAction } from "@/reduxs/accounts/account.actions";
-import { useAppDispatch, useAppSelector } from "@/reduxs/hooks";
+import { useAppSelector } from "@/reduxs/hooks";
 import { getToast } from "@/utils";
 import { showSortAddress } from "@/utils";
 import {
@@ -15,6 +13,7 @@ import {
   useClipboard,
   useToast,
 } from "@chakra-ui/react";
+import { useWallet } from "@suiet/wallet-kit";
 import React, { useCallback, useEffect } from "react";
 
 const DEFAULT_MESSAGE = "Not connected yet";
@@ -22,18 +21,18 @@ const DEFAULT_MESSAGE = "Not connected yet";
 export default function AccountInfo() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
-  const { onCopy, value, setValue, hasCopied } = useClipboard("");
-
-  const dispatch = useAppDispatch();
+  const wallet = useWallet();
+  const { onCopy, setValue } = useClipboard("");
 
   const { steamInfo, steamId } = useAppSelector((p) => p.auth);
   const { walletInfo } = useAppSelector((p) => p.account);
 
-  const handleDisconnectMetamask = useCallback(async () => {
-    await disconnectMetaMask();
-    dispatch(disconnectMetamaskAction());
-    onClose();
-  }, [dispatch, onClose]);
+  const handleDisconnectWallet = async () => {
+    if (wallet.address) {
+      await wallet.disconnect();
+      onClose();
+    }
+  };
 
   useEffect(() => {
     setValue(walletInfo?.address || '')
@@ -56,16 +55,16 @@ export default function AccountInfo() {
           {steamId || DEFAULT_MESSAGE}
         </Text>
         <VStack w="full" alignItems="flex-start" my="30px">
-          <Text variant="with-24">Wallet ID</Text>
-          {!walletInfo && (
+          <Text variant="with-24">Sui Wallet ID</Text>
+          {!wallet.address && (
             <Text variant="with-18" color="#98A2B3">
               {DEFAULT_MESSAGE}
             </Text>
           )}
-          {walletInfo && (
+          {wallet.address && (
             <HStack w="full">
               <Text variant="with-18">
-                {showSortAddress(walletInfo?.address || "") || DEFAULT_MESSAGE}
+                {showSortAddress(wallet.address || "") || DEFAULT_MESSAGE}
               </Text>
               <Image
                 src="/copy.svg"
@@ -77,7 +76,7 @@ export default function AccountInfo() {
               <Text variant="with-18">Sign Out</Text>
               <Image
                 cursor="pointer"
-                alt="sign out your metamask"
+                alt="sign out your wallet"
                 src="/sign-out.svg"
                 onClick={onOpen}
               />
@@ -89,7 +88,7 @@ export default function AccountInfo() {
         isOpen={isOpen}
         title="Are you sure you want to sign out of this account?"
         onClose={onClose}
-        onOk={handleDisconnectMetamask}
+        onOk={handleDisconnectWallet}
       />
     </>
   );
