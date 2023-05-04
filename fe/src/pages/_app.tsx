@@ -1,14 +1,15 @@
-import {UserProvider} from '@auth0/nextjs-auth0/client';
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 import store from "@/reduxs/store";
+import { SuiWallet, WalletProvider } from "@suiet/wallet-kit";
+import "@suiet/wallet-kit/style.css";
 import "@/styles/globals.css";
 import theme from "@/themes/theme";
 import { ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { Provider } from "react-redux";
-import { NextPage } from 'next';
-import { ReactElement, ReactNode } from 'react';
-
+import { NextPage } from "next";
+import { ReactElement, ReactNode } from "react";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -23,7 +24,8 @@ export default function App({ Component, pageProps }: MyAppProps) {
   return (
     <Provider store={store}>
       <ChakraProvider theme={theme}>
-        <UserProvider>         
+        <WalletProvider defaultWallets={[SuiWallet]}>
+          <UserProvider>
             <Head>
               <meta charSet="UTF-8" />
               <meta name="keywords" content="Flip, coin, deget" />
@@ -32,11 +34,21 @@ export default function App({ Component, pageProps }: MyAppProps) {
                 name="viewport"
                 content="width=device-width, initial-scale=1.0"
               />
-               <link rel="stylesheet" type="text/css" charSet="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" /> 
-               <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
-            </Head>           
+              <link
+                rel="stylesheet"
+                type="text/css"
+                charSet="UTF-8"
+                href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+              />
+              <link
+                rel="stylesheet"
+                type="text/css"
+                href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+              />
+            </Head>
             {getLayout(<Component {...pageProps} />)}
-        </UserProvider>
+          </UserProvider>
+        </WalletProvider>
       </ChakraProvider>
     </Provider>
   );
