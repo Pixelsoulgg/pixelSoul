@@ -19,24 +19,33 @@ import { Empty } from "../../components";
 import { fonts, NFTsData } from "../../configs/constants";
 import { useAppSelector } from "../../reduxs/hooks";
 import { Animate } from "@/components/animations";
+import { useWallet } from "@suiet/wallet-kit";
+import Rarity from "@/components/Rarity";
 
-export default function MyNFTs() {
-  const { walletInfo } = useAppSelector((state) => state.account);
-  const {nfts} = useAppSelector((state) => state.soul);
+const data = [
+  {name: "Animoca x Souldrop Chest", img: "1", rarity: "common", description: "Placeholder Text"},
+  {name: "Placeholder Text", img: "3", rarity: "rare", description: "Placeholder Text"},
+  {name: "Placeholder Text", img: "2", rarity: "super", description: "Placeholder Text"},
+]
 
-  const data = useMemo(() => {
-    if (!nfts) return [];
-    return nfts.assets.slice(0, 3);
-  }, [nfts]);
+export default function MySouldDropChests() {
+  // const { walletInfo } = useAppSelector((state) => state.account);
+  const wallet = useWallet();
+  const {nfts} = useAppSelector((state) => state.soul);  
+
+  // const data = useMemo(() => {
+  //   if (!nfts) return [];
+  //   return nfts.assets.slice(0, 3);
+  // }, [nfts]);
 
   return (
     <Flex w="full" flexDir="column" mt="30px">
       <Text variant="with-title" fontSize="24px" mb="10px">
-        My NFTs
+        My SouldDrop Chests
       </Text>
-      {!walletInfo && <Empty />}
+      {!wallet.address && <Empty />}
 
-      {walletInfo && (
+      {wallet.address && (
         <>
           <Table variant="simple" margin="0px" className="nft-table">
             <Thead>
@@ -58,9 +67,9 @@ export default function MyNFTs() {
               {data.map((d, index) => (
                 <Tr key={String(index)} as={motion.tr} whileHover={Animate.tableHover}>
                   <Td>
-                    <Link href={d.permalink} target="_blank">
+                    <Link href="#" target="_blank">
                     <HStack>
-                      <Image src={d.image_preview_url} alt={d.name} 
+                      <Image src={`/sould-drop/${d.img}.png`} alt={d.name} 
                         h="50px"
                         w="83px"
                         objectFit="cover"
@@ -87,23 +96,21 @@ export default function MyNFTs() {
                       lineHeight="20px"
                       fontWeight="400"
                       fontFamily={fonts.Inter}
-                    >
-                      {d.stats.floor_price}
+                    >         
+                     {/* @ts-ignore */}
+                     <Rarity type={d.rarity} />
                     </Text>
                   </Td>
-                  <Td>
-                    <HStack>
-                      <Image src="/steam-icon.svg" alt="steam" />
+                  <Td>                   
                       <Text variant="with-sub" fontWeight="600">
-                        Steam
+                        {d.description}
                       </Text>
-                    </HStack>
                   </Td>
                 </Tr>
               ))}
             </Tbody>
           </Table>         
-            <Box
+            {/* <Box
               as="a"
               mt="20px"
               borderRadius="8px"
@@ -125,7 +132,7 @@ export default function MyNFTs() {
                     View All
                   </Text>
                 </Link>
-            </Box>
+            </Box> */}
         </>
       )}
     </Flex>

@@ -1,11 +1,11 @@
 import StreamGeneralData from "./StreamGeneralData";
 import MyCollectibles from "./MyCollectibles";
-import MyNFTs from "./MyNFTs";
+import MySouldDropChests from "./MySouldDropChests";
 import ProfileSection from "./ProfileSection";
 
 export {
   StreamGeneralData,
   MyCollectibles,
-  MyNFTs,
+  MySouldDropChests,
   ProfileSection,
 }
