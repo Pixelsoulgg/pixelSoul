@@ -1,5 +1,5 @@
 import { Flex, HStack, Heading, Spacer, Text, VStack, Image, SimpleGrid, useDisclosure } from '@chakra-ui/react'
-import { MyCollectibles, MyNFTs, ProfileSection, StreamGeneralData } from '@/views/dashboards'
+import { MyCollectibles, MySouldDropChests, ProfileSection, StreamGeneralData } from '@/views/dashboards'
 import { fonts } from '@/configs/constants'
 import WalletContainer from '@/views/dashboards/WalletContainer'
 import SteamContainer from '@/views/dashboards/SteamContainer'
@@ -16,8 +16,7 @@ import { getNFTsAction, getSteamPlayerGeneralAction } from '@/reduxs/souls/soul.
 MySoul.getLayout = function getLayout(page: React.ReactElement) {
   return <Layout variant="dashboard">{page}</Layout>;
 };
-
-
+              
 export default function MySoul() {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -109,8 +108,8 @@ export default function MySoul() {
             </SimpleGrid>
           </Flex>
            <StreamGeneralData />
-           <MyCollectibles />
-           <MyNFTs />
+           {/* <MyCollectibles /> */}
+           <MySouldDropChests />
         </Flex>
       </Flex>     
     </>

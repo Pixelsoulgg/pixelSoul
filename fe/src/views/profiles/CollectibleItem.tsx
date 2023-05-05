@@ -12,7 +12,7 @@ export default function CollectibleItem() {
       whileTap={Animate.whileTap}
       borderRadius="20px"
       padding="10px"
-      cursor="pointer"
+      cursor="pointer"    
     >
       <Flex      
         bgImage="/bg-collectible.svg"

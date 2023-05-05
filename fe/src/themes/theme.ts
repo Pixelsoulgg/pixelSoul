@@ -171,7 +171,7 @@ const Button: ComponentStyleConfig = {
       color: "#fff",
       minW: "160px",
       minH: "36px",
-      justifyContent: "center",
+      justifyContent: "center",    
       alignItems: "center",
       fontFamily: fonts.VT323,
       border: "3px solid #4691FF",
