@@ -17,6 +17,7 @@ import UserAvatar from "@/components/dashboards/UserAvatar";
 import { updateUserAvatarAction } from "@/reduxs/auths/auth.slices";
 import { useAppDispatch, useAppSelector } from "@/reduxs/hooks";
 import AccountInfo from "./AccountInfo";
+import Rarity from "@/components/Rarity";
 
 export default function ProfileSection() {
   const dispatch = useAppDispatch();
@@ -117,8 +118,8 @@ export default function ProfileSection() {
               fontWeight="600"
               cursor="pointer"
               bg={available === "Silver" ? "#F9FAFB" : ""}
-              onClick={() => setAvailable("MY_NFTS")}
-              className={available === "MY_NFTS" ? "tab-nft-active" : ""}
+              //onClick={() => setAvailable("MY_NFTS")}
+              className={available === "MY_NFTS" ? "tab-nft-active" : ""}              
             >
               My NFT Collection
             </Flex>
@@ -169,6 +170,7 @@ export default function ProfileSection() {
           Ok
         </Button>
       </Flex>
+     
     </Flex>
   );
 }
