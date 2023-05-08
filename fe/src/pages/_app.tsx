@@ -1,8 +1,8 @@
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import store from "@/reduxs/store";
 import { SuiWallet, WalletProvider } from "@suiet/wallet-kit";
-import "@suiet/wallet-kit/style.css";
 import "@/styles/globals.css";
+import "@suiet/wallet-kit/style.css";
 import theme from "@/themes/theme";
 import { ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
@@ -34,7 +34,7 @@ export default function App({ Component, pageProps }: MyAppProps) {
                 name="viewport"
                 content="width=device-width, initial-scale=1.0"
               />
-              <link
+              {/* <link
                 rel="stylesheet"
                 type="text/css"
                 charSet="UTF-8"
@@ -44,7 +44,7 @@ export default function App({ Component, pageProps }: MyAppProps) {
                 rel="stylesheet"
                 type="text/css"
                 href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-              />
+              /> */}
             </Head>
             {getLayout(<Component {...pageProps} />)}
           </UserProvider>
