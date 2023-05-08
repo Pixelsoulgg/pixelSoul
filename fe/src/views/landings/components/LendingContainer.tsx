@@ -9,7 +9,7 @@ export default function LendingContainer({ children, contentStyle, ...props }: I
   return (
     <Flex w="full" alignItems="center" justifyContent="center" {...props}>
       <Flex
-        w="full"
+        w={{base: "95%", lg: "95%"}}
         alignSelf="center"
         maxW="1667.56px"
         px="20px"
