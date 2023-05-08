@@ -11,9 +11,8 @@ export default function WalletContainer() {
   const wallet = useWallet();
 
   return (
-    <Flex w="full" flexDir="column" mt={{ base: "10px", lg: "0px" }}>
+    <Flex w="full" flexDir="column" mt={{ base: "10px"}}>
       {!wallet.address && <SuiWalletConnector />}
-
       {wallet.address && (
         <SimpleGrid w="full" columns={{ base: 1, lg: 2 }} columnGap="24px">
           <StatCard

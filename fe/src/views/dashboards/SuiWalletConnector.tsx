@@ -16,12 +16,9 @@ export default function SuiWalletConnector() {
           key={wallet.name}
           cursor="pointer"
           bg="#DC6803"
-          justifyContent="center"
-          alignItems="center"
           display="flex"
           w="260px"
           h="44px"
-          alignSelf="center"
           borderRadius="8px"
           px="16px"
           ml={{ base: "-100px", lg: "0px" }}
@@ -33,7 +30,7 @@ export default function SuiWalletConnector() {
             select(wallet.name);
           }}
         >
-          <Text variant="with-title" fontSize="16px" color="white">
+          <Text variant="with-title" fontSize="16px" w="full" color="white" textAlign="center">
             Connect to {wallet.name}
           </Text>
         </Box>
