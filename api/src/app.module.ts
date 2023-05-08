@@ -8,9 +8,18 @@ import { UserModule } from './user/user.module'
 import { NftModule } from './nft/nft.module'
 import { SteamModule } from './steam/steam.module'
 import { ChallengeModule } from './challenge/challenge.module'
+import { ChestModule } from './chest/chest.module'
 
 @Module({
-  imports: [GameModule, ScoreModule, UserModule, NftModule, SteamModule, ChallengeModule],
+  imports: [
+    GameModule,
+    ScoreModule,
+    UserModule,
+    NftModule,
+    SteamModule,
+    ChallengeModule,
+    ChestModule
+  ],
   controllers: [AppController],
   providers: [AppService, ConfigService]
 })
