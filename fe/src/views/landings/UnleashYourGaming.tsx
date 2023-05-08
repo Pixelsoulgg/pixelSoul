@@ -32,9 +32,10 @@ export default function UnleashYourGaming({onSignUp}: IProps) {
       variants={AnimateVariants}
     >
       <LendingContainer
+        w="full"
         contentStyle={{
           minH: "207px",
-          maxW: "1523px",
+          // maxW: "1523px",
           bg: "white",
           borderRadius: "20px",
           justifyContent: "center",

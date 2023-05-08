@@ -32,7 +32,7 @@ export default function InfoCard({
     <Flex
       as={m.div}
       flexDirection="column"
-      minW={{ base: "390px", lg: "481px" }}
+      minW={{ base: "390px", lg: "470px" }}
       h="577px"
       bg="#fff"
       borderRadius="20px"

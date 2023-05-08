@@ -33,7 +33,7 @@ export default function LandingFooter() {
           minH: { base: "50vh", "2xl": "294px" },
           bg: "rgba(255,255,255, 0.85)",
           borderRadius: "20px",
-          w: "1523px",
+          // w: "1523px",
           p: "58px 50px",
           mx: { base: "10px", lg: "0px" },
         }}
