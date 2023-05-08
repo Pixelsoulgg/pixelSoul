@@ -23,7 +23,7 @@ export default function SteamContainer() {
   }, [score?.collectorLevel, score?.investorLevel, steamInfo, steamUser?.point]);
 
   return (
-    <Flex w="full" flexDir="column">
+    <Flex w="full" flexDir="column" mt={{ base: "10px"}}>
       {!isAuth && (<Link href={process.env.NEXT_PUBLIC_STEAM_AUTH_URL || ''}>
         <Box
           cursor="pointer"
