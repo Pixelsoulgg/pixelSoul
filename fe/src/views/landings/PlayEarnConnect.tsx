@@ -6,7 +6,7 @@ import InfoCard from "./components/InfoCard";
 export default function PlayEarnConnect() {
   return (
       <LendingContainer contentStyle={{ justifyContent: "center" }}>
-        <SimpleGrid w="full" columns={{ base: 1, "2xl": 3 }} gap={20}>
+        <SimpleGrid w="full" columns={{ base: 1, lg: 3 }} gap={20}>
           <Center>
             <InfoCard
               name="Play"

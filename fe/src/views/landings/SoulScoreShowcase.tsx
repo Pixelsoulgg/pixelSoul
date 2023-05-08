@@ -8,13 +8,13 @@ export default function SoulScoreShowcase() {
     <LendingContainer contentStyle={{ justifyContent: "center" }}
       mb={{base: "150px", lg: "0px"}}
     >
-      <SimpleGrid w="full" columns={{ base: 1, "2xl": 2 }} gap={20}>
+      <SimpleGrid w="full" columns={{ base: 1, lg:2 }} gap={20}>
         <Center>
           <InfoCard
             name="SoulScore"
             img="4"
             des="Rank up your SoulScore and become a legend"
-            minW={{base: "390px", lg: "741px"}}
+            minW={{base: "390px", lg: "700px", "2xl": "741px"}}
             imgStyle={{
               w: {base: "90%", lg: "fit-content"}
             
@@ -26,7 +26,7 @@ export default function SoulScoreShowcase() {
             name="Showcase"
             img="5"
             des="Earn rare one-of-a-kind collectibles and show them off"
-            minW={{base: "390px", lg: "741px"}}
+            minW={{base: "390px", lg: "700px", "2xl": "741px"}}
             imgStyle={{
               w: {base: "90%", lg: "fit-content"}
             

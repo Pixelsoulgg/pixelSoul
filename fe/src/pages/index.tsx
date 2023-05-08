@@ -128,7 +128,7 @@ export default function LandingPage() {
             animate="animate"
           >
             <HStack alignItems="center">
-              <PixelSouldLogo />
+              <PixelSouldLogo isExpand />
               <Link href="/">
                 <Text
                   variant="with-lexend-menu"
