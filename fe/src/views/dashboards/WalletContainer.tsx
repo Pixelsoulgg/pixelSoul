@@ -5,15 +5,17 @@ import StatCard from "../../components/dashboards/StatCard";
 import { useAppSelector } from "../../reduxs/hooks";
 import { numberFormat } from "@/utils";
 import SuiWalletConnector from "./SuiWalletConnector";
+import ConnectMetaMask from "./ConnectMetaMask";
 
 export default function WalletContainer() {
-  const { score } = useAppSelector((state) => state.account);
+  const { score, walletInfo } = useAppSelector((state) => state.account);
   const wallet = useWallet();
 
   return (
     <Flex w="full" flexDir="column" mt={{ base: "10px"}}>
-      {!wallet.address && <SuiWalletConnector />}
-      {wallet.address && (
+      {/* {!walletInfo?.address && <SuiWalletConnector />} */}
+      {!walletInfo?.address && <ConnectMetaMask />}
+      {walletInfo?.address && (
         <SimpleGrid w="full" columns={{ base: 1, lg: 2 }} columnGap="24px">
           <StatCard
             title="InvestScore"
