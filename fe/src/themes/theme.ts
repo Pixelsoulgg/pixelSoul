@@ -231,6 +231,17 @@ const Button: ComponentStyleConfig = {
       borderRadius: "6px",
       fontSize: "20px",
     },
+    "wallet-signIn": {
+      bgColor: "#BBF2FF",
+      color: "#000082",
+      minW: "82px",
+      minH: "26px",
+      justifyContent: "center",
+      alignItems: "center",
+      fontFamily: fonts.VT323,
+      borderRadius: "6px",
+      fontSize: "18px",
+    },
   },
 };
 
@@ -240,6 +251,7 @@ export const ButtonVariants = {
   WITH_HIGHLIGHT_BLUE: "with-hl-blue",
   WITH_HOVER: "with-hover",
   WITH_ACTIVE: "with-active",
+  WITH_WALLET_SIGN_IN: "wallet-signIn",
 
 }
 

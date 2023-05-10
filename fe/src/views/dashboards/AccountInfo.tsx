@@ -1,5 +1,5 @@
 import ConfirmModal from "@/components/ConfirmModal";
-import { useAppSelector } from "@/reduxs/hooks";
+import { useAppDispatch, useAppSelector } from "@/reduxs/hooks";
 import { getToast } from "@/utils";
 import { showSortAddress } from "@/utils";
 import {
@@ -12,37 +12,51 @@ import {
   useDisclosure,
   useClipboard,
   useToast,
+  Button,
 } from "@chakra-ui/react";
 import { useWallet } from "@suiet/wallet-kit";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import SuiWalletConnector from "./SuiWalletConnector";
+import { disconnectMetaMask } from "@/contracts/interfaces/EthersConnect";
+import { disconnectMetamaskAction } from "@/reduxs/accounts/account.actions";
 
 const DEFAULT_MESSAGE = "Not connected yet";
 
 export default function AccountInfo() {
+  const dispatch = useAppDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const wallet = useWallet();
-  const { onCopy, setValue } = useClipboard("");
+  const { onCopy: onMetaMaskCopy, setValue: setValueMetaMask } = useClipboard("");
+  const { onCopy: onSuiCopy, setValue: setValueSui } = useClipboard("");
 
   const { steamInfo, steamId } = useAppSelector((p) => p.auth);
   const { walletInfo } = useAppSelector((p) => p.account);
 
+  const [disconnectType, setDisconnectType] = useState<'SUI' | 'METAMASK'>()
+
   const handleDisconnectWallet = async () => {
-    if (wallet.address) {
-      await wallet.disconnect();
-      onClose();
+    if (wallet.address && disconnectType === 'SUI') {
+      await wallet.disconnect();      
+    } else {
+      await disconnectMetaMask();
+      dispatch(disconnectMetamaskAction())
     }
+    onClose();
   };
 
   useEffect(() => {
-    setValue(walletInfo?.address || '')
-  }, [setValue, walletInfo]); 
+    setValueMetaMask(walletInfo?.address || "");
+    setValueSui(wallet?.address || "");
+  }, [wallet, walletInfo]);
 
-
-  const handleCopy= useCallback(() => {
-    onCopy();
-    toast(getToast("copied", "success", ""))
-  }, [onCopy, toast]);
+  const handleCopy = useCallback((isSui = false) => {
+    if (isSui)
+       onSuiCopy()
+   else 
+      onMetaMaskCopy();
+    toast(getToast("copied", "success", ""));
+  }, [toast]);
 
   return (
     <>
@@ -54,12 +68,50 @@ export default function AccountInfo() {
         >
           {steamId || DEFAULT_MESSAGE}
         </Text>
+
         <VStack w="full" alignItems="flex-start" my="30px">
-          <Text variant="with-24">Sui Wallet ID</Text>
-          {!wallet.address && (
+          <Text variant="with-24">Wallet ID</Text>
+          {!walletInfo?.address && (
             <Text variant="with-18" color="#98A2B3">
               {DEFAULT_MESSAGE}
             </Text>
+          )}
+          {walletInfo?.address && (
+            <HStack w="full">
+              <Text variant="with-18">
+                {showSortAddress(walletInfo.address || "") || DEFAULT_MESSAGE}
+              </Text>
+              <Image
+                src="/copy.svg"
+                alt="copy wallet address"
+                cursor="pointer"
+                onClick={() => handleCopy(false)}
+              />
+              <Spacer />
+              <Text variant="with-18">Sign Out</Text>
+              <Image
+                cursor="pointer"
+                alt="sign out your wallet"
+                src="/sign-out.svg"
+                onClick={() => {
+                  onOpen();
+                  setDisconnectType('METAMASK');
+                }}
+              />
+            </HStack>
+          )}
+        </VStack>
+
+        <VStack w="full" alignItems="flex-start" mb="30px">
+          <Text variant="with-24">Sui Wallet ID</Text>
+          {!wallet.address && (
+            <HStack w="full">
+              <Text variant="with-18" color="#98A2B3">
+                {DEFAULT_MESSAGE}
+              </Text>
+              <Spacer />
+              <SuiWalletConnector />
+            </HStack>
           )}
           {wallet.address && (
             <HStack w="full">
@@ -70,7 +122,7 @@ export default function AccountInfo() {
                 src="/copy.svg"
                 alt="copy wallet address"
                 cursor="pointer"
-                onClick={handleCopy}
+                onClick={() => handleCopy(true)}
               />
               <Spacer />
               <Text variant="with-18">Sign Out</Text>
@@ -78,7 +130,10 @@ export default function AccountInfo() {
                 cursor="pointer"
                 alt="sign out your wallet"
                 src="/sign-out.svg"
-                onClick={onOpen}
+                onClick={() => {
+                  onOpen();
+                  setDisconnectType('SUI');
+                }}
               />
             </HStack>
           )}

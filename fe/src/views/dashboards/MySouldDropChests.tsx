@@ -23,9 +23,9 @@ import { useWallet } from "@suiet/wallet-kit";
 import Rarity from "@/components/Rarity";
 
 const data = [
-  {name: "Animoca x Souldrop Chest", img: "1", rarity: "common", description: "Placeholder Text"},
-  {name: "Placeholder Text", img: "3", rarity: "rare", description: "Placeholder Text"},
-  {name: "Placeholder Text", img: "2", rarity: "super", description: "Placeholder Text"},
+  {name: "Animoca x Souldrop Chest", img: "1", rarity: "Common", description: "Placeholder Text"},
+  {name: "Placeholder Text", img: "3", rarity: "Rare", description: "Placeholder Text"},
+  {name: "Placeholder Text", img: "2", rarity: "Lengendary", description: "Placeholder Text"},
 ]
 
 export default function MySouldDropChests() {

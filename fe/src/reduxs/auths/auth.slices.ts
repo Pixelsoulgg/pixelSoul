@@ -72,7 +72,6 @@ export const setSteamInfoAction = createAsyncThunk<OpenIDData, OpenIDData>(
     const params = claimed_id.split('/');
     const steamId = params[params.length -1];
     model.steamId = steamId;
-    console.log({model})
     storage.setSteamInfo(model);
     const appApi = new AppApi();
     await appApi.addSteamInfo(
