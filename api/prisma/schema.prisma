@@ -94,8 +94,8 @@ model Users {
   auth0Sub         String?         @unique(map: "auth0Sub_UNIQUE") @db.VarChar(100)
   steamTimeCreated DateTime?       @db.Timestamp(6)
   gold             Int?            @default(0)
-  chest            Chest[]
   userChallenge    UserChallenge[]
+  userChest        UserChest[]
 
   @@index([auth0Sid], map: "fk_user_auth0_idx")
   @@index([steamId], map: "fk_user_steam_idx")
@@ -109,23 +109,22 @@ model Box {
 }
 
 model Chest {
-  id          Int          @id @default(autoincrement())
-  name        String?      @db.VarChar(1000)
-  description String?      @db.VarChar(2000)
-  image       String?      @db.VarChar(500)
-  claimDate   DateTime?    @db.DateTime(0)
-  rarityId    Int?
-  auth0Sub    String?      @db.VarChar(100)
-  chestRarity ChestRarity? @relation(fields: [rarityId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_Chest_Rarity")
-  users       Users?       @relation(fields: [auth0Sub], references: [auth0Sub], onDelete: NoAction, onUpdate: NoAction, map: "fk_Chest_User")
-
-  @@index([rarityId], map: "fk_Chest_Rarity_idx")
-  @@index([auth0Sub], map: "fk_Chest_User_idx")
+  id          Int         @id @default(autoincrement())
+  name        String?     @db.VarChar(1000)
+  description String?     @db.VarChar(2000)
+  image       String?     @db.VarChar(500)
+  claimDate   DateTime?   @db.DateTime(0)
+  rarity      String?     @db.VarChar(50)
+  userChest   UserChest[]
 }
 
-model ChestRarity {
-  id     Int     @id
-  name   String? @db.VarChar(200)
-  status Int?    @default(1)
-  chest  Chest[]
+model UserChest {
+  auth0Sub String @db.VarChar(100)
+  chestId  Int
+  amount   Int?
+  chest    Chest  @relation(fields: [chestId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_chest")
+  users    Users  @relation(fields: [auth0Sub], references: [auth0Sub], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
+
+  @@id([auth0Sub, chestId])
+  @@index([chestId], map: "fk_chest_idx")
 }

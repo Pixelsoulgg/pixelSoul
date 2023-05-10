@@ -9,19 +9,19 @@ export class ChestService {
   async findAll(params: {
     skip?: number
     take?: number
-    cursor?: Prisma.ChestWhereUniqueInput
-    where?: Prisma.ChestWhereInput
-    orderBy?: Prisma.ChestOrderByWithRelationInput
+    cursor?: Prisma.UserChestWhereUniqueInput
+    where?: Prisma.UserChestWhereInput
+    orderBy?: Prisma.UserChestOrderByWithRelationInput
   }) {
     const { skip, take, cursor, where, orderBy } = params
-    return await this.prismaService.chest.findMany({
+    return await this.prismaService.userChest.findMany({
       skip,
       take,
       cursor,
       where,
       orderBy,
       include: {
-        chestRarity: true
+        chest: true
       }
     })
   }
