@@ -89,4 +89,21 @@ export class UserService {
       where
     })
   }
+  async addSuiAddress(where: Prisma.UsersWhereUniqueInput, suiWalletAddress: string) {
+    const updateData: Prisma.UsersUpdateInput = {
+      suiWalletAddress
+    }
+    const user = await this.prisma.users.findFirst({
+      where: { suiWalletAddress }
+    })
+    if (user)
+      throw new HttpException(
+        `suiWalletAddress [${user.suiWalletAddress}] existed`,
+        HttpStatus.NOT_FOUND
+      )
+    return await this.prisma.users.update({
+      data: updateData,
+      where
+    })
+  }
 }

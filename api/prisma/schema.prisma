@@ -94,6 +94,7 @@ model Users {
   auth0Sub         String?         @unique(map: "auth0Sub_UNIQUE") @db.VarChar(100)
   steamTimeCreated DateTime?       @db.Timestamp(6)
   gold             Int?            @default(0)
+  suiWalletAddress String?         @db.VarChar(45)
   userChallenge    UserChallenge[]
   userChest        UserChest[]
 
