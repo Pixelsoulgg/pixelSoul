@@ -19,21 +19,25 @@ import React, { useCallback, useEffect, useState } from "react";
 import SuiWalletConnector from "./SuiWalletConnector";
 import { disconnectMetaMask } from "@/contracts/interfaces/EthersConnect";
 import { disconnectMetamaskAction } from "@/reduxs/accounts/account.actions";
+import { useAddSuiWalletMutation } from "@/services/modules/game.check.services";
 
 const DEFAULT_MESSAGE = "Not connected yet";
 
 export default function AccountInfo() {
   const dispatch = useAppDispatch();
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const wallet = useWallet();
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const { onCopy: onMetaMaskCopy, setValue: setValueMetaMask } = useClipboard("");
   const { onCopy: onSuiCopy, setValue: setValueSui } = useClipboard("");
 
-  const { steamInfo, steamId } = useAppSelector((p) => p.auth);
+  const { steamInfo, steamId, auth0Sub } = useAppSelector((p) => p.auth);
   const { walletInfo } = useAppSelector((p) => p.account);
+  const [disconnectType, setDisconnectType] = useState<'SUI' | 'METAMASK'>();
 
-  const [disconnectType, setDisconnectType] = useState<'SUI' | 'METAMASK'>()
+  const [addSuiWallet, addSuiWalletResult] = useAddSuiWalletMutation()
 
   const handleDisconnectWallet = async () => {
     if (wallet.address && disconnectType === 'SUI') {
@@ -57,6 +61,21 @@ export default function AccountInfo() {
       onMetaMaskCopy();
     toast(getToast("copied", "success", ""));
   }, [toast]);
+
+
+  const handlePostSuiWalletToApi = useCallback(async() => {
+    try {
+      if (wallet && wallet.address) {
+        await addSuiWallet({auth0Sub: auth0Sub, suiWalletAddress: wallet.address}).unwrap();
+      } 
+    } catch(ex) {}
+   
+  }, [wallet, wallet.address]);
+
+  useEffect(() => {
+    handlePostSuiWalletToApi();
+  }, [handlePostSuiWalletToApi]);
+
 
   return (
     <>

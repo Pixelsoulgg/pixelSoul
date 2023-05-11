@@ -12,11 +12,12 @@ interface AuthState {
   steamInfo?: OpenIDData;
   auth0Info?: IUser;
   steamId?: string;
-  auth0Sub?: string;
+  auth0Sub: string;
 }
 
 const initialState: AuthState = {
   steamInfo: undefined,
+  auth0Sub: '',
 };
 
 export const authSlice = createSlice({
