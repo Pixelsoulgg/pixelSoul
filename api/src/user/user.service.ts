@@ -63,47 +63,48 @@ export class UserService {
       where
     })
   }
-  async addWallet(where: Prisma.UsersWhereUniqueInput, wallet: string) {
+  async addWallet(auth0Sub: string, wallet: string) {
     const updateData: Prisma.UsersUpdateInput = {
       walletAddress: wallet
     }
     const user = await this.findOne({ walletAddress: wallet })
-    if (user)
+    if (user && user.auth0Sub != auth0Sub)
       throw new HttpException(
         `wallet address [${user.walletAddress}] existed`,
         HttpStatus.NOT_FOUND
       )
     return await this.prisma.users.update({
       data: updateData,
-      where
+      where: { auth0Sub }
     })
   }
-  async addSteamId(where: Prisma.UsersWhereUniqueInput, steamId: string) {
+  async addSteamId(auth0Sub: string, steamId: string) {
     const updateData: Prisma.UsersUpdateInput = {
       steamId
     }
     const user = await this.findOne({ steamId })
-    if (user) throw new HttpException(`steam id [${user.steamId}] existed`, HttpStatus.NOT_FOUND)
+    if (user && user.auth0Sub != auth0Sub)
+      throw new HttpException(`steam id [${user.steamId}] existed`, HttpStatus.NOT_FOUND)
     return await this.prisma.users.update({
       data: updateData,
-      where
+      where: { auth0Sub }
     })
   }
-  async addSuiAddress(where: Prisma.UsersWhereUniqueInput, suiWalletAddress: string) {
+  async addSuiAddress(auth0Sub: string, suiWalletAddress: string) {
     const updateData: Prisma.UsersUpdateInput = {
       suiWalletAddress
     }
     const user = await this.prisma.users.findFirst({
       where: { suiWalletAddress }
     })
-    if (user)
+    if (user && user.auth0Sub != auth0Sub)
       throw new HttpException(
         `suiWalletAddress [${user.suiWalletAddress}] existed`,
         HttpStatus.NOT_FOUND
       )
     return await this.prisma.users.update({
       data: updateData,
-      where
+      where: { auth0Sub }
     })
   }
 }
