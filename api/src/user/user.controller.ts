@@ -36,6 +36,13 @@ export class UserController {
   async addWallet(@Param('auth0Sub') auth0Sub: string, @Body() userAddWalletDto: UserAddWalletDto) {
     return await this.userService.addWallet({ auth0Sub }, userAddWalletDto.walletAddress)
   }
+  @Post('addSuiWallet/:auth0Sub')
+  async addSuiWallet(
+    @Param('auth0Sub') auth0Sub: string,
+    @Body() userAddWalletDto: UserAddWalletDto
+  ) {
+    return await this.userService.addSuiAddress({ auth0Sub }, userAddWalletDto.walletAddress)
+  }
   @Delete(':auth0Sub')
   async remove(@Param('auth0Sub') auth0Sub: string) {
     return await this.userService.remove({ auth0Sub })
