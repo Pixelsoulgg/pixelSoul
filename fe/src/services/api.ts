@@ -32,9 +32,9 @@ const baseQueryWithInterceptor: BaseQueryFn<
 }
 
 export const api = createApi({
+  tagTypes: ['PixelSoul'],
   baseQuery: baseQueryWithInterceptor,
   endpoints: () => ({}),
-  tagTypes: ['PixelSoul'],
 })
 
 

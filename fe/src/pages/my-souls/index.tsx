@@ -11,7 +11,6 @@ import { useRouter } from 'next/router'
 import { OpenIDData } from '@/types'
 import { handleConnectMetamaskSuccess, setSteamInfoAction, steamAuthSuccess } from '@/reduxs/auths/auth.slices'
 import { getNFTsAction, getSteamPlayerGeneralAction } from '@/reduxs/souls/soul.slices'
-import { useGetGamesQuery } from '@/services/modules/game.services'
 
 MySoul.getLayout = function getLayout(page: React.ReactElement) {
   return <Layout variant="dashboard">{page}</Layout>;
@@ -21,8 +20,6 @@ export default function MySoul() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
- const {data, isFetching, isLoading, isError} =  useGetGamesQuery();
- console.log({data, isFetching, isLoading, isError})
   const { walletInfo } = useAppSelector((s) => s.account);
   const {auth0Info, auth0Sub, steamId} = useAppSelector(s => s.auth);
 

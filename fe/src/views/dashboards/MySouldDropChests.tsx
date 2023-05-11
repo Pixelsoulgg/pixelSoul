@@ -21,6 +21,7 @@ import { useAppSelector } from "../../reduxs/hooks";
 import { Animate } from "@/components/animations";
 import { useWallet } from "@suiet/wallet-kit";
 import Rarity from "@/components/Rarity";
+import { useGetChestQuery } from "@/services/modules/game.check.services";
 
 const data = [
   {name: "Animoca x Souldrop Chest", img: "1", rarity: "Common", description: "Placeholder Text"},
@@ -29,23 +30,20 @@ const data = [
 ]
 
 export default function MySouldDropChests() {
-  // const { walletInfo } = useAppSelector((state) => state.account);
-  const wallet = useWallet();
-  const {nfts} = useAppSelector((state) => state.soul);  
+  const { auth0Sub } = useAppSelector((state) => state.auth);
+  const { walletInfo } = useAppSelector((state) => state.account);
 
-  // const data = useMemo(() => {
-  //   if (!nfts) return [];
-  //   return nfts.assets.slice(0, 3);
-  // }, [nfts]);
+  const {data: chestData, isLoading, isError, isFetching} = useGetChestQuery(auth0Sub, {skip: !auth0Sub});
+  console.log({chestData})
 
   return (
     <Flex w="full" flexDir="column" mt="30px">
       <Text variant="with-title" fontSize="24px" mb="10px">
         My SouldDrop Chests
       </Text>
-      {!wallet.address && <Empty />}
+      {!walletInfo?.address && <Empty />}
 
-      {wallet.address && (
+      {walletInfo?.address && (
         <>
           <Table variant="simple" margin="0px" className="nft-table">
             <Thead>
@@ -64,12 +62,12 @@ export default function MySouldDropChests() {
               </Tr>
             </Thead>
             <Tbody>
-              {data.map((d, index) => (
+              {chestData?.map((d, index) => (
                 <Tr key={String(index)} as={motion.tr} whileHover={Animate.tableHover}>
                   <Td>
                     <Link href="#" target="_blank">
                     <HStack>
-                      <Image src={`/sould-drop/${d.img}.png`} alt={d.name} 
+                      <Image src={`/sould-drop/${d.chest.image || 1}.png`} alt={d.chest.name} 
                         h="50px"
                         w="83px"
                         objectFit="cover"
@@ -83,7 +81,7 @@ export default function MySouldDropChests() {
                           fontWeight="500"
                           fontFamily={fonts.Inter}
                         >
-                          {d.name}
+                          {d.chest.name}
                         </Text>
                       </VStack>
                     </HStack>
@@ -98,12 +96,12 @@ export default function MySouldDropChests() {
                       fontFamily={fonts.Inter}
                     >         
                      {/* @ts-ignore */}
-                     <Rarity type={d.rarity} />
+                     <Rarity type={d.chest.rarity} />
                     </Text>
                   </Td>
                   <Td>                   
                       <Text variant="with-sub" fontWeight="600">
-                        {d.description}
+                        {d.chest.description}
                       </Text>
                   </Td>
                 </Tr>
