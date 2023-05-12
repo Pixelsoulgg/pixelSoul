@@ -9,6 +9,7 @@ import { NftModule } from './nft/nft.module'
 import { SteamModule } from './steam/steam.module'
 import { ChallengeModule } from './challenge/challenge.module'
 import { ChestModule } from './chest/chest.module'
+import { MysteryChestModule } from './mystery-chest/mystery-chest.module'
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { ChestModule } from './chest/chest.module'
     NftModule,
     SteamModule,
     ChallengeModule,
-    ChestModule
+    ChestModule,
+    MysteryChestModule
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService]
