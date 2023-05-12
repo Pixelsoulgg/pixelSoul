@@ -24,6 +24,7 @@ import { OpenseaService } from 'src/opensea/opensea.service'
     MoralisService,
     OpenseaService
   ],
-  imports: [PassportModule]
+  imports: [PassportModule],
+  exports: [SteamService]
 })
 export class SteamModule {}

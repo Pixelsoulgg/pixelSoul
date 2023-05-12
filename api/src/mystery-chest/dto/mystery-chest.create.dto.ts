@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 
-export class MysteryChestCreateDto {
+export class MysteryChestDto {
   @ApiProperty()
   auth0Sub: string
   @ApiProperty()
