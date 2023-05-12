@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common'
+import { Controller, Get, Param, Post } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { MysteryChestService } from './mystery-chest.service'
 @ApiTags('mystery chest')
@@ -8,5 +8,9 @@ export class MysteryChestController {
   @Get(':auth0Sub')
   async findAllByUser(@Param('auth0Sub') auth0Sub: string) {
     return await this.mysteryChestService.findAll(auth0Sub)
+  }
+  @Post('claim/:auth0Sub')
+  async claim(@Param('auth0Sub') auth0Sub: string) {
+    return await this.mysteryChestService.increase(auth0Sub)
   }
 }
