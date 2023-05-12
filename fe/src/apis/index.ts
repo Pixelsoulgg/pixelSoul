@@ -1,3 +1,4 @@
+import { getBaseUrlHelper } from '@/utils/env.helpers';
 import axios from 'axios';
 import queryString from 'query-string';
 
@@ -9,7 +10,7 @@ const headers: Readonly<Record<string, string | boolean>> = {
 };
 
 const axiosInstance = axios.create({
-  baseURL: 'https://api.pixelsoul.gg/api/v1',
+  baseURL: getBaseUrlHelper(),
   headers,
   paramsSerializer: {
     serialize: (params) => {

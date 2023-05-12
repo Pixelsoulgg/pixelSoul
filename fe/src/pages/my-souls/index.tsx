@@ -12,7 +12,6 @@ import { OpenIDData } from '@/types'
 import { handleConnectMetamaskSuccess, setSteamInfoAction, steamAuthSuccess } from '@/reduxs/auths/auth.slices'
 import { getNFTsAction, getSteamPlayerGeneralAction } from '@/reduxs/souls/soul.slices'
 
-
 MySoul.getLayout = function getLayout(page: React.ReactElement) {
   return <Layout variant="dashboard">{page}</Layout>;
 };

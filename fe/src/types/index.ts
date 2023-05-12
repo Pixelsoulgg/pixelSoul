@@ -77,7 +77,6 @@ export interface IUser {
   imageUrl?: string;
   steamTimeCreated?: number;
   gold?: number;
-  
 }
 
 export interface IGame {
@@ -90,4 +89,18 @@ export interface IGame {
   socialTwitter: string;
   socialDiscord: string;
   socialTelegram: string;
+}
+
+export interface IChest {
+  auth0Sub: string;
+  chestId: number;
+  amount: number;
+  chest: {
+    id: number;
+    name: string;
+    description: string;
+    image: string | null;
+    claimDate: string | null;
+    rarity: string;
+  };
 }
