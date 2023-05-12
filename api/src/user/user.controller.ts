@@ -30,18 +30,18 @@ export class UserController {
     @Param('auth0Sub') auth0Sub: string,
     @Body() userAddSteamIdDto: UserAddSteamIdDto
   ) {
-    return await this.userService.addSteamId({ auth0Sub }, userAddSteamIdDto.steamId)
+    return await this.userService.addSteamId(auth0Sub, userAddSteamIdDto.steamId)
   }
   @Post('addWallet/:auth0Sub')
   async addWallet(@Param('auth0Sub') auth0Sub: string, @Body() userAddWalletDto: UserAddWalletDto) {
-    return await this.userService.addWallet({ auth0Sub }, userAddWalletDto.walletAddress)
+    return await this.userService.addWallet(auth0Sub, userAddWalletDto.walletAddress)
   }
   @Post('addSuiWallet/:auth0Sub')
   async addSuiWallet(
     @Param('auth0Sub') auth0Sub: string,
     @Body() userAddWalletDto: UserAddWalletDto
   ) {
-    return await this.userService.addSuiAddress({ auth0Sub }, userAddWalletDto.walletAddress)
+    return await this.userService.addSuiAddress(auth0Sub, userAddWalletDto.walletAddress)
   }
   @Delete(':auth0Sub')
   async remove(@Param('auth0Sub') auth0Sub: string) {
