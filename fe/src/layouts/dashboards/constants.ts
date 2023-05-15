@@ -6,7 +6,7 @@ export interface INavigationItem {
 
 export const MENUS: INavigationItem[] = [
   {name: 'My Soul', nav: '/my-souls', icon: 'heart'},
-  {name: 'SoulDrop', nav: '/soul-drop', icon: 'soul-drop'},
+  {name: 'SoulDrop', nav: '/soul-drops', icon: 'soul-drop'},
   // {name: 'Dungeon', nav: '/dungeons', icon: 'play-to-earn'},
   // {name: 'Tavern', nav: '/taverns', icon: 'tavern'},
   // {name: 'Forge', nav: '/forges', icon: 'forge'},

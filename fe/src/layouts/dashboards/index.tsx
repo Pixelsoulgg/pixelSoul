@@ -8,6 +8,7 @@ import Sidebar from "./Sidebar";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useGlobal } from "@/contexts/Globals";
 import { useAppSelector } from "@/reduxs/hooks";
+import { SoulScoreButton } from "@/components/dashboards";
 
 export interface IProps {
   children: ReactNode;
@@ -22,13 +23,13 @@ export default function DashboardLayout({ children }: IProps) {
   const { pathname } = router;
 
   const isHideSearch = useMemo(() => {
-    const checkList = ["/my-souls", "/taverns", "/forges", "/epochs"];
+    const checkList = ["/my-souls", "/taverns", "/forges", "/epochs", "/soul-drops"];
     if (checkList.findIndex((p) => p === pathname) > -1) return false;
     return true;
   }, [pathname]);
 
   const isHideBack = useMemo(() => {
-    const checkList = ["/my-souls", "/dungeons", "/taverns", "/forges", "/epochs"];
+    const checkList = ["/my-souls", "/dungeons", "/taverns", "/forges", "/epochs", "/soul-drops"];
     if (checkList.findIndex((p) => p === pathname) > -1) return false;
     return true;
   }, [pathname]);
@@ -52,6 +53,8 @@ export default function DashboardLayout({ children }: IProps) {
         return "Dungeon";
       case "/my-souls":
         return `Welcome to PixelSoul, ${user?.name || ''}`;
+      case "/soul-drops":
+         return "SoulDrop"
       default:
         return "";
     }
@@ -98,7 +101,7 @@ export default function DashboardLayout({ children }: IProps) {
               )}
               <Text variant="with-title" fontSize="40px">{getTitle}</Text>
             </HStack>
-            {!isHideSearch && <GoldButton gold={auth0Info?.gold} />}
+            {!isHideSearch && <SoulScoreButton soul={auth0Info?.gold} />}
             {isHideSearch && (
               <Search
                 paddingY="0px"
