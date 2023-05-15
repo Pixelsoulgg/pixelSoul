@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { MysteryChestDto } from './dto/mystery-chest.create.dto'
 import { SteamService } from '../steam/steam.service'
-import { ScoreService } from 'src/score/score.service'
+import { ScoreService } from '../score/score.service'
 
 @Injectable()
 export class MysteryChestService {
