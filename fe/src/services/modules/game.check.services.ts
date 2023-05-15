@@ -19,6 +19,7 @@ export const gameCheckApiServices = api.injectEndpoints({
 
     addSuiWallet: builder.mutation<IUser, {auth0Sub: string, suiWalletAddress: string}>({
       query(data) {
+        console.log({data})
         return {
             url: `${USER_URL}/addSuiWallet/${data.auth0Sub}`,
             method: 'POST',
