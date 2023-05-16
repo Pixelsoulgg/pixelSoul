@@ -110,6 +110,7 @@ model Chest {
   image       String?     @db.VarChar(500)
   claimDate   DateTime?   @db.DateTime(0)
   rarity      String?     @db.VarChar(50)
+  partner     String?     @db.VarChar(500)
   userChest   UserChest[]
 }
 
