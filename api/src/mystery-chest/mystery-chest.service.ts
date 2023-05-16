@@ -25,10 +25,12 @@ export class MysteryChestService {
 
   async increase(auth0Sub: string) {
     let amount = 0
+    let claimSteam = 0
+    let claimWallet = 0
     const user = await this.prismaService.users.findUnique({
       where: { auth0Sub }
     })
-    if (user.steamId) {
+    if (user.steamId && user.claimSteamChest == 0) {
       const steamInfor = await this.steamService.ownedGames(user.steamId)
       if (steamInfor?.response?.game_count > 0) {
         const games = steamInfor.response.games
@@ -44,14 +46,16 @@ export class MysteryChestService {
         else if (timeCount >= 50) amount += 2
         else if (timeCount >= 10) amount += 1
       }
+      claimSteam = 1
     }
-    if (user.walletAddress) {
+    if (user.walletAddress && user.claimWalletChest == 0) {
       const score = await this.scoreService.getScore(user.walletAddress)
       if (score.investorLevel >= 1000) amount += 5
       if (score.investorLevel >= 500) amount += 4
       if (score.investorLevel >= 100) amount += 3
       if (score.investorLevel >= 50) amount += 2
       if (score.investorLevel >= 10) amount += 1
+      claimWallet = 1
     }
     if (amount > 0) {
       await this.prismaService.userMysteryChest.upsert({
@@ -64,6 +68,10 @@ export class MysteryChestService {
         update: {
           amount: { increment: amount }
         }
+      })
+      await this.prismaService.users.update({
+        where: { auth0Sub },
+        data: { claimSteamChest: claimSteam, claimWalletChest: claimWallet }
       })
     }
   }
