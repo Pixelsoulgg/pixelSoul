@@ -117,4 +117,7 @@ export interface IMysteryChest {
   };
 }
 
-
+export interface IChestAmount {
+  rarity: string;
+  amount: number;
+}
