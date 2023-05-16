@@ -1,5 +1,7 @@
-import ClaimedAndAvailableMysteryBox from "./ClaimedAndAvailableMysteryBox";
+import ClaimedContainer from "./ClaimedContainer";
+import AvailableMysteryChest from "./AvailableMysteryChest";
 
 export {
-  ClaimedAndAvailableMysteryBox
+  ClaimedContainer,
+  AvailableMysteryChest
 }

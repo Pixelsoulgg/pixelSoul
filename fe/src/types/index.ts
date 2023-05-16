@@ -104,3 +104,17 @@ export interface IChest {
     rarity: string;
   };
 }
+
+export interface IMysteryChest {
+  auth0Sub: string;
+  mysteryId: number;
+  amount: number;
+  mysteryChest: {
+    id: number;
+    name: string;
+    description: string;
+    image: string | null;
+  };
+}
+
+
