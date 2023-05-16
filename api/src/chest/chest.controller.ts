@@ -9,4 +9,8 @@ export class ChestController {
   async chest(@Param('auth0Sub') auth0Sub: string) {
     return this.chestService.findAll({ where: { auth0Sub } })
   }
+  @Get('summary/:auth0Sub')
+  async chestSummary(@Param('auth0Sub') auth0Sub: string) {
+    return await this.chestService.chest(auth0Sub)
+  }
 }
