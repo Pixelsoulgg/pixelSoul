@@ -78,8 +78,11 @@ export const getDays = (dateNum: number) => {
   return diffDays;
 }
 
-export function formatDateYYYYMMDDHHMMSS(date: number) {
-  return moment(date * 1000).format(DATE_TIME_FORMAT_ONE)
+export function formatDateYYYYMMDDHHMMSS(date?: number | Date) {
+  if (!date) return "--/--/----"
+  if (typeof date === 'number')
+    return moment(date * 1000).format(DATE_TIME_FORMAT_ONE);
+  return moment(date).format(DATE_TIME_FORMAT_ONE);
 }
 
 export function parseBalance(balanceWei: number | string, decimals = 18) {
