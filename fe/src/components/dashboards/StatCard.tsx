@@ -9,6 +9,7 @@ interface IProps {
   percent?: number;
   isUp: boolean;
   comingSoon?: boolean;
+  disableUpDown?: boolean;
 }
 
 export default function StatCard({
@@ -17,6 +18,7 @@ export default function StatCard({
   percent,
   isUp,
   comingSoon,
+  disableUpDown
 }: IProps) {
   const color = isUp ? "#027A48" : "#B42318";
   const bg = isUp ? "#ECFDF3" : "#FEF3F2";
@@ -59,7 +61,7 @@ export default function StatCard({
             {value}
           </Text>
           <Spacer />
-          <Box
+         {!disableUpDown && <Box
             display="flex"
             flexDirection="row"
             bg={bg}
@@ -79,7 +81,7 @@ export default function StatCard({
             >
               {percent}%
             </Text>
-          </Box>
+          </Box>}
         </HStack>
       )}
       {comingSoon && <ComingSoon isSmall  bg="#f1f1f170" borderRadius="5px" minH="50px" />}

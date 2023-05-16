@@ -242,6 +242,19 @@ const Button: ComponentStyleConfig = {
       borderRadius: "6px",
       fontSize: "18px",
     },
+    "with-hl-blue-dark": {
+      bgColor: "#194185",
+      color: "#fff",
+      minW: "160px",
+      minH: "36px",
+      justifyContent: "center",    
+      alignItems: "center",
+      fontFamily: fonts.VT323,
+      border: "1px solid #D0D5DD",
+      boxShadow: "0px 1px 2px rgba(16, 24, 40, 0.05)",
+      borderRadius: "6px",
+      fontSize: "20px",
+    },
   },
 };
 
@@ -249,6 +262,7 @@ export const ButtonVariants = {
   WITH_DEFAULT: "with-default",
   WITH_HIGHLIGHT_GREEN: "with-hl-green",
   WITH_HIGHLIGHT_BLUE: "with-hl-blue",
+  WITH_HIGHLIGHT_BLUE_DARK: "with-hl-blue-dark",
   WITH_HOVER: "with-hover",
   WITH_ACTIVE: "with-active",
   WITH_WALLET_SIGN_IN: "wallet-signIn",

@@ -24,6 +24,7 @@ export const showSortAddress = (address: string): string => {
 export const numberFormat = (number: number | string) => new Intl.NumberFormat().format(Number(number));
 
 export const getToast = (description: string | object, status: UseToastOptions["status"] = 'error', title = 'Error'): UseToastOptions => {
+  console.log({description})
   if (typeof description === 'string')
     return { title, status, position: 'top-right', description, duration: 3000 }
   let msg = 'something wrong!';
@@ -78,8 +79,11 @@ export const getDays = (dateNum: number) => {
   return diffDays;
 }
 
-export function formatDateYYYYMMDDHHMMSS(date: number) {
-  return moment(date * 1000).format(DATE_TIME_FORMAT_ONE)
+export function formatDateYYYYMMDDHHMMSS(date?: number | Date) {
+  if (!date) return "--/--/----"
+  if (typeof date === 'number')
+    return moment(date * 1000).format(DATE_TIME_FORMAT_ONE);
+  return moment(date).format(DATE_TIME_FORMAT_ONE);
 }
 
 export function parseBalance(balanceWei: number | string, decimals = 18) {
