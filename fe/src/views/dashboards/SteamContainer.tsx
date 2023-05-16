@@ -5,6 +5,7 @@ import StatCard from "../../components/dashboards/StatCard";
 import { useAppSelector } from "../../reduxs/hooks";
 import Link from "next/link";
 import { numberFormat } from "@/utils";
+import { getSteamAuthUrl } from "@/utils/env.helpers";
 
 
 export default function SteamContainer() {
@@ -24,7 +25,7 @@ export default function SteamContainer() {
 
   return (
     <Flex w="full" flexDir="column" mt={{ base: "10px"}}>
-      {!isAuth && (<Link href={process.env.NEXT_PUBLIC_STEAM_AUTH_URL || ''}>
+      {!isAuth && (<Link href={getSteamAuthUrl() || ''}>
         <Box
           cursor="pointer"
           bg="#194185"
