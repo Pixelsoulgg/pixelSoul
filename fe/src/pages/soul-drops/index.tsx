@@ -35,7 +35,6 @@ export default function SoulDrop() {
     skip: !steamId || !auth0Sub,
   });
 
-  console.log({isFetchingGetAmount, amountData });
 
   useEffect(() => {
     const handleClaimChest = async () => {
@@ -72,7 +71,7 @@ export default function SoulDrop() {
 
   return (
     <Flex w="full" flexDirection="column">
-      <SimpleGrid w="full" columns={{ base: 1, lg: 4 }} columnGap="24px">
+      <SimpleGrid w="full" columns={{ base: 2, lg: 6 }} columnGap="24px">
         {!isFetchingGetAmount && amountData && amountData?.map((p, index) => (
           <StatCard
             key={`${p.rarity}-${index}`}
@@ -81,6 +80,8 @@ export default function SoulDrop() {
             percent={0}
             disableUpDown
             isUp
+            minW="190px"
+            disableThreeDot
           />
         ))}
 
