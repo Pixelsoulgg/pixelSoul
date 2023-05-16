@@ -7,8 +7,11 @@ import {
 import React from "react";
 import ChestCard from "./components/ChestCard";
 
+interface IProps {
+  onOpenChest?: () => void;
+}
 
-export default function AvailableMysteryChest() {
+export default function AvailableMysteryChest({onOpenChest}: IProps) {
   const { steamId } = useAppSelector((p) => p.auth);
   return (
     <Flex w="full" my="15px" flexDirection="column">
@@ -19,12 +22,13 @@ export default function AvailableMysteryChest() {
           .fill(1)
           .map((_, index) => (
             <ChestCard
-              chestName="Chest_name"
+              chestName="Mystery Chest"
               key={String(index)}
               text={`${index === 0 ? 10 : index * 50}H of Steam Gameplay`}
-              src={`/chests/${index + 1}.svg`}
+              src={`/chests/Mystery.svg`}
               isClaimed={false}
               steamConnected={!!steamId}
+              onOpenOrClaim={onOpenChest}
             />
           ))}
       </SimpleGrid>

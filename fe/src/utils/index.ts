@@ -24,6 +24,7 @@ export const showSortAddress = (address: string): string => {
 export const numberFormat = (number: number | string) => new Intl.NumberFormat().format(Number(number));
 
 export const getToast = (description: string | object, status: UseToastOptions["status"] = 'error', title = 'Error'): UseToastOptions => {
+  console.log({description})
   if (typeof description === 'string')
     return { title, status, position: 'top-right', description, duration: 3000 }
   let msg = 'something wrong!';
