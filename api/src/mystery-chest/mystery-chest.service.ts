@@ -82,7 +82,10 @@ export class MysteryChestService {
     const mysteryChest = await this.prismaService.userMysteryChest.findUnique({
       where: { auth0Sub_mysteryId: { mysteryId: type, auth0Sub } }
     })
-    if (mysteryChest.amount < amount)
+    if (!mysteryChest) {
+      throw new HttpException(`Please claim mystery chest before opening`, HttpStatus.BAD_REQUEST)
+    }
+    if (mysteryChest?.amount < amount)
       throw new HttpException(
         `Insufficient chest. owned: ${mysteryChest.amount}, open: ${amount} `,
         HttpStatus.BAD_REQUEST
@@ -102,7 +105,12 @@ export class MysteryChestService {
     // legendary 5%
     // mythic 1%
     const raritys = []
+    let selectedChest = {
+      id: 0,
+      rarity: ''
+    }
     for (let i = 0; i < amount; i++) {
+      selectedChest = undefined
       for (let i = 0; i < 39; i++) {
         raritys.push('Common')
         if (i < 30) raritys.push('Gold')
@@ -111,7 +119,7 @@ export class MysteryChestService {
         if (i == 25) raritys.push('Mythic')
       }
       const index = randomIntFromInterval(0, raritys.length - 1)
-      const selectedChest = chests.find((f) => f.rarity == raritys[index])
+      selectedChest = chests.find((f) => f.rarity == raritys[index])
       // insert chest for player
       await this.prismaService.userChest.upsert({
         create: { chestId: selectedChest.id, auth0Sub, amount: 1 },
@@ -119,6 +127,6 @@ export class MysteryChestService {
         where: { auth0Sub_chestId: { chestId: selectedChest.id, auth0Sub } }
       })
     }
-    return `Open success ${amount} mystery chest`
+    return { reward: selectedChest.rarity }
   }
 }
