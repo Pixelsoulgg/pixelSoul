@@ -83,30 +83,24 @@ model UserChallenge {
 }
 
 model Users {
-  id               Int             @id @default(autoincrement())
-  email            String?         @unique(map: "email_UNIQUE") @db.VarChar(200)
-  walletAddress    String?         @unique(map: "walletAddress_UNIQUE") @db.VarChar(42)
-  steamId          String?         @unique(map: "steamId_UNIQUE") @db.VarChar(100)
-  imageUrl         String?         @db.VarChar(200)
-  auth0Sid         String?         @db.VarChar(100)
-  auth0NickName    String?         @db.VarChar(45)
-  auth0Name        String?         @db.VarChar(200)
-  auth0Sub         String?         @unique(map: "auth0Sub_UNIQUE") @db.VarChar(100)
-  steamTimeCreated DateTime?       @db.Timestamp(6)
-  gold             Int?            @default(0)
-  suiWalletAddress String?         @db.VarChar(45)
+  id               Int                @id @default(autoincrement())
+  email            String?            @unique(map: "email_UNIQUE") @db.VarChar(200)
+  walletAddress    String?            @unique(map: "walletAddress_UNIQUE") @db.VarChar(42)
+  steamId          String?            @unique(map: "steamId_UNIQUE") @db.VarChar(100)
+  imageUrl         String?            @db.VarChar(200)
+  auth0Sid         String?            @db.VarChar(100)
+  auth0NickName    String?            @db.VarChar(45)
+  auth0Name        String?            @db.VarChar(200)
+  auth0Sub         String?            @unique(map: "auth0Sub_UNIQUE") @db.VarChar(100)
+  steamTimeCreated DateTime?          @db.Timestamp(6)
+  gold             Int?               @default(0)
+  suiWalletAddress String?            @db.VarChar(66)
   userChallenge    UserChallenge[]
   userChest        UserChest[]
+  userMysteryChest UserMysteryChest[]
 
   @@index([auth0Sid], map: "fk_user_auth0_idx")
   @@index([steamId], map: "fk_user_steam_idx")
-}
-
-model Box {
-  id          Int     @id
-  name        String? @db.VarChar(200)
-  description String? @db.VarChar(2000)
-  image       String? @db.VarChar(200)
 }
 
 model Chest {
@@ -116,16 +110,37 @@ model Chest {
   image       String?     @db.VarChar(500)
   claimDate   DateTime?   @db.DateTime(0)
   rarity      String?     @db.VarChar(50)
+  partner     String?     @db.VarChar(500)
   userChest   UserChest[]
 }
 
 model UserChest {
-  auth0Sub String @db.VarChar(100)
-  chestId  Int
-  amount   Int?
-  chest    Chest  @relation(fields: [chestId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_chest")
-  users    Users  @relation(fields: [auth0Sub], references: [auth0Sub], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
+  auth0Sub    String    @db.VarChar(100)
+  chestId     Int
+  amount      Int?
+  latestClaim DateTime? @db.DateTime(0)
+  chest       Chest     @relation(fields: [chestId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_chest")
+  users       Users     @relation(fields: [auth0Sub], references: [auth0Sub], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
 
   @@id([auth0Sub, chestId])
   @@index([chestId], map: "fk_chest_idx")
+}
+
+model MysteryChest {
+  id               Int                @id @default(autoincrement())
+  name             String?            @db.VarChar(200)
+  description      String?            @db.VarChar(2000)
+  image            String?            @db.VarChar(200)
+  userMysteryChest UserMysteryChest[]
+}
+
+model UserMysteryChest {
+  auth0Sub     String       @db.VarChar(50)
+  mysteryId    Int
+  amount       Int?
+  mysteryChest MysteryChest @relation(fields: [mysteryId], references: [id], onDelete: Cascade, map: "fk_user_mystery_chest_chest")
+  users        Users        @relation(fields: [auth0Sub], references: [auth0Sub], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_mystery_chest_user")
+
+  @@id([auth0Sub, mysteryId])
+  @@index([mysteryId], map: "fk_user_mystery_chest_chest_idx")
 }

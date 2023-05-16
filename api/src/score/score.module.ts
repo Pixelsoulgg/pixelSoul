@@ -8,6 +8,7 @@ import { ScoreService } from './score.service'
 
 @Module({
   controllers: [ScoreController],
-  providers: [ScoreService, PrismaService, CoinMarketCapService, MoralisService, OpenseaService]
+  providers: [ScoreService, PrismaService, CoinMarketCapService, MoralisService, OpenseaService],
+  exports: [ScoreService]
 })
 export class ScoreModule {}
