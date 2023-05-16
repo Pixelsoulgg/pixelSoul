@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
   Button,
   HStack,
@@ -51,6 +51,7 @@ export default function OpenChestModal({
           display="flex"
           flexDirection="column"
         >
+         {isSuccess &&  <Fragment>
           <Text
             variant="with-24"
             textAlign="center"
@@ -63,6 +64,8 @@ export default function OpenChestModal({
           <Text variant="with-24" textAlign="center" my="30px">
             {subTitle}
           </Text>
+          </Fragment>
+}
           <Image src={`/chests/${img || 'Mystery'}.svg`} alignSelf="center" />
           <HStack w="full" justifyContent="center" mt="30px">
             <Button

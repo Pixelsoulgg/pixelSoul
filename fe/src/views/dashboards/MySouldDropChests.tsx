@@ -19,15 +19,9 @@ import { Empty } from "../../components";
 import { fonts, NFTsData } from "../../configs/constants";
 import { useAppSelector } from "../../reduxs/hooks";
 import { Animate } from "@/components/animations";
-import { useWallet } from "@suiet/wallet-kit";
 import Rarity from "@/components/Rarity";
 import { useGetChestQuery } from "@/services/modules/game.check.services";
 
-const data = [
-  {name: "Animoca x Souldrop Chest", img: "1", rarity: "Common", description: "Placeholder Text"},
-  {name: "Placeholder Text", img: "3", rarity: "Rare", description: "Placeholder Text"},
-  {name: "Placeholder Text", img: "2", rarity: "Lengendary", description: "Placeholder Text"},
-]
 
 export default function MySouldDropChests() {
   const { auth0Sub } = useAppSelector((state) => state.auth);
@@ -67,7 +61,7 @@ export default function MySouldDropChests() {
                   <Td>
                     <Link href="#" target="_blank">
                     <HStack>
-                      <Image src={`/sould-drop/${d.chest.image || 1}.png`} alt={d.chest.name} 
+                      <Image src={`/chests/${d.chest.rarity}.svg`} alt={d.chest.name} 
                         h="50px"
                         w="83px"
                         objectFit="cover"

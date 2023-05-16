@@ -1,15 +1,8 @@
 import { Animate } from "@/components/animations";
-import { ButtonVariants } from "@/themes/theme";
+import { ButtonVariants, TextVariants } from "@/themes/theme";
 import { formatDateYYYYMMDDHHMMSS } from "@/utils";
 import { getSteamAuthUrl } from "@/utils/env.helpers";
-import {
-  Button,
-  Flex,
-  HStack,
-  Image,
-  Spacer,
-  Text,
-} from "@chakra-ui/react";
+import { Button, Flex, HStack, Image, Spacer, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import React from "react";
 
@@ -21,6 +14,7 @@ interface IProps {
   steamConnected?: boolean;
   claimDate?: Date;
   isDisable?: boolean;
+  amount?: number;
   onOpenOrClaim?: () => void;
 }
 
@@ -32,16 +26,16 @@ export default function ChestCard({
   steamConnected,
   claimDate,
   isDisable,
-  onOpenOrClaim
+  amount,
+  onOpenOrClaim,
 }: IProps) {
-
   const handleClick = () => {
     if (!steamConnected && window) {
-      window.location.href = getSteamAuthUrl() || '';
+      window.location.href = getSteamAuthUrl() || "";
     } else if (onOpenOrClaim) {
-      onOpenOrClaim()
+      onOpenOrClaim();
     }
-  }
+  };
 
   return (
     <Flex
@@ -55,7 +49,11 @@ export default function ChestCard({
       flexDirection="column"
       mt="10px"
     >
-      <Text variant="with-24">{chestName}</Text>
+      <HStack>
+        <Text variant="with-24">{chestName}</Text>
+        <Spacer />
+        {amount && <Text variant={TextVariants.WITH_24}>Amount: {amount}</Text>}
+      </HStack>
       <Flex
         w="full"
         borderRadius="20px"
@@ -74,7 +72,7 @@ export default function ChestCard({
         </Text>
         <Spacer />
         <Text variant="with-18" color="#B54708">
-         {formatDateYYYYMMDDHHMMSS(claimDate)}
+          {formatDateYYYYMMDDHHMMSS(claimDate)}
         </Text>
       </HStack>
 
@@ -86,14 +84,16 @@ export default function ChestCard({
         <Spacer />
         <Button
           variant={
-            !steamConnected ? ButtonVariants.WITH_HIGHLIGHT_BLUE_DARK : (
-              isClaimed ? ButtonVariants.WITH_DEFAULT : ButtonVariants.WITH_HIGHLIGHT_GREEN
-            )
+            !steamConnected
+              ? ButtonVariants.WITH_HIGHLIGHT_BLUE_DARK
+              : isClaimed
+              ? ButtonVariants.WITH_DEFAULT
+              : ButtonVariants.WITH_HIGHLIGHT_GREEN
           }
           isDisabled={steamConnected && isDisable}
-        onClick={handleClick}
+          onClick={handleClick}
         >
-          {!steamConnected ? "Connect Steam" : (isClaimed ? "Open" : "Claim")}
+          {!steamConnected ? "Connect Steam" : isClaimed ? "Open" : "Claim"}
         </Button>
       </HStack>
     </Flex>
