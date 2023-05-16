@@ -47,16 +47,15 @@ export class ChestService {
       where: { auth0Sub, mysteryId: 1 }
     })
 
-    grChest['MysteryChest'] = mysChest.amount
+    grChest['Mystery'] = mysChest.amount
     const summary = []
     Object.keys(grChest).forEach((k) => {
       const ch = {
-        rariry: k,
+        rarity: k,
         amount: grChest[k]
       }
       summary.push(ch)
     })
-    console.log('group', grChest)
     return summary
   }
 }
