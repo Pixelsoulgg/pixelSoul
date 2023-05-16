@@ -40,14 +40,14 @@ export class ChestService {
     const chests = await this.findAll({ where: { auth0Sub } })
     const chestTypes = await this.prismaService.chest.findMany({})
     const grChest = []
-    let amount = 0
     chestTypes.forEach((c) => {
-      amount += 1
       grChest[c.rarity] = chests.find((f) => f.chestId == c.id)?.amount || 0
     })
     const mysChest = await this.prismaService.userMysteryChest.findFirst({
       where: { auth0Sub, mysteryId: 1 }
     })
+
+    grChest['MysteryChest'] = mysChest.amount
     const summary = []
     Object.keys(grChest).forEach((k) => {
       const ch = {
@@ -56,7 +56,6 @@ export class ChestService {
       }
       summary.push(ch)
     })
-    grChest['MysteryChest'] = mysChest.amount
     console.log('group', grChest)
     return summary
   }
