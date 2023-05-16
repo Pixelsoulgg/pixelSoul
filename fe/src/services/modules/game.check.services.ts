@@ -15,6 +15,9 @@ export const gameCheckApiServices = api.injectEndpoints({
 
     getChest: builder.query<IChest[], string>({
       query: (auth0Sub) => `${CHEST_URL}/${auth0Sub}`,
+      providesTags: (result) => {
+        return [{ type: 'Chests', id: 'LIST' }]
+      }
     }),
 
     addSuiWallet: builder.mutation<
@@ -32,6 +35,9 @@ export const gameCheckApiServices = api.injectEndpoints({
 
     getMysteryChest: builder.query<IMysteryChest[], string>({
       query: (auth0Sub) => `${MYSTERY_CHEST_URL}/${auth0Sub}`,
+      providesTags: (result) => {
+        return [{ type: 'Chests', id: 'LIST' }]
+      }
     }),
 
     claimMysteryChest: builder.mutation<void, string>({
@@ -39,9 +45,20 @@ export const gameCheckApiServices = api.injectEndpoints({
         return {
           url: `${MYSTERY_CHEST_URL}/claim/${auth0Sub}`,
           method: "POST",
-          body: {}
+          body: {},
         };
       },
+    }),
+
+    openChest: builder.mutation<{reward: string}, { auth0Sub: string; type: number; amount: number }>({
+      query: (body) => {
+        return {
+          url: `${MYSTERY_CHEST_URL}/open`,
+          method: "POST",
+          body,
+        };
+      },
+      invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Chests', id: 'LIST' }])
     }),
   }),
 });
@@ -52,4 +69,5 @@ export const {
   useAddSuiWalletMutation,
   useGetMysteryChestQuery,
   useClaimMysteryChestMutation,
+  useOpenChestMutation,
 } = gameCheckApiServices;

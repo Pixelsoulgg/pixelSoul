@@ -8,7 +8,11 @@ import React from "react";
 import ChestCard from "./components/ChestCard";
 import { useGetChestQuery, useGetMysteryChestQuery } from "@/services/modules/game.check.services";
 
-export default function ClaimedContainer() {
+interface IProps {
+  onOpenChest?: () => void;
+}
+
+export default function ClaimedContainer({onOpenChest}: IProps) {
   const { steamId, auth0Sub } = useAppSelector((p) => p.auth);
   const {data: mysteryChestData, isLoading} = useGetMysteryChestQuery(auth0Sub, {skip: !steamId || !auth0Sub});
   const {data: chestData, isLoading: isChestLoading} = useGetChestQuery(auth0Sub, {skip: !steamId || !auth0Sub});
@@ -25,9 +29,10 @@ export default function ClaimedContainer() {
               chestName="Mystery chest"
               text="0k"     
               key={String(index)}     
-              src={`/chests/${index+1}.svg`}
+              src={`/chests/Mystery.svg`}
               isClaimed
               steamConnected ={!!steamId}
+              onOpenOrClaim={onOpenChest}
             />
           ))}
 
@@ -36,9 +41,10 @@ export default function ClaimedContainer() {
               chestName={`${chest.chest.rarity} chest`}
               text="0k"     
               key={String(index)}     
-              src={`/chests/${index+1}.svg`}
+              src={`/chests/${chest.chest.name}.svg`}
               isClaimed
               steamConnected ={!!steamId}
+              isDisable
             />
           ))}
       </SimpleGrid>

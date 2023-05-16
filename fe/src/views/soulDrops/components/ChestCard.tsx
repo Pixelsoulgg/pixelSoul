@@ -20,6 +20,8 @@ interface IProps {
   isClaimed?: boolean;
   steamConnected?: boolean;
   claimDate?: Date;
+  isDisable?: boolean;
+  onOpenOrClaim?: () => void;
 }
 
 export default function ChestCard({
@@ -28,12 +30,16 @@ export default function ChestCard({
   text,
   isClaimed,
   steamConnected,
-  claimDate
+  claimDate,
+  isDisable,
+  onOpenOrClaim
 }: IProps) {
 
   const handleClick = () => {
     if (!steamConnected && window) {
       window.location.href = getSteamAuthUrl() || '';
+    } else if (onOpenOrClaim) {
+      onOpenOrClaim()
     }
   }
 
@@ -84,6 +90,7 @@ export default function ChestCard({
               isClaimed ? ButtonVariants.WITH_DEFAULT : ButtonVariants.WITH_HIGHLIGHT_GREEN
             )
           }
+          isDisabled={steamConnected && isDisable}
         onClick={handleClick}
         >
           {!steamConnected ? "Connect Steam" : (isClaimed ? "Open" : "Claim")}
