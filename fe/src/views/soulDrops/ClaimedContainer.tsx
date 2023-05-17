@@ -3,10 +3,10 @@ import { Flex, SimpleGrid, Text } from "@chakra-ui/react";
 import React from "react";
 import ChestCard from "./components/ChestCard";
 import {
-  useGetAmountGroupByRarityQuery,
   useGetChestQuery,
   useGetMysteryChestQuery,
 } from "@/services/modules/game.check.services";
+import ChestCardLoading from "./components/ChestCardLoading";
 
 interface IProps {
   onOpenChest?: () => void;
@@ -14,14 +14,8 @@ interface IProps {
 
 export default function ClaimedContainer({ onOpenChest }: IProps) {
   const { steamId, auth0Sub } = useAppSelector((p) => p.auth);
-  const { data: mysteryChestData, isLoading } = useGetMysteryChestQuery(
-    auth0Sub,
-    { skip: !steamId || !auth0Sub }
-  );
-  const { data: chestData, isLoading: isChestLoading } = useGetChestQuery(
-    auth0Sub,
-    { skip: !steamId || !auth0Sub }
-  );
+  const { data: mysteryChestData, isLoading: isMysteryLoading } = useGetMysteryChestQuery(auth0Sub, { skip: !steamId || !auth0Sub } );
+  const { data: chestData, isLoading: isChestLoading } = useGetChestQuery(auth0Sub,{ skip: !steamId || !auth0Sub });
 
   return (
     <Flex w="full" my="15px" flexDirection="column">
@@ -53,6 +47,11 @@ export default function ClaimedContainer({ onOpenChest }: IProps) {
             />
           );
         })}
+
+        {isMysteryLoading &&  <ChestCardLoading />}
+        {isChestLoading && Array(6).fill(0).map((_, index) => <ChestCardLoading key={String(index)} />)  }
+
+        
       </SimpleGrid>
     </Flex>
   );

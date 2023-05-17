@@ -20,6 +20,20 @@ export const gameCheckApiServices = api.injectEndpoints({
       }
     }),
 
+    getMysteryChest: builder.query<IMysteryChest[], string>({
+      query: (auth0Sub) => `${MYSTERY_CHEST_URL}/${auth0Sub}`,
+      providesTags: (result) => {
+        return [{ type: 'Chests', id: 'LIST' }]
+      }
+    }),
+
+    getAmountGroupByRarity: builder.query<IChestAmount[], string>({
+      query: (auth0Sub) => `${CHEST_URL}/summary/${auth0Sub}`,
+      providesTags: (result) => {
+        return [{ type: 'Chests', id: 'LIST' }]
+      }
+    }),
+
     addSuiWallet: builder.mutation<
       IUser,
       { auth0Sub: string; suiWalletAddress: string }
@@ -33,12 +47,7 @@ export const gameCheckApiServices = api.injectEndpoints({
       },
     }),
 
-    getMysteryChest: builder.query<IMysteryChest[], string>({
-      query: (auth0Sub) => `${MYSTERY_CHEST_URL}/${auth0Sub}`,
-      providesTags: (result) => {
-        return [{ type: 'Chests', id: 'LIST' }]
-      }
-    }),
+    
 
     claimMysteryChest: builder.mutation<void, string>({
       query: (auth0Sub) => {
@@ -61,9 +70,7 @@ export const gameCheckApiServices = api.injectEndpoints({
       invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Chests', id: 'LIST' }])
     }),
 
-    getAmountGroupByRarity: builder.query<IChestAmount[], string>({
-      query: (auth0Sub) => `${CHEST_URL}/summary/${auth0Sub}`
-    })
+    
   }),
 });
 
