@@ -68,12 +68,10 @@ export const setSteamInfoAction = createAsyncThunk<OpenIDData, OpenIDData>(
   "authentication/setSteamInfo",
   async (model) => {
     const { auth } = store.getState();
-    const storage = new StorageHelpers();
     const claimed_id = model["openid.claimed_id"];
     const params = claimed_id.split('/');
     const steamId = params[params.length -1];
     model.steamId = steamId;
-    storage.setSteamInfo(model);
     const appApi = new AppApi();
     await appApi.addSteamInfo(
       auth.auth0Info?.auth0Sub || "",
@@ -96,6 +94,9 @@ export const handleAuth0LoginSuccess = createAsyncThunk<void, IAuth0Model>(
           auth0Sid: model["sid"] || "",
           auth0Name: model.name || "",
           auth0Sub: sub,
+          claimSteamChest: 0,
+          claimWalletChest: 0,
+          claimSuiChest: 0
         });        
       }
       store.dispatch(authSlice.actions.auth0LoginSuccess(userInfo));
@@ -113,7 +114,6 @@ export const handleConnectMetamaskSuccess = createAsyncThunk<
   if (auth0Sub) {
     const user: IUser = await api.addWallet(auth0Sub, walletAddress);
   }
-  // store.dispatch(authSlice.actions.auth0LoginSuccess(user));
 });
 
 export const updateUserAvatarAction = createAsyncThunk<

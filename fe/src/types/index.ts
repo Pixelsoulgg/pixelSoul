@@ -77,6 +77,10 @@ export interface IUser {
   imageUrl?: string;
   steamTimeCreated?: number;
   gold?: number;
+  suiWalletAddress?: string;
+  claimSteamChest: number;
+  claimWalletChest: number;
+  claimSuiChest: number;
 }
 
 export interface IGame {
