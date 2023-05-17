@@ -9,6 +9,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { useGlobal } from "@/contexts/Globals";
 import { useAppSelector } from "@/reduxs/hooks";
 import { SoulScoreButton } from "@/components/dashboards";
+import { numberFormat } from "@/utils";
 
 export interface IProps {
   children: ReactNode;
@@ -16,7 +17,16 @@ export interface IProps {
 export default function DashboardLayout({ children }: IProps) {
   const {user} = useUser();
   const router = useRouter();  
-  const {auth0Info} = useAppSelector((p) => p.auth);
+
+  const {auth0Info, steamInfo} = useAppSelector((p) => p.auth);
+  const {steamUser} = useAppSelector(p => p.soul) ;
+  const {score} = useAppSelector(p => p.account) ;
+
+  const soulScore = useMemo(() => {    
+    if (!steamInfo) return 0;
+    return  ((steamUser?.point || 0) * 0.7) + ((score?.collectorLevel || 0) * 0.2) + ((score?.investorLevel || 0) * 0.1)
+  }, [score?.collectorLevel, score?.investorLevel, steamInfo, steamUser?.point]);
+
 
   const {onMenuChange} = useGlobal();
 
@@ -101,7 +111,7 @@ export default function DashboardLayout({ children }: IProps) {
               )}
               <Text variant="with-title" fontSize="40px">{getTitle}</Text>
             </HStack>
-            {!isHideSearch && <SoulScoreButton soul={auth0Info?.gold} />}
+            {!isHideSearch && <SoulScoreButton soul={numberFormat(soulScore)} />}
             {isHideSearch && (
               <Search
                 paddingY="0px"

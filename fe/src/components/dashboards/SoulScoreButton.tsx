@@ -3,7 +3,7 @@ import { Box, Image, Text } from "@chakra-ui/react";
 import React from "react";
 
 interface IProps {
-  soul?: number;
+  soul?: number | string;
 }
 
 export default function SoulScoreButton({soul = 0}: IProps) {
