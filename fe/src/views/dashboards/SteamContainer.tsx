@@ -13,9 +13,8 @@ export default function SteamContainer() {
   const {score} = useAppSelector(p => p.account) ;
 
   const soulScore = useMemo(() => {    
-    if (!steamInfo) return 0;
     return  ((steamUser?.point || 0) * 0.7) + ((score?.collectorLevel || 0) * 0.2) + ((score?.investorLevel || 0) * 0.1)
-  }, [score?.collectorLevel, score?.investorLevel, steamInfo, steamUser?.point]);
+  }, [score?.collectorLevel, score?.investorLevel, steamUser?.point]);
 
   return (
     <Flex w="full" flexDir="column" mt={{ base: "10px"}}>
