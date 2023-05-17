@@ -123,7 +123,7 @@ export class MysteryChestService {
       // insert chest for player
       await this.prismaService.userChest.upsert({
         create: { chestId: selectedChest.id, auth0Sub, amount: 1 },
-        update: { amount: { increment: 1 } },
+        update: { amount: { increment: 1 }, latestClaim: new Date().toISOString() },
         where: { auth0Sub_chestId: { chestId: selectedChest.id, auth0Sub } }
       })
     }
