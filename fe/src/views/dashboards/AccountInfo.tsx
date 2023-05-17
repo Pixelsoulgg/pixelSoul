@@ -65,12 +65,12 @@ export default function AccountInfo() {
 
   const handlePostSuiWalletToApi = useCallback(async() => {
     try {
-      if (wallet && wallet.address) {
+      if (wallet && wallet.address && auth0Sub) {
         await addSuiWallet({auth0Sub: auth0Sub, suiWalletAddress: wallet.address}).unwrap();
       } 
     } catch(ex) {}
    
-  }, [wallet, wallet.address]);
+  }, [wallet, wallet.address, auth0Sub]);
 
   useEffect(() => {
     handlePostSuiWalletToApi();

@@ -8,7 +8,7 @@ import { numberFormat } from "@/utils";
 import { ButtonVariants } from "@/themes/theme";
 
 export default function StreamGeneralData() {
-  const { steamInfo } = useAppSelector((state) => state.auth);
+  const { steamId } = useAppSelector((state) => state.auth);
   const { steamUser } = useAppSelector((state) => state.soul);
   return (
     <Flex w="full" flexDir="column" mt="30px">
@@ -16,8 +16,8 @@ export default function StreamGeneralData() {
         <Button variant={ButtonVariants.WITH_ACTIVE} minW="103px" borderRadius="10px">Steam</Button>
         <Button variant={ButtonVariants.WITH_DEFAULT} minW="103px" borderRadius="10px" disabled isDisabled>Epic</Button>
       </HStack>
-      {!steamInfo && <Empty />}
-      {steamInfo && (
+      {!steamId && <Empty />}
+      {steamId && (
         <Flex w="full" flexDirection="column">
           <SteamTable />
           <SimpleGrid
