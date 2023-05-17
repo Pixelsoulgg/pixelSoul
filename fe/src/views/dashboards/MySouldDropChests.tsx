@@ -24,20 +24,16 @@ import { useGetChestQuery } from "@/services/modules/game.check.services";
 
 
 export default function MySouldDropChests() {
-  const { auth0Sub } = useAppSelector((state) => state.auth);
-  const { walletInfo } = useAppSelector((state) => state.account);
-
-  const {data: chestData, isLoading, isError, isFetching} = useGetChestQuery(auth0Sub, {skip: !auth0Sub});
-  console.log({chestData})
+  const { auth0Sub, auth0Info } = useAppSelector((state) => state.auth);
+  const {data: chestData} = useGetChestQuery(auth0Sub, {skip: !auth0Sub});
 
   return (
     <Flex w="full" flexDir="column" mt="30px">
       <Text variant="with-title" fontSize="24px" mb="10px">
         My SouldDrop Chests
       </Text>
-      {!walletInfo?.address && <Empty />}
-
-      {walletInfo?.address && (
+      {!auth0Info?.walletAddress && <Empty />}
+      {auth0Info?.walletAddress && (
         <>
           <Table variant="simple" margin="0px" className="nft-table">
             <Thead>
@@ -101,30 +97,7 @@ export default function MySouldDropChests() {
                 </Tr>
               ))}
             </Tbody>
-          </Table>         
-            {/* <Box
-              as="a"
-              mt="20px"
-              borderRadius="8px"
-              padding="10px 16px"
-              border="1px solid #D0D5DD"
-              bg="#fff"
-              boxShadow="0px 1px 2px rgba(16, 24, 40, 0.05)"
-              w="fit-content"
-              
-            >
-               <Link href="profiles/nfts">
-                  <Text
-                    color="#344054"
-                    fontSize="14px"
-                    fontWeight="600"
-                    fontFamily={fonts.Inter}
-                    flex={1}
-                  >
-                    View All
-                  </Text>
-                </Link>
-            </Box> */}
+          </Table>   
         </>
       )}
     </Flex>

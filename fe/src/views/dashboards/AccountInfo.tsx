@@ -33,7 +33,7 @@ export default function AccountInfo() {
   const { onCopy: onMetaMaskCopy, setValue: setValueMetaMask } = useClipboard("");
   const { onCopy: onSuiCopy, setValue: setValueSui } = useClipboard("");
 
-  const { steamInfo, steamId, auth0Sub } = useAppSelector((p) => p.auth);
+  const { steamInfo, steamId, auth0Sub, auth0Info } = useAppSelector((p) => p.auth);
   const { walletInfo } = useAppSelector((p) => p.account);
   const [disconnectType, setDisconnectType] = useState<'SUI' | 'METAMASK'>();
 
@@ -90,15 +90,15 @@ export default function AccountInfo() {
 
         <VStack w="full" alignItems="flex-start" my="30px">
           <Text variant="with-24">Wallet ID</Text>
-          {!walletInfo?.address && (
+          {!auth0Info?.walletAddress && (
             <Text variant="with-18" color="#98A2B3">
               {DEFAULT_MESSAGE}
             </Text>
           )}
-          {walletInfo?.address && (
+          {auth0Info?.walletAddress && (
             <HStack w="full">
               <Text variant="with-18">
-                {showSortAddress(walletInfo.address || "") || DEFAULT_MESSAGE}
+                {showSortAddress(auth0Info?.walletAddress || "") || DEFAULT_MESSAGE}
               </Text>
               <Image
                 src="/copy.svg"
@@ -107,7 +107,7 @@ export default function AccountInfo() {
                 onClick={() => handleCopy(false)}
               />
               <Spacer />
-              <Text variant="with-18">Sign Out</Text>
+              {/* <Text variant="with-18">Sign Out</Text>
               <Image
                 cursor="pointer"
                 alt="sign out your wallet"
@@ -116,14 +116,14 @@ export default function AccountInfo() {
                   onOpen();
                   setDisconnectType('METAMASK');
                 }}
-              />
+              /> */}
             </HStack>
           )}
         </VStack>
 
         <VStack w="full" alignItems="flex-start" mb="30px">
           <Text variant="with-24">Sui Wallet ID</Text>
-          {!wallet.address && (
+          {!auth0Info?.suiWalletAddress && (
             <HStack w="full">
               <Text variant="with-18" color="#98A2B3">
                 {DEFAULT_MESSAGE}
@@ -132,7 +132,7 @@ export default function AccountInfo() {
               <SuiWalletConnector />
             </HStack>
           )}
-          {wallet.address && (
+          {auth0Info?.suiWalletAddress && (
             <HStack w="full">
               <Text variant="with-18">
                 {showSortAddress(wallet.address || "") || DEFAULT_MESSAGE}
@@ -144,7 +144,7 @@ export default function AccountInfo() {
                 onClick={() => handleCopy(true)}
               />
               <Spacer />
-              <Text variant="with-18">Sign Out</Text>
+              {/* <Text variant="with-18">Sign Out</Text>
               <Image
                 cursor="pointer"
                 alt="sign out your wallet"
@@ -153,7 +153,7 @@ export default function AccountInfo() {
                   onOpen();
                   setDisconnectType('SUI');
                 }}
-              />
+              /> */}
             </HStack>
           )}
         </VStack>
