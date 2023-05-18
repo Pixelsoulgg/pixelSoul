@@ -39,10 +39,13 @@ export default function MySoul() {
 
   const fetchData = useCallback(async () => {
     try {    
-      if (walletInfo && walletInfo.address && auth0Sub) {      
-        dispatch(handleConnectMetamaskSuccess({walletAddress: walletInfo.address}))
-        dispatch(getScoreAction());
-        dispatch(getNFTsAction(walletInfo.address));       
+      if (auth0Sub) {
+        const walletAddress = auth0Info?.walletAddress || walletInfo?.address;
+        if (walletAddress) {
+          dispatch(handleConnectMetamaskSuccess({walletAddress}))
+          dispatch(getScoreAction(walletAddress));
+          dispatch(getNFTsAction(walletAddress));   
+        }
       }
       if (steamId) {
         dispatch(getSteamPlayerGeneralAction(steamId));
@@ -50,7 +53,7 @@ export default function MySoul() {
     } catch(er) {
       console.log({er})
     }
-  }, [dispatch, walletInfo, steamId, auth0Sub]); 
+  }, [dispatch, walletInfo, steamId, auth0Sub, auth0Info]); 
 
   useEffect(() => {
     fetchData();

@@ -16,7 +16,6 @@ export default function AvailableMysteryChest({onOpenChest}: IProps) {
   return (
     <Flex w="full" my="15px" flexDirection="column">
       <Text variant="with-24">Available Mystery Chest</Text>
-
       <SimpleGrid w="full" columns={{ base: 1, lg: 3 }} columnGap="20px"> 
         {Array(3)
           .fill(1)

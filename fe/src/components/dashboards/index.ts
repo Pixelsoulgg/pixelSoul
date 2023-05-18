@@ -1,4 +1,5 @@
 import StatCard from "./StatCard";
+import StatCardLoading from "./StatCardLoading";
 import GoldButton from "./GoldButton";
 import GameCard from "./GameCard";
 import NFTTable from "./NFTTable";
@@ -13,4 +14,5 @@ export {
   NFTTable,
   UserAvatar,
   SoulScoreButton,
+  StatCardLoading,
 }
