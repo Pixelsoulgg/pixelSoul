@@ -95,6 +95,9 @@ model Users {
   steamTimeCreated DateTime?          @db.Timestamp(6)
   gold             Int?               @default(0)
   suiWalletAddress String?            @db.VarChar(66)
+  claimSteamChest  Int?               @default(0)
+  claimWalletChest Int?               @default(0)
+  claimSuiChest    Int?               @default(0)
   userChallenge    UserChallenge[]
   userChest        UserChest[]
   userMysteryChest UserMysteryChest[]
@@ -115,7 +118,7 @@ model Chest {
 }
 
 model UserChest {
-  auth0Sub    String    @db.VarChar(100)
+  auth0Sub    String    @default("NOW()") @db.VarChar(100)
   chestId     Int
   amount      Int?
   latestClaim DateTime? @db.DateTime(0)
