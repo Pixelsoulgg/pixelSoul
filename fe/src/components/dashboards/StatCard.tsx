@@ -1,15 +1,16 @@
-import { Box, Flex, HStack, Image, Img, Spacer, Text } from "@chakra-ui/react";
+import { Box, Flex, FlexProps, HStack, Image, Img, Spacer, Text } from "@chakra-ui/react";
 import React from "react";
 import { fonts } from "../../configs/constants";
 import ComingSoon from "../ComingSoon";
 
-interface IProps {
+interface IProps extends FlexProps {
   title: string;
   value: string;
   percent?: number;
   isUp: boolean;
   comingSoon?: boolean;
   disableUpDown?: boolean;
+  disableThreeDot?: boolean;
 }
 
 export default function StatCard({
@@ -18,7 +19,9 @@ export default function StatCard({
   percent,
   isUp,
   comingSoon,
-  disableUpDown
+  disableUpDown,
+  disableThreeDot,
+  ...props
 }: IProps) {
   const color = isUp ? "#027A48" : "#B42318";
   const bg = isUp ? "#ECFDF3" : "#FEF3F2";
@@ -36,7 +39,8 @@ export default function StatCard({
       minW="223px"
       maxH="115px"
       flex={1}
-      my="10px"
+      my="10px" 
+      {...props}
     >
       <HStack justifyContent="space-between" w="full">
         <Text
@@ -47,7 +51,7 @@ export default function StatCard({
         >
           {title}
         </Text>
-        <Image src="/three-dot.svg" alt="" />
+       {!disableThreeDot && <Image src="/three-dot.svg" alt="" />}
       </HStack>
       {!comingSoon && (
         <HStack w="full">

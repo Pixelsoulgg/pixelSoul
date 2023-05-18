@@ -1,6 +1,5 @@
 import { Box, Flex, SimpleGrid, Text } from "@chakra-ui/react";
-import React, { useCallback, useMemo } from "react";
-import { Empty } from "../../components";
+import React, { useMemo } from "react";
 import StatCard from "../../components/dashboards/StatCard";
 import { useAppSelector } from "../../reduxs/hooks";
 import Link from "next/link";
@@ -9,23 +8,17 @@ import { getSteamAuthUrl } from "@/utils/env.helpers";
 
 
 export default function SteamContainer() {
-  const { steamInfo } = useAppSelector((state) => state.auth); 
+  const { steamInfo, steamId } = useAppSelector((state) => state.auth); 
   const {steamUser} = useAppSelector(p => p.soul) ;
   const {score} = useAppSelector(p => p.account) ;
 
-  const isAuth = useMemo(() => {
-    if (!steamInfo) return false;
-    return steamInfo['openid.sig'] !== undefined;
-  }, [steamInfo]);
-
   const soulScore = useMemo(() => {    
-    if (!steamInfo) return 0;
     return  ((steamUser?.point || 0) * 0.7) + ((score?.collectorLevel || 0) * 0.2) + ((score?.investorLevel || 0) * 0.1)
-  }, [score?.collectorLevel, score?.investorLevel, steamInfo, steamUser?.point]);
+  }, [score?.collectorLevel, score?.investorLevel, steamUser?.point]);
 
   return (
     <Flex w="full" flexDir="column" mt={{ base: "10px"}}>
-      {!isAuth && (<Link href={getSteamAuthUrl() || ''}>
+      {!steamId && (<Link href={getSteamAuthUrl() || ''}>
         <Box
           cursor="pointer"
           bg="#194185"
@@ -44,7 +37,7 @@ export default function SteamContainer() {
         </Box>
         </Link>
       )}
-      {isAuth && (
+      {steamId && (
         <SimpleGrid w="full" columns={{ base: 1, lg: 2 }} columnGap="24px">
           <StatCard title="SoulScore" value={numberFormat(soulScore)} percent={0} isUp />
           <StatCard title="GamerScore" value={numberFormat(steamUser?.point || 0)} percent={0} isUp={false} />
