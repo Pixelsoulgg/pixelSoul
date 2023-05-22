@@ -1,6 +1,6 @@
 import { IGameDungeon } from "@/types/dungeon.types";
 import { api } from "../api";
-import { IChest, IChestAmount, IMysteryChest, IUser } from "@/types";
+import { IChest, IChestAmount, IEvent, IMysteryChest, IUser } from "@/types";
 
 const GAME_URL = "game";
 const CHEST_URL = "chest";
@@ -45,9 +45,7 @@ export const gameCheckApiServices = api.injectEndpoints({
           body: { walletAddress: data.suiWalletAddress },
         };
       },
-    }),
-
-    
+    }),    
 
     claimMysteryChest: builder.mutation<void, string>({
       query: (auth0Sub) => {
@@ -70,7 +68,23 @@ export const gameCheckApiServices = api.injectEndpoints({
       invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Chests', id: 'LIST' }])
     }),
 
+    addEvent: builder.mutation<IEvent, FormData>({
+      query: (body) => {
+        return {
+          url: 'event/create',
+          method: "POST",
+          body
+        }
+      },
+      invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Events', id: 'LIST' }])
+    }),
     
+    getEvents: builder.query<IEvent[], void>({
+      query: () => 'event',
+      providesTags: (result) => {
+        return [{ type: 'Events', id: 'LIST' }]
+      }
+    })
   }),
 });
 
@@ -81,5 +95,7 @@ export const {
   useGetMysteryChestQuery,
   useClaimMysteryChestMutation,
   useOpenChestMutation,
-  useGetAmountGroupByRarityQuery
+  useGetAmountGroupByRarityQuery,
+  useAddEventMutation,
+  useGetEventsQuery,
 } = gameCheckApiServices;

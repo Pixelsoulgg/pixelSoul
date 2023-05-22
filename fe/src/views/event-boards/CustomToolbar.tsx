@@ -1,8 +1,9 @@
 import MonthDropdown from "@/components/dashboards/MonthDropdown";
 import YearDropdown from "@/components/dashboards/YearDropdown";
-import { ButtonVariants } from "@/themes/theme";
+import { ButtonVariants, TextVariants } from "@/themes/theme";
 import { getShortMonth } from "@/utils";
-import { Button, HStack, Spacer } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
+import { Button, HStack, Image, Spacer, Text } from "@chakra-ui/react";
 import moment from "moment";
 import React, { useState } from "react";
 import { Calendar, View, Views } from "react-big-calendar";
@@ -12,6 +13,7 @@ interface IProps {
   defaultView: View;
   calendarRef?: React.RefObject<Calendar>;
   onDateChange?: (date: Date) => void;
+  onAdd?:() => void;
 }
 
 export default function CustomToolbar({
@@ -19,6 +21,7 @@ export default function CustomToolbar({
   defaultView,
   calendarRef,
   onDateChange,
+  onAdd,
 }: IProps) {
   const [activeView, setActiveView] = useState<View>(defaultView);
 
@@ -43,12 +46,17 @@ export default function CustomToolbar({
     }
 
     const newDate = moment(`01-${month}-${year}`, 'DD-MMM-YYYY').toDate();
-    console.log({newDate})
     onDateChange && onDateChange(newDate)
   };
 
   return (
-    <HStack w="full" minH="20px">
+    <HStack w="full" minH="20px" mb="20px">
+      <Button variant={ButtonVariants.WITH_HIGHLIGHT_BLUE_DARK}>
+        <AddIcon />
+        <Text variant={TextVariants.WITH_24} color="white" ml="5px"
+          onClick={onAdd}
+        >Add Event</Text>
+      </Button>
       <Spacer />
       <YearDropdown
         defaultValue={date.getFullYear()}

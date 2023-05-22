@@ -11,9 +11,13 @@ import {
 const baseQuery = fetchBaseQuery({
   baseUrl: getBaseUrlHelper(),
   credentials: 'same-origin',
-  prepareHeaders: (headers, {}) => {
+  prepareHeaders: (headers, {endpoint}) => {
+    const UPLOAD_ENDPOINT = ["addEvent"];
+    const index = UPLOAD_ENDPOINT.indexOf(endpoint);
     headers.set('Accept', 'application/json');
-    headers.set('Content-Type', 'application/json; charset=utf-8');
+    if (index < 0) {
+      headers.set('Content-Type', 'application/json; charset=utf-8');
+    }
     headers.set('Access-Control-Allow-Credentials', 'true');
     headers.set('X-Requested-With', 'XMLHttpRequest');
     return headers
@@ -32,7 +36,7 @@ const baseQueryWithInterceptor: BaseQueryFn<
 }
 
 export const api = createApi({
-  tagTypes: ['PixelSoul', 'Chests'],
+  tagTypes: ['PixelSoul', 'Chests', 'Events'],
   baseQuery: baseQueryWithInterceptor,
   endpoints: () => ({}),
 })

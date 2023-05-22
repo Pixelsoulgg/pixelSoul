@@ -125,3 +125,12 @@ export interface IChestAmount {
   rarity: string;
   amount: number;
 }
+
+export interface IEvent {
+  id: number;
+  name: string;
+  date: string;
+  insertedDate: string;
+  description: string;
+  image: string;
+}

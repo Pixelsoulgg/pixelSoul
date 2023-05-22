@@ -32,6 +32,7 @@
     "next": "13.2.4",
     "react": "18.2.0",
     "react-big-calendar": "^1.6.9",
+    "react-datepicker": "^4.11.0",
     "react-dom": "18.2.0",
     "react-intersection-observer": "^9.4.3",
     "react-redux": "^8.0.5",
@@ -42,6 +43,7 @@
   },
   "devDependencies": {
     "@types/react-big-calendar": "^1.6.3",
+    "@types/react-datepicker": "^4.11.2",
     "@types/react-slick": "^0.23.10"
   }
 }
