@@ -44,3 +44,14 @@ export const CHALLANGES_DATA = [
     process: 10,    
   },
 ]
+
+
+export const events = [
+  {
+    id: 0,
+    title: "Board meeting",
+    start: new Date(2023,4,23),
+    end: new Date(),
+    resourceId: 1
+  },
+];
