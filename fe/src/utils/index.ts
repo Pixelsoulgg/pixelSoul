@@ -118,3 +118,7 @@ export const getYears = (time: number) => {
   const years = moment().diff(time * 1000, "years")
   return years;
 }
+
+export const getShortMonth = (date: string | number | Date) => {
+  return moment(date).format('MMM')
+}
