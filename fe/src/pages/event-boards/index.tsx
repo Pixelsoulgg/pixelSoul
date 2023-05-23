@@ -6,7 +6,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Flex, useDisclosure } from "@chakra-ui/react";
 import CustomToolbar from "@/views/event-boards/CustomToolbar";
-// import { events } from "@/configs/mockup.data";
 import EventModal from "@/views/event-boards/EventModal";
 import AddEditEventModal from "@/views/event-boards/AddEditEventModal";
 import { useGetEventsQuery } from "@/services/modules/game.check.services";
@@ -47,9 +46,14 @@ export default function EventBoard() {
       title: e.name,
       start: new Date(e.date),
       end: new Date(e.date),
-      img: e.image ? `${getCDNServer()}/${e.image}` : undefined
-    }))
+      img: e.image ? `${getCDNServer()}/${e.image}` : undefined,
+    }));
   }, [data]);
+
+  const handleOnEdit = () => {
+    onClose();
+    onOpenAdd();
+  };
 
   return (
     <Flex w="full" h="100vh">
@@ -64,7 +68,10 @@ export default function EventBoard() {
         components={{
           toolbar: () => (
             <CustomToolbar
-              onAdd={onOpenAdd}
+              onAdd={() => {
+                setEvent(undefined);
+                onOpenAdd();
+              }}
               date={selectedDate}
               defaultView={Views.MONTH}
               calendarRef={calendarRef}
@@ -81,9 +88,15 @@ export default function EventBoard() {
         isOpen={isOpen}
         eventName={`${selectedEvent?.title || "Event"}`}
         onClose={onClose}
+        onEdit={() => handleOnEdit()}
       />
 
-      <AddEditEventModal isOpen={isOpenAdd} onClose={onCloseAdd} />
+      <AddEditEventModal
+        //@ts-ignore
+        event={data?.find((p) => p.id === selectedEvent?.id)}
+        isOpen={isOpenAdd}
+        onClose={onCloseAdd}
+      />
     </Flex>
   );
 }

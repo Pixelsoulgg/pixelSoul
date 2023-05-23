@@ -68,6 +68,7 @@ export const gameCheckApiServices = api.injectEndpoints({
       invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Chests', id: 'LIST' }])
     }),
 
+    // Events
     addEvent: builder.mutation<IEvent, FormData>({
       query: (body) => {
         return {
@@ -84,6 +85,27 @@ export const gameCheckApiServices = api.injectEndpoints({
       providesTags: (result) => {
         return [{ type: 'Events', id: 'LIST' }]
       }
+    }),
+
+    deleteEventById: builder.mutation<IEvent, string>({
+      query:(eventId) => {
+        return {
+          url: `event/${eventId}`,
+          method: 'DELETE',          
+        }
+      },
+      invalidatesTags: (result, error, data) => (error ? [] : [{type: 'Events', id: 'LIST'}]) 
+    }),
+
+    updateEventById: builder.mutation<IEvent, {eventId: string, data: FormData}>({
+      query: ({eventId, data: body}) => {
+        return {
+          url: `event/${eventId}`,
+          method: 'PATCH',
+          body
+        }
+      },
+      invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Events', id: 'LIST' }])
     })
   }),
 });
@@ -98,4 +120,6 @@ export const {
   useGetAmountGroupByRarityQuery,
   useAddEventMutation,
   useGetEventsQuery,
+  useDeleteEventByIdMutation,
+  useUpdateEventByIdMutation,
 } = gameCheckApiServices;

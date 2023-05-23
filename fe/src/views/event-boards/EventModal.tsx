@@ -1,4 +1,4 @@
-import { TextVariants } from "@/themes/theme";
+import { ButtonVariants, TextVariants } from "@/themes/theme";
 import {
   ModalOverlay,
   ModalContent,
@@ -8,17 +8,22 @@ import {
   ModalProps,
   Text,
   Image,
+  Button,
+  HStack,
+  Spacer,
 } from "@chakra-ui/react";
 import React, { Fragment } from "react";
 import CountdownTimer from "./CountDownTimer";
 import { convertDateToUnix } from "@/utils";
 import { Event } from "react-big-calendar";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 interface IProps extends Omit<ModalProps, "children"> {
   eventName: string;
   event?: Event;
   img?: string;
   onOk?: () => void;
+  onEdit?: () => void;
 }
 
 export default function EventModal({
@@ -26,6 +31,7 @@ export default function EventModal({
   img,
   event,
   onOk,
+  onEdit,
   onClose,
   ...props
 }: IProps) {
@@ -75,6 +81,13 @@ export default function EventModal({
           </Text>
           {/* @ts-ignore */}
           <Image src={event?.img || '/events/box.svg'} alignSelf="center" minH="300px" minW="300px" />
+
+          <HStack mt="30px">
+            <Button variant={ButtonVariants.WITH_ACTIVE} onClick={onEdit}>            
+              <EditIcon mr="10px" />            
+              Edit
+            </Button>
+          </HStack>
         </ModalBody>
       </ModalContent>
     </Modal>
