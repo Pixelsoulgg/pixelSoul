@@ -12,7 +12,7 @@ const baseQuery = fetchBaseQuery({
   baseUrl: getBaseUrlHelper(),
   credentials: 'same-origin',
   prepareHeaders: (headers, {endpoint}) => {
-    const UPLOAD_ENDPOINT = ["addEvent"];
+    const UPLOAD_ENDPOINT = ["addEvent", "updateEventById"];
     const index = UPLOAD_ENDPOINT.indexOf(endpoint);
     headers.set('Accept', 'application/json');
     if (index < 0) {

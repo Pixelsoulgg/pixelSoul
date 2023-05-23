@@ -1,6 +1,12 @@
-import { useAddEventMutation } from "@/services/modules/game.check.services";
+import {
+  useAddEventMutation,
+  useDeleteEventByIdMutation,
+  useUpdateEventByIdMutation,
+} from "@/services/modules/game.check.services";
 import { ButtonVariants, TextVariants } from "@/themes/theme";
+import { IEvent } from "@/types";
 import { getToast } from "@/utils";
+import { DeleteIcon } from "@chakra-ui/icons";
 import {
   ModalOverlay,
   ModalContent,
@@ -9,7 +15,6 @@ import {
   Modal,
   ModalProps,
   Text,
-  Image,
   FormControl,
   FormLabel,
   Input,
@@ -20,11 +25,15 @@ import {
   useToast,
   Spinner,
 } from "@chakra-ui/react";
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
+
 import DatePicker from "react-datepicker";
 
-interface IProps extends Omit<ModalProps, "children"> {
-  onOk?: () => void;
+interface IValidate {
+  isName: boolean;
+  isDescription: boolean;
+  isDate: boolean;
+  isHasFile: boolean;
 }
 
 interface IModel {
@@ -35,36 +44,74 @@ interface IModel {
   date: Date;
 }
 
+interface IProps extends Omit<ModalProps, "children"> {
+  onOk?: () => void;
+  event?: IEvent;
+}
+
 const initialState: IModel = {
   name: "",
   description: "",
   date: new Date(),
 };
 
-export default function AddEditEventModal({ onOk, onClose, ...props }: IProps) {
+export default function AddEditEventModal({
+  event,
+  onOk,
+  onClose,
+  ...props
+}: IProps) {
   const toast = useToast();
-  const [addEvent, {isLoading: isAddEventLoading}] = useAddEventMutation();
+
+  const [addEvent, { isLoading: isAddEventLoading }] = useAddEventMutation();
+  const [deleteEventAsync, deleteEventResult] = useDeleteEventByIdMutation();
+  const [updateEventAsync, updateEventResult] = useUpdateEventByIdMutation();
+
   const [model, setModel] = useState<IModel>(initialState);
   const [fileSelected, setFile] = useState<File>();
+  const [validate, setValidate] = useState<IValidate>();
+
+  useEffect(() => {
+    if (!event) {
+      setModel(initialState);
+    } else {
+      console.log({ event });
+      setModel({
+        name: event.name,
+        description: event.description,
+        date: new Date(event.date),
+        imageName: event.image,
+      });
+    }
+  }, [event]);
 
   const handleClose = () => {
     setModel(initialState);
     onClose();
   };
 
-  const handleSelectFile = 
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (event.target.files) {
-        const file = event.target.files[0];
-        setFile(file);
-        setModel({ ...model, imageName: file.name });
-      }
+  const handleSelectFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const file = event.target.files[0];
+      setFile(file);
+      setModel({ ...model, imageName: file.name });
     }
+  };
+
+  const validateData = () => {
+    const isName = model.name === "";
+    const isDescription = model.description === "";
+    const isDate = model.date === undefined;
+    const isHasFile = event ? event.image === '' : fileSelected === undefined;
+    setValidate({ isName, isDescription, isDate, isHasFile });
+    return !isName && !isDescription && !isDate && !isHasFile;
+  };
 
   const handleSubmitForm = async () => {
     try {
+      if (!validateData()) return;
+
       const formData = new FormData();
-      console.log({model})
       formData.append("name", model.name);
       formData.append("description", model.description);
       if (fileSelected) {
@@ -73,12 +120,39 @@ export default function AddEditEventModal({ onOk, onClose, ...props }: IProps) {
       if (model.date) {
         formData.append("date", model.date.toISOString());
       }
-      await addEvent(formData).unwrap();
-      toast(getToast('Create event successfully!', 'success', 'success'));
+      let message = "Create event successfully!";
+      if (!event) {
+        await addEvent(formData).unwrap();
+      } else {
+        await updateEventAsync({
+          eventId: event.id.toString(),
+          data: formData,
+        }).unwrap();
+        message = "Update event successfully!";
+      }
+      toast(getToast(message, "success", "success"));
       onClose();
       setModel(initialState);
     } catch (ex) {
-      toast(getToast('something errors!'));
+      toast(getToast("something errors!"));
+    }
+  };
+
+  const handleDeleteEvent = async () => {
+    try {
+      if (event) {
+        await deleteEventAsync(event.id.toString()).unwrap();
+        toast(
+          getToast(
+            `Delete event: ${event.name} success.`,
+            "success",
+            "successfully"
+          )
+        );
+        onClose();
+      }
+    } catch (er) {
+      toast(getToast("something errors!"));
     }
   };
 
@@ -101,20 +175,20 @@ export default function AddEditEventModal({ onOk, onClose, ...props }: IProps) {
           flexDirection="column"
         >
           <Text variant={TextVariants.WITH_24} fontSize="40px" mb="30px">
-            CREATE EVENT
+            {`${event ? "EDIT" : "CREATE"} EVENT`}
           </Text>
-          <FormControl isRequired>
+          <FormControl isRequired isInvalid={validate?.isName}>
             <FormLabel>Event Name</FormLabel>
             <Input
               placeholder="Event name"
               value={model.name}
               onChange={(e) => {
                 const name = e.target.value;
-                setModel({ ...model, name})
+                setModel({ ...model, name });
               }}
             />
           </FormControl>
-          <FormControl isRequired mt="20px">
+          <FormControl isRequired mt="20px" isInvalid={validate?.isDate}>
             <FormLabel>Start date</FormLabel>
             <DatePicker
               className="chakra-input css-1kp110w"
@@ -128,7 +202,7 @@ export default function AddEditEventModal({ onOk, onClose, ...props }: IProps) {
               dateFormat="dd-MM-yyyy hh:mm aa"
             />
           </FormControl>
-          <FormControl mt="20px">
+          <FormControl mt="20px" isInvalid={validate?.isDescription}>
             <FormLabel> Description</FormLabel>
             <Textarea
               placeholder="Event Description"
@@ -138,7 +212,7 @@ export default function AddEditEventModal({ onOk, onClose, ...props }: IProps) {
               }
             />
           </FormControl>
-          <FormControl mt="20px">
+          <FormControl mt="20px" isInvalid={validate?.isHasFile}>
             <FormLabel> Event Image</FormLabel>
             <HStack position="relative" bg="white" w="full">
               <Input
@@ -150,7 +224,7 @@ export default function AddEditEventModal({ onOk, onClose, ...props }: IProps) {
                 position="absolute"
                 right="0"
                 borderRadius="0px"
-                variant={ButtonVariants.WITH_HIGHLIGHT_BLUE}
+                variant={ButtonVariants.WITH_ACTIVE}
               >
                 Select Image
               </Button>
@@ -169,6 +243,19 @@ export default function AddEditEventModal({ onOk, onClose, ...props }: IProps) {
             </HStack>
           </FormControl>
           <HStack w="full" mt="20px">
+            {event && (
+              <Button
+                variant={ButtonVariants.WITH_HOVER}
+                minW="50px"
+                title="Delete event"
+                onClick={handleDeleteEvent}
+                disabled={isAddEventLoading || updateEventResult.isLoading}
+                isDisabled={isAddEventLoading || updateEventResult.isLoading}
+              >
+                {deleteEventResult.isLoading && <Spinner />}
+                {!deleteEventResult.isLoading && <DeleteIcon />}
+              </Button>
+            )}
             <Spacer />
             <Button variant={ButtonVariants.WITH_DEFAULT} onClick={handleClose}>
               Cancel
@@ -176,11 +263,15 @@ export default function AddEditEventModal({ onOk, onClose, ...props }: IProps) {
             <Button
               variant={ButtonVariants.WITH_HIGHLIGHT_BLUE_DARK}
               onClick={handleSubmitForm}
-              disabled={isAddEventLoading}
-              isDisabled={isAddEventLoading}
+              disabled={isAddEventLoading || updateEventResult.isLoading}
+              isDisabled={isAddEventLoading || updateEventResult.isLoading}
             >
-              {isAddEventLoading && <Spinner />}
-              Ok
+              {(isAddEventLoading || updateEventResult.isLoading) && (
+                <Spinner />
+              )}
+              {!isAddEventLoading && !updateEventResult.isLoading && (
+                <Text variant={TextVariants.WITH_24} color="#fff">Ok</Text>
+              )}
             </Button>
           </HStack>
         </ModalBody>

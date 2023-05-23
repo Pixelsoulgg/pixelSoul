@@ -182,7 +182,7 @@ a {
 
 
 .rbc-header, .rbc-day-bg, .rbc-date-cell {
-  margin-right: 8px !important;
+  /* margin-right: 8px !important; */
 }
 
 .rbc-day-bg {
@@ -217,13 +217,13 @@ a {
   text-align: end !important;
   padding-top: 5px !important;
   padding-bottom: 17px;
-  padding-right: 10px !important;
+  /* padding-right: 10px !important; */
   height: 50px !important;
   text-align: end;
   align-items: end;
 }
 .rbc-date-cell {
-  padding-right: 10px !important;
+  /* padding-right: 10px !important; */
 }
 .rbc-header, .rbc-button-link {
   font-size: 18px !important;
