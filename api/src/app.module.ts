@@ -10,6 +10,9 @@ import { SteamModule } from './steam/steam.module'
 import { ChallengeModule } from './challenge/challenge.module'
 import { ChestModule } from './chest/chest.module'
 import { MysteryChestModule } from './mystery-chest/mystery-chest.module'
+import { EventModule } from './event/event.module'
+import { ServeStaticModule } from '@nestjs/serve-static'
+import { join } from 'path'
 
 @Module({
   imports: [
@@ -20,7 +23,11 @@ import { MysteryChestModule } from './mystery-chest/mystery-chest.module'
     SteamModule,
     ChallengeModule,
     ChestModule,
-    MysteryChestModule
+    MysteryChestModule,
+    EventModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'upload')
+    })
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService]

@@ -75,7 +75,7 @@ model UserChallenge {
   challengeId Int
   status      Int?      @default(0)
   challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "challenge")
-  users       Users     @relation(fields: [userSteamId], references: [steamId], onDelete: NoAction, onUpdate: NoAction, map: "user_challenge")
+  users       Users     @relation(fields: [userSteamId], references: [steamId], onDelete: Cascade, map: "user_challenge")
 
   @@id([challengeId, userSteamId])
   @@index([challengeId], map: "challenge_game_idx")
@@ -146,4 +146,13 @@ model UserMysteryChest {
 
   @@id([auth0Sub, mysteryId])
   @@index([mysteryId], map: "fk_user_mystery_chest_chest_idx")
+}
+
+model Event {
+  id           Int       @id @default(autoincrement())
+  name         String?   @db.VarChar(200)
+  date         DateTime? @db.DateTime(0)
+  insertedDate DateTime? @default(now()) @db.DateTime(0)
+  description  String?   @db.VarChar(2000)
+  image        String?   @db.VarChar(200)
 }
