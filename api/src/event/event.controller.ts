@@ -11,9 +11,7 @@ import {
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger'
-import { FileUploadDto } from './dto/event.file.dto'
 import { diskStorage } from 'multer'
-import path from 'path'
 import { EventService } from './event.service'
 import { EventCreateDto } from './dto/event.create.dto'
 import { Prisma } from '@prisma/client'
@@ -46,7 +44,7 @@ export class EventController {
     }
     return await this.eventService.create(createData)
   }
-  @Get('')
+  @Get()
   async findMany() {
     return await this.eventService.findAll({})
   }
@@ -79,7 +77,7 @@ export class EventController {
       name: data.name,
       date: new Date(data.date),
       description: data.description,
-      image: file.filename
+      image: file?.filename
     }
     return await this.eventService.update(updateData, { id: parseInt(id) })
   }
