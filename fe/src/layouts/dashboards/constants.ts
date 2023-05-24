@@ -10,7 +10,7 @@ export const MENUS: INavigationItem[] = [
   // {name: 'Dungeon', nav: '/dungeons', icon: 'play-to-earn'},
   // {name: 'Tavern', nav: '/taverns', icon: 'tavern'},
   // {name: 'Forge', nav: '/forges', icon: 'forge'},
-  {name: 'Event Board', nav: '/event-board', icon: 'epoch'},
+  {name: 'Event Board', nav: '/event-boards', icon: 'epoch'},
 ]
 
 export const SETTING_MENU: INavigationItem[] = [

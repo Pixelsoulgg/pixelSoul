@@ -179,3 +179,57 @@ a {
   border: 2px solid #4691FF;
   box-shadow: 0px 4px 4px rgba(75, 255, 255, 0.5);
 }
+
+
+.rbc-header, .rbc-day-bg, .rbc-date-cell {
+  /* margin-right: 8px !important; */
+}
+
+.rbc-day-bg {
+  font-family: VT323;
+  font-size: 22px;
+}
+
+.rbc-calendar {
+    box-sizing: inherit;
+    font-family: VT323;
+}
+
+.rbc-day-bg + .rbc-day-bg {
+  border-left: 0px solid #ddd !important;
+}
+.rbc-month-view {
+  border: none !important;
+}
+.rbc-header {
+  overflow: hidden;
+  flex: 1 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 3px;
+  vertical-align: middle;
+  font-weight: bold;
+  font-size: 90%;
+  min-height: 0;
+  border-bottom: 1px solid #ddd;
+  border-right: 0px !important;
+  border-left: 0px !important;
+  text-align: end !important;
+  padding-top: 5px !important;
+  padding-bottom: 17px;
+  /* padding-right: 10px !important; */
+  height: 50px !important;
+  text-align: end;
+  align-items: end;
+}
+.rbc-date-cell {
+  /* padding-right: 10px !important; */
+}
+.rbc-header, .rbc-button-link {
+  font-size: 18px !important;
+}
+
+.active-view-calendar {
+  border: 1px solid #1890FF !important;
+  color: #1890FF !important;
+}
