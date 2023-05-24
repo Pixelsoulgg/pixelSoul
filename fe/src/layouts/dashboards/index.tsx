@@ -31,13 +31,13 @@ export default function DashboardLayout({ children }: IProps) {
   const { pathname } = router;
 
   const isHideSearch = useMemo(() => {
-    const checkList = ["/my-souls", "/taverns", "/forges", "/epochs", "/soul-drops"];
+    const checkList = ["/my-souls", "/taverns", "/forges", "/epochs", "/soul-drops", "/event-boards"];
     if (checkList.findIndex((p) => p === pathname) > -1) return false;
     return true;
   }, [pathname]);
 
   const isHideBack = useMemo(() => {
-    const checkList = ["/my-souls", "/dungeons", "/taverns", "/forges", "/epochs", "/soul-drops"];
+    const checkList = ["/my-souls", "/dungeons", "/taverns", "/forges", "/epochs", "/soul-drops", "/event-boards"];
     if (checkList.findIndex((p) => p === pathname) > -1) return false;
     return true;
   }, [pathname]);
@@ -62,7 +62,9 @@ export default function DashboardLayout({ children }: IProps) {
       case "/my-souls":
         return `Welcome to PixelSoul, ${user?.name || ''}`;
       case "/soul-drops":
-         return "SoulDrop"
+         return "SoulDrop";
+      case "/event-boards": 
+        return "Events"
       default:
         return "";
     }
