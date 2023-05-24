@@ -6,6 +6,7 @@ import { setAppSetting } from './app.settings'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
+
   setAppSetting(app)
   const version = '1.0'
   const config = new DocumentBuilder()
