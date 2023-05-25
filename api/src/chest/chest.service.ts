@@ -43,12 +43,12 @@ export class ChestService {
       where: { auth0Sub, mysteryId: 1 }
     })
     const grChest = []
-    grChest['My Chest'] = chests.reduce((s, c) => s + c.amount, 0) + mysChest.amount
+    grChest['My Chest'] = chests.reduce((s, c) => s + c.amount, 0) + (mysChest?.amount || 0)
     chestTypes.forEach((c) => {
       grChest[c.rarity] = chests.find((f) => f.chestId == c.id)?.amount || 0
     })
 
-    grChest['Mystery'] = mysChest.amount
+    grChest['Mystery'] = mysChest?.amount
     const summary = []
     Object.keys(grChest).forEach((k) => {
       const ch = {
