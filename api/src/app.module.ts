@@ -13,7 +13,6 @@ import { MysteryChestModule } from './mystery-chest/mystery-chest.module'
 import { EventModule } from './event/event.module'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { join } from 'path'
-import { AuthService } from './auth/auth.service'
 import { AuthModule } from './auth/auth.module'
 
 @Module({
@@ -33,6 +32,6 @@ import { AuthModule } from './auth/auth.module'
     AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService, ConfigService, AuthService]
+  providers: [AppService, ConfigService]
 })
 export class AppModule {}
