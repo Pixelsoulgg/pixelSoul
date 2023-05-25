@@ -26,6 +26,14 @@ export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
   const [menuSelected, setMenuSelected] = React.useState<string>('/my-souls'); 
   const onMenuChange = (menu: string) => setMenuSelected(menu);
 
+  const handleGetAccessToken= useCallback( async () => {
+    try {
+      const accessToken = (await axios.get('/api/check')).data as IAuth0Model;
+      console.log({accessToken})
+    } catch(ex) {}
+   
+  }, []);
+
   const handleInitialState= useCallback( async () => {
     const me = (await axios.get('/api/auth/me')).data as IAuth0Model;
     if (!me) {
@@ -38,6 +46,10 @@ export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
   useEffect(() => {  
     handleInitialState();
   }, [handleInitialState]);
+
+  useEffect(() => {  
+    handleGetAccessToken();
+  }, [handleGetAccessToken]);
 
   return (
     <GlobalContext.Provider
