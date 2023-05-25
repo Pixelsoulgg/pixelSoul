@@ -13,6 +13,7 @@ async function bootstrap() {
     .setTitle('Pixel Soul API')
     .setDescription('Pixel Soul API description')
     .setVersion(version)
+    .addBearerAuth()
     .build()
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('docs', app, document)

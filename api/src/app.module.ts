@@ -13,6 +13,8 @@ import { MysteryChestModule } from './mystery-chest/mystery-chest.module'
 import { EventModule } from './event/event.module'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { join } from 'path'
+import { AuthService } from './auth/auth.service'
+import { AuthModule } from './auth/auth.module'
 
 @Module({
   imports: [
@@ -27,9 +29,10 @@ import { join } from 'path'
     EventModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'upload')
-    })
+    }),
+    AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService, ConfigService]
+  providers: [AppService, ConfigService, AuthService]
 })
 export class AppModule {}

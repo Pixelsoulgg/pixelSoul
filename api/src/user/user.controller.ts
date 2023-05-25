@@ -1,10 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common'
 import { UserDto } from './dto/user.dto'
 import { UserUpdateDto } from './dto/userUpdate.dto'
 import { UserService } from './user.service'
 import { UserAddSteamIdDto } from './dto/userAddSteamId.dto'
 import { UserAddWalletDto } from './dto/userAddWallet.dto'
-import { ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+import { AuthGuard } from '@nestjs/passport'
+@UseGuards(AuthGuard('jwt'))
+@ApiBearerAuth()
 @ApiTags('user')
 @Controller({ version: '1', path: 'user' })
 export class UserController {
