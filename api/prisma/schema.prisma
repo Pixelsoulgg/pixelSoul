@@ -98,6 +98,7 @@ model Users {
   claimSteamChest  Int?               @default(0)
   claimWalletChest Int?               @default(0)
   claimSuiChest    Int?               @default(0)
+  grantRole        GrantRole[]
   userChallenge    UserChallenge[]
   userChest        UserChest[]
   userMysteryChest UserMysteryChest[]
@@ -155,4 +156,21 @@ model Event {
   insertedDate DateTime? @default(now()) @db.DateTime(0)
   description  String?   @db.VarChar(2000)
   image        String?   @db.VarChar(200)
+}
+
+model GrantRole {
+  roleId   Int
+  auth0Sub String @db.VarChar(100)
+  role     Role   @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_role_granted")
+  users    Users  @relation(fields: [auth0Sub], references: [auth0Sub], onDelete: NoAction, onUpdate: NoAction, map: "frk_user_granted")
+
+  @@id([roleId, auth0Sub])
+  @@index([auth0Sub], map: "fk_user_idx")
+}
+
+model Role {
+  id        Int         @id @default(autoincrement())
+  name      String?     @db.VarChar(100)
+  rolecol   String?     @db.VarChar(45)
+  grantRole GrantRole[]
 }

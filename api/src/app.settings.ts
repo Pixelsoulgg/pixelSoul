@@ -1,5 +1,8 @@
 import { INestApplication, RequestMethod, VersioningType } from '@nestjs/common'
+import { AuthGuard } from '@nestjs/passport'
 import * as dotenv from 'dotenv'
+import { RolesGuard } from './roles/roles.guard'
+import { Reflector } from '@nestjs/core'
 dotenv.config()
 export const MORALIS_API_KEY = process.env.MORALIS_API_KEY || ''
 export const OPENSEA_API_KEY = process.env.OPENSEA_API_KEY || ''
@@ -24,4 +27,5 @@ export function setAppSetting(app: INestApplication) {
     preflightContinue: false,
     optionsSuccessStatus: 204
   })
+  app.useGlobalGuards(new (AuthGuard('jwt'))(), new RolesGuard(new Reflector()))
 }

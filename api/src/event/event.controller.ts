@@ -15,6 +15,7 @@ import { diskStorage } from 'multer'
 import { EventService } from './event.service'
 import { EventCreateDto } from './dto/event.create.dto'
 import { Prisma } from '@prisma/client'
+import { Roles } from 'src/roles/roles.decorator'
 @ApiTags('Event')
 @Controller({ path: 'event', version: '1' })
 export class EventController {
@@ -25,6 +26,7 @@ export class EventController {
     description: 'Image',
     type: EventCreateDto
   })
+  @Roles('admin')
   @UseInterceptors(
     FileInterceptor('image', {
       storage: diskStorage({
@@ -68,6 +70,7 @@ export class EventController {
       })
     })
   )
+  @Roles('admin')
   async update(
     @Param('eventId') id: string,
     @Body() data: EventCreateDto,
