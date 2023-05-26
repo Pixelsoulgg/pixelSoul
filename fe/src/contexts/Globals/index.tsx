@@ -1,7 +1,8 @@
-import { getSteamInfoAction, handleAuth0LoginSuccess } from '@/reduxs/auths/auth.slices';
+import { getSteamInfoAction, handleAuth0LoginSuccess, setAccessToken } from '@/reduxs/auths/auth.slices';
 import { useAppDispatch } from '@/reduxs/hooks';
 import { IAuth0Model } from '@/types';
 import axios from 'axios';
+import axiosInstance from '@/apis';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect } from 'react';
 
@@ -28,10 +29,15 @@ export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
 
   const handleGetAccessToken= useCallback( async () => {
     try {
-      const accessToken = (await axios.get('/api/check')).data as IAuth0Model;
-      console.log({accessToken})
-    } catch(ex) {}
-   
+      const rs:any = (await axios.get('/api/check')).data;
+      if (rs.accessToken) {
+        dispatch(setAccessToken(rs.accessToken));
+        axiosInstance.interceptors.request.use((conf) => {
+          conf.headers.Authorization = `Bearer ${rs.accessToken}`;
+          return conf;
+        })
+      }
+    } catch(ex) {}   
   }, []);
 
   const handleInitialState= useCallback( async () => {
@@ -39,6 +45,7 @@ export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
     if (!me) {
       push('/')
     }
+    await handleGetAccessToken();
     dispatch(handleAuth0LoginSuccess(me));
     dispatch(getSteamInfoAction());
   }, [dispatch, push]);
@@ -46,10 +53,6 @@ export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
   useEffect(() => {  
     handleInitialState();
   }, [handleInitialState]);
-
-  useEffect(() => {  
-    handleGetAccessToken();
-  }, [handleGetAccessToken]);
 
   return (
     <GlobalContext.Provider

@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import { Calendar, View, Views } from "react-big-calendar";
 
 interface IProps {
+  isAdministrator: Boolean;
   date: Date;
   defaultView: View;
   calendarRef?: React.RefObject<Calendar>;
@@ -17,6 +18,7 @@ interface IProps {
 }
 
 export default function CustomToolbar({
+  isAdministrator,
   date,
   defaultView,
   calendarRef,
@@ -51,12 +53,13 @@ export default function CustomToolbar({
 
   return (
     <HStack w="full" minH="20px" mb="20px">
-      <Button variant={ButtonVariants.WITH_HIGHLIGHT_BLUE_DARK}>
+     {isAdministrator &&  <Button variant={ButtonVariants.WITH_HIGHLIGHT_BLUE_DARK}>
         <AddIcon />
         <Text variant={TextVariants.WITH_24} color="white" ml="5px"
           onClick={onAdd}
         >Add Event</Text>
       </Button>
+    }
       <Spacer />
       <YearDropdown
         defaultValue={date.getFullYear()}
