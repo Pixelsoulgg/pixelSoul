@@ -19,6 +19,7 @@ EventBoard.getLayout = function getLayout(page: React.ReactElement) {
 };
 
 export default function EventBoard() {
+  const {auth0Info} = useAppSelector((p) => p.auth);
   const { auth0Sub } = useAppSelector((p) => p.auth);
   const { isLoading, data, isError, isFetching } = useGetEventsQuery(
     undefined,
@@ -55,6 +56,12 @@ export default function EventBoard() {
     onOpenAdd();
   };
 
+  const isAdministrator =  useMemo(() => {
+    const val = auth0Info?.grantRole.findIndex(p => p.role.id === 1);
+    if (val === undefined) return false;
+    return val > -1;
+  }, [auth0Info, auth0Info?.grantRole]);
+
   return (
     <Flex w="full" h="100vh">
       <Calendar
@@ -68,6 +75,7 @@ export default function EventBoard() {
         components={{
           toolbar: () => (
             <CustomToolbar
+              isAdministrator={isAdministrator}
               onAdd={() => {
                 setEvent(undefined);
                 onOpenAdd();
@@ -84,6 +92,7 @@ export default function EventBoard() {
       />
 
       <EventModal
+        isAdministrator={isAdministrator}
         event={selectedEvent}
         isOpen={isOpen}
         eventName={`${selectedEvent?.title || "Event"}`}

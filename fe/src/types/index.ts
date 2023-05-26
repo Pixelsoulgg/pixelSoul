@@ -65,6 +65,10 @@ export interface IAuth0Model extends UserProfile {
   sid: string;
 }
 
+export interface IRole {
+  role: { id: number; name: string };
+}
+
 export interface IUser {
   id?: number;
   email?: string;
@@ -81,6 +85,7 @@ export interface IUser {
   claimSteamChest: number;
   claimWalletChest: number;
   claimSuiChest: number;
+  grantRole: IRole[];
 }
 
 export interface IGame {
