@@ -1,13 +1,4 @@
-import { Controller, Get, Request, UseGuards } from '@nestjs/common'
-import { AuthGuard } from '@nestjs/passport'
-import { ApiBearerAuth } from '@nestjs/swagger'
+import { Controller, Get, Request } from '@nestjs/common'
 
 @Controller('auth')
-export class AuthController {
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard('jwt'))
-  @Get()
-  hello(@Request() req: any) {
-    return req.user
-  }
-}
+export class AuthController {}
