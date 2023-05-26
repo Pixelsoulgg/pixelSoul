@@ -1,4 +1,5 @@
-import { getState } from '@/reduxs/rtkActions'
+// import { getState } from '@/reduxs/rtkActions'
+import { RootState } from '@/reduxs/store'
 import { getBaseUrlHelper } from '@/utils/env.helpers'
 import {
   BaseQueryFn,
@@ -11,7 +12,8 @@ import {
 const baseQuery = fetchBaseQuery({
   baseUrl: getBaseUrlHelper(),
   credentials: 'same-origin',
-  prepareHeaders: (headers, {endpoint}) => {
+  prepareHeaders: (headers, {endpoint, getState}) => {
+    const accessToken = (getState() as RootState).auth.accessToken
     const UPLOAD_ENDPOINT = ["addEvent", "updateEventById"];
     const index = UPLOAD_ENDPOINT.indexOf(endpoint);
     headers.set('Accept', 'application/json');
@@ -20,6 +22,9 @@ const baseQuery = fetchBaseQuery({
     }
     headers.set('Access-Control-Allow-Credentials', 'true');
     headers.set('X-Requested-With', 'XMLHttpRequest');
+    if (accessToken) {
+      headers.set('Authorization', `Bearer ${accessToken}`)
+    }
     return headers
   },
 })

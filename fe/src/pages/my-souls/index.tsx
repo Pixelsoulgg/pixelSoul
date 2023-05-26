@@ -21,8 +21,7 @@ export default function MySoul() {
   const dispatch = useAppDispatch();
 
   const { walletInfo } = useAppSelector((s) => s.account);
-  const {auth0Info, auth0Sub, steamId} = useAppSelector(s => s.auth);
-
+  const {auth0Info, auth0Sub, steamId, accessToken} = useAppSelector(s => s.auth);
   const handleSteamAuth = useCallback(() => {
     //@ts-ignore
     const query: OpenIDData | undefined = router.query;
