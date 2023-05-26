@@ -41,7 +41,8 @@ export class UserService {
 
   async findOne(where: Prisma.UsersWhereUniqueInput) {
     return await this.prisma.users.findUnique({
-      where
+      where,
+      include: { grantRole: { select: { role: true } } }
     })
   }
 

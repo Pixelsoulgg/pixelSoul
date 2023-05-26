@@ -171,6 +171,5 @@ model GrantRole {
 model Role {
   id        Int         @id @default(autoincrement())
   name      String?     @db.VarChar(100)
-  rolecol   String?     @db.VarChar(45)
   grantRole GrantRole[]
 }
