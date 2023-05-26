@@ -14,9 +14,6 @@ import { EventModule } from './event/event.module'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { join } from 'path'
 import { AuthModule } from './auth/auth.module'
-import { APP_GUARD } from '@nestjs/core'
-import { AuthGuard } from '@nestjs/passport'
-import { RolesGuard } from './roles/roles.guard'
 
 @Module({
   imports: [
