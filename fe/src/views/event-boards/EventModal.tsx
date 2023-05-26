@@ -19,6 +19,7 @@ import { Event } from "react-big-calendar";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 interface IProps extends Omit<ModalProps, "children"> {
+  isAdministrator: Boolean;
   eventName: string;
   event?: Event;
   img?: string;
@@ -27,6 +28,7 @@ interface IProps extends Omit<ModalProps, "children"> {
 }
 
 export default function EventModal({
+  isAdministrator,
   eventName,
   img,
   event,
@@ -68,7 +70,7 @@ export default function EventModal({
             </Text>
           </Fragment>
 
-        <CountdownTimer targetDate={convertDateToUnix(event?.start)} />
+          <CountdownTimer targetDate={convertDateToUnix(event?.start)} />
 
           <Text
             variant={TextVariants.WITH_18}
@@ -79,15 +81,24 @@ export default function EventModal({
             Do not miss this opportunity <br />
             Many attractive gifts are waiting for you!
           </Text>
-          {/* @ts-ignore */}
-          <Image src={event?.img || '/events/box.svg'} alignSelf="center" minH="300px" minW="300px" />
+         
+          <Image
+           /* @ts-ignore */
+            src={event?.img || "/events/box.svg"}
+            alignSelf="center"
+            minH="300px"
+            minW="300px"
+            maxW={{lg: '250px', '2xl': '350px'}}
+          />
 
-          <HStack mt="30px">
-            <Button variant={ButtonVariants.WITH_ACTIVE} onClick={onEdit}>            
-              <EditIcon mr="10px" />            
-              Edit
-            </Button>
-          </HStack>
+          {isAdministrator && (
+            <HStack mt="30px">
+              <Button variant={ButtonVariants.WITH_ACTIVE} onClick={onEdit}>
+                <EditIcon mr="10px" />
+                Edit
+              </Button>
+            </HStack>
+          )}
         </ModalBody>
       </ModalContent>
     </Modal>
