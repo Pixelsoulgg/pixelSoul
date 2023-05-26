@@ -94,6 +94,7 @@ export const handleAuth0LoginSuccess = createAsyncThunk<void, IAuth0Model>(
           claimSteamChest: 0,
           claimWalletChest: 0,
           claimSuiChest: 0,
+          grantRole: []
         });
       }
       store.dispatch(authSlice.actions.auth0LoginSuccess(userInfo));
