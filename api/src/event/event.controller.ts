@@ -7,24 +7,30 @@ import {
   Patch,
   Post,
   UploadedFile,
+  UseGuards,
   UseInterceptors
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
-import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger'
 import { diskStorage } from 'multer'
 import { EventService } from './event.service'
 import { EventCreateDto } from './dto/event.create.dto'
 import { Prisma } from '@prisma/client'
+import { Roles } from 'src/roles/roles.decorator'
+import { AuthGuard } from '@nestjs/passport'
 @ApiTags('Event')
 @Controller({ path: 'event', version: '1' })
 export class EventController {
   constructor(private eventService: EventService) {}
+  @ApiBearerAuth('bearer')
+  @UseGuards(AuthGuard('jwt'))
   @Post('create')
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description: 'Image',
     type: EventCreateDto
   })
+  @Roles('admin')
   @UseInterceptors(
     FileInterceptor('image', {
       storage: diskStorage({
@@ -44,14 +50,19 @@ export class EventController {
     }
     return await this.eventService.create(createData)
   }
+
   @Get()
   async findMany() {
     return await this.eventService.findAll({})
   }
+
   @Get(':month')
   async findByMonth(@Param('month') month: string) {
     return await this.eventService.findByMonth(parseInt(month))
   }
+
+  @ApiBearerAuth('bearer')
+  @UseGuards(AuthGuard('jwt'))
   @Patch(':eventId')
   @ApiConsumes('multipart/form-data')
   @ApiBody({
@@ -68,6 +79,7 @@ export class EventController {
       })
     })
   )
+  @Roles('admin')
   async update(
     @Param('eventId') id: string,
     @Body() data: EventCreateDto,
@@ -81,6 +93,10 @@ export class EventController {
     }
     return await this.eventService.update(updateData, { id: parseInt(id) })
   }
+
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
+  @Roles('admin')
   @Delete(':eventId')
   async remove(@Param('eventId') id: string) {
     return await this.eventService.remove({ id: parseInt(id) })

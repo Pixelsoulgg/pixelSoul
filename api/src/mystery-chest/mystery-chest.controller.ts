@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common'
-import { ApiTags } from '@nestjs/swagger'
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common'
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { MysteryChestService } from './mystery-chest.service'
 import { OpenChestDto } from './dto/mystery-chest.open.dto'
+import { AuthGuard } from '@nestjs/passport'
 @ApiTags('mystery chest')
 @Controller({ version: '1', path: 'mystery-chest' })
 export class MysteryChestController {
@@ -10,10 +11,16 @@ export class MysteryChestController {
   async findAllByUser(@Param('auth0Sub') auth0Sub: string) {
     return await this.mysteryChestService.findAll(auth0Sub)
   }
+
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
   @Post('claim/:auth0Sub')
   async claim(@Param('auth0Sub') auth0Sub: string) {
     return await this.mysteryChestService.increase(auth0Sub)
   }
+
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
   @Post('open')
   async open(@Body() data: OpenChestDto) {
     return await this.mysteryChestService.openMysteryChest(data)
