@@ -20,6 +20,9 @@ import SuiWalletConnector from "./SuiWalletConnector";
 import { disconnectMetaMask } from "@/contracts/interfaces/EthersConnect";
 import { disconnectMetamaskAction } from "@/reduxs/accounts/account.actions";
 import { useAddSuiWalletMutation } from "@/services/modules/game.check.services";
+import { auth0LoginSuccess } from "@/reduxs/auths/auth.slices";
+import AppApi from "@/apis/app.api";
+import { IUser } from "@/types";
 
 const DEFAULT_MESSAGE = "Not connected yet";
 
@@ -67,6 +70,9 @@ export default function AccountInfo() {
     try {
       if (wallet && wallet.address && auth0Sub) {
         await addSuiWallet({auth0Sub: auth0Sub, suiWalletAddress: wallet.address}).unwrap();
+        const api = new AppApi();
+        let userInfo: IUser = await api.getUserById(auth0Sub);
+        dispatch(auth0LoginSuccess(userInfo));
       } 
     } catch(ex) {}
    

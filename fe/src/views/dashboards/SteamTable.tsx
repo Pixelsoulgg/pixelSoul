@@ -1,7 +1,5 @@
 import React from "react";
 import {
-  Box,
-  Button,
   Flex,
   FlexProps,
   HStack,
@@ -20,7 +18,7 @@ import { getYears, numberFormat } from "@/utils";
 interface IProps extends FlexProps {}
 
 export default function SteamTable({ ...props }: IProps) {
-  const {steamUser} = useAppSelector((p) => p.soul);  
+  const { steamUser } = useAppSelector((p) => p.soul);
 
   return (
     <Flex
@@ -39,20 +37,21 @@ export default function SteamTable({ ...props }: IProps) {
           <Tr>
             <Th minW="200px">Steam ID</Th>
             <Th w="20%" minW="150px">
-            Total Hours
+              Total Hours
             </Th>
             <Th w="10%" minW="150px">
-            Steam Level
-            </Th>           
+              Steam Level
+            </Th>
             <Th w="20%" minW="200px">
-            Age
+              Age
             </Th>
             <Th w="10%" minW="150px">
-            Games
+              Games
             </Th>
           </Tr>
         </Thead>
-        <Tbody>     
+        <Tbody>
+          {steamUser && (
             <Tr>
               <Td>
                 <HStack>
@@ -63,27 +62,35 @@ export default function SteamTable({ ...props }: IProps) {
                 </HStack>
               </Td>
               <Td>
-                  <Text variant="with-sub" fontWeight="500" color="#101828">
-                    {numberFormat((steamUser?.totalHours || 0) / 60)} 
-                  </Text>
+                <Text variant="with-sub" fontWeight="500" color="#101828">
+                  {numberFormat((steamUser?.totalHours || 0) / 60)}
+                </Text>
               </Td>
               <Td>
-                   <Text variant="with-sub" fontWeight="500" color="#101828">
-                   {steamUser?.level}
-                  </Text>
+                <Text variant="with-sub" fontWeight="500" color="#101828">
+                  {steamUser?.level}
+                </Text>
               </Td>
-              
+
               <Td>
-                   <Text variant="with-sub" fontWeight="500" color="#101828">
-                   {getYears(steamUser?.timeCreated || 0)} Y
-                  </Text> 
+                <Text variant="with-sub" fontWeight="500" color="#101828">
+                  {getYears(steamUser?.timeCreated || 0)} Y
+                </Text>
               </Td>
               <Td>
-                  <Text variant="with-sub" fontWeight="500" color="#101828">
-                   {steamUser?.gameNumber}
-                  </Text>
+                <Text variant="with-sub" fontWeight="500" color="#101828">
+                  {steamUser?.gameNumber}
+                </Text>
               </Td>
-            </Tr>         
+            </Tr>
+          )}
+          {!steamUser && <Tr>
+              <Td colSpan={5}>
+                <Text variant="with-sub" fontWeight="500" color="#101828">
+                  You don't have any games!.
+                </Text>
+              </Td>
+            </Tr>}
         </Tbody>
       </Table>
     </Flex>

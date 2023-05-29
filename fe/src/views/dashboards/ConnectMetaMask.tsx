@@ -19,7 +19,7 @@ export default function ConnectMetaMask() {
       onClick={connectToMetamask}
     >
       <Text variant="with-title" fontSize="16px" color="white">
-        Connect Wallet
+        Connect MetaMask
       </Text>
     </Box>
   );
