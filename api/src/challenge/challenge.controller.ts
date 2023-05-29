@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common'
-import { ApiTags } from '@nestjs/swagger'
+import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common'
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { ChallengeService } from './challenge.service'
 import { EligibilityDto } from './dto/eligibility.dto'
+import { AuthGuard } from '@nestjs/passport'
 @ApiTags('challenge')
 @Controller({ version: '1', path: 'challenge' })
 export class ChallengeController {
@@ -11,6 +12,8 @@ export class ChallengeController {
     console.log('steamid', steamId)
     return await this.challengeService.findMany(steamId)
   }
+  @ApiBearerAuth('bearer')
+  @UseGuards(AuthGuard('jwt'))
   @Patch('/active')
   async active(@Body() eligibilityDto: EligibilityDto) {
     return await this.challengeService.activeChallenge(
@@ -18,7 +21,8 @@ export class ChallengeController {
       eligibilityDto.steamId
     )
   }
-
+  @ApiBearerAuth('bearer')
+  @UseGuards(AuthGuard('jwt'))
   @Post('/check')
   async check(@Body() eligibilityDto: EligibilityDto) {
     return await this.challengeService.checkEligibility(eligibilityDto)
