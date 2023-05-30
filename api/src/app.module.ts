@@ -14,6 +14,8 @@ import { EventModule } from './event/event.module'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { join } from 'path'
 import { AuthModule } from './auth/auth.module'
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler'
+import { APP_GUARD } from '@nestjs/core'
 
 @Module({
   imports: [
@@ -29,9 +31,20 @@ import { AuthModule } from './auth/auth.module'
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'upload')
     }),
-    AuthModule
+    AuthModule,
+    ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 30
+    })
   ],
   controllers: [AppController],
-  providers: [AppService, ConfigService]
+  providers: [
+    AppService,
+    ConfigService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard
+    }
+  ]
 })
 export class AppModule {}
