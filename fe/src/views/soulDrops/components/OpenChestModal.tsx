@@ -68,21 +68,21 @@ export default function OpenChestModal({
 }
           <Image src={`/chests/${img || 'Mystery'}.svg`} alignSelf="center" />
           <HStack w="full" justifyContent="center" mt="30px">
-            <Button
+            {/* <Button
               variant={isSuccess ? ButtonVariants.WITH_HIGHLIGHT_BLUE : ButtonVariants.WITH_DEFAULT}
               w={isSuccess ? 'full' : ''}
               isDisabled={isLoading}
               onClick={onClose}
             >
               Ok
-            </Button>
+            </Button> */}
             {!isSuccess && <Button
               variant={ButtonVariants.WITH_HIGHLIGHT_BLUE}
               isDisabled={isLoading}
               onClick={() => onOk && onOk()}
             >
               {isLoading && <Spinner />}
-              {!isLoading && 'OPEN NOW'} 
+              {!isLoading && 'CLAIM NOW'} 
             </Button>}
           </HStack>
         </ModalBody>
