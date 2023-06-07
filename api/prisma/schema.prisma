@@ -98,6 +98,9 @@ model Users {
   claimSteamChest  Int?               @default(0)
   claimWalletChest Int?               @default(0)
   claimSuiChest    Int?               @default(0)
+  referralCode     String?            @db.VarChar(10)
+  referredBy       String?            @db.VarChar(10)
+  referralAmount   Int?               @default(0)
   grantRole        GrantRole[]
   userChallenge    UserChallenge[]
   userChest        UserChest[]

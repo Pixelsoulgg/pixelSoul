@@ -3,6 +3,7 @@ import { Prisma } from '@prisma/client'
 import { PrismaService } from '../prisma.service'
 import { UserDto } from './dto/user.dto'
 import { UserUpdateDto } from './dto/userUpdate.dto'
+import { randomBytes, randomFill, randomUUID } from 'crypto'
 
 @Injectable()
 export class UserService {
@@ -16,8 +17,26 @@ export class UserService {
       const msg = `user.auth0Sid [${auth0User.auth0Sid}] existed`
       throw new HttpException(msg, HttpStatus.NOT_FOUND)
     }
+    const referredUser = await this.prisma.users.findFirst({
+      where: { referralCode: userDto.referredBy }
+    })
+    if (!referredUser) {
+      throw new HttpException(
+        `Referral code [${userDto.referredBy}] not found`,
+        HttpStatus.NOT_FOUND
+      )
+    } else {
+      await this.prisma.users.update({
+        where: { auth0Sub: referredUser.auth0Sub },
+        data: {
+          referralAmount: { increment: 1 }
+        }
+      })
+    }
+    const referralCode = await this.generateCode()
     const data: Prisma.UsersUncheckedCreateInput = {
-      ...userDto
+      ...userDto,
+      referralCode
     }
     return await this.prisma.users.create({ data })
   }
@@ -107,5 +126,15 @@ export class UserService {
       data: updateData,
       where: { auth0Sub }
     })
+  }
+
+  async generateCode(): Promise<string> {
+    let referralCode = randomBytes(4).toString('hex')
+    while (true) {
+      if (await this.prisma.users.findFirst({ where: { referralCode } }))
+        referralCode = randomBytes(4).toString('hex')
+      else break
+    }
+    return referralCode
   }
 }
