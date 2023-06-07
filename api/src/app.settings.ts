@@ -27,5 +27,4 @@ export function setAppSetting(app: INestApplication) {
     preflightContinue: false,
     optionsSuccessStatus: 204
   })
-  //app.useGlobalGuards(new (AuthGuard('jwt'))(), new RolesGuard(new Reflector()))
 }
