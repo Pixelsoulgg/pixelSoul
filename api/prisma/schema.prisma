@@ -176,3 +176,9 @@ model Role {
   name      String?     @db.VarChar(100)
   grantRole GrantRole[]
 }
+
+model ReferralTransaction {
+  id           String  @id @db.VarChar(35)
+  checkPoint   Int?
+  referralCode String? @db.VarChar(10)
+}

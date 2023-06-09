@@ -16,6 +16,7 @@ import { join } from 'path'
 import { AuthModule } from './auth/auth.module'
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler'
 import { APP_GUARD } from '@nestjs/core'
+import { ReferralModule } from './referral/referral.module'
 
 @Module({
   imports: [
@@ -35,7 +36,8 @@ import { APP_GUARD } from '@nestjs/core'
     ThrottlerModule.forRoot({
       ttl: 60,
       limit: 30
-    })
+    }),
+    ReferralModule
   ],
   controllers: [AppController],
   providers: [

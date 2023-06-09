@@ -13,6 +13,8 @@ export const STEAM_API_KEY = process.env.STEAM_API_KEY || ''
 export const STEAM_API_HOST = process.env.STEAM_API_HOST || ''
 export const AUTH0_ISSUER_URL = process.env.AUTH0_ISSUER_URL || ''
 export const AUTH0_AUDIENCE = process.env.AUTH0_AUDIENCE || ''
+export const EMAIL = process.env.EMAIL || ''
+export const EMAIL_PASS = process.env.EMAIL_PASS || ''
 
 export function setAppSetting(app: INestApplication) {
   app.setGlobalPrefix('api', {

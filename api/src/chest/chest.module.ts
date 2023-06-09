@@ -5,6 +5,7 @@ import { ChestController } from './chest.controller'
 
 @Module({
   controllers: [ChestController],
-  providers: [ChestService, PrismaService]
+  providers: [ChestService, PrismaService],
+  exports: [ChestService]
 })
 export class ChestModule {}

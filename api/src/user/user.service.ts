@@ -3,11 +3,18 @@ import { Prisma } from '@prisma/client'
 import { PrismaService } from '../prisma.service'
 import { UserDto } from './dto/user.dto'
 import { UserUpdateDto } from './dto/userUpdate.dto'
-import { randomBytes, randomFill, randomUUID } from 'crypto'
+import { randomBytes, randomUUID } from 'crypto'
+import { reward } from './user.utils'
+import { MysteryChestService } from '../mystery-chest/mystery-chest.service'
+import { ChestService } from '../chest/chest.service'
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private mysteryService: MysteryChestService,
+    private chestService: ChestService
+  ) {}
   async create(userDto: UserDto) {
     const auth0User = await this.prisma.users.findUnique({
       where: { auth0Sub: userDto.auth0Sub }
@@ -17,27 +24,65 @@ export class UserService {
       const msg = `user.auth0Sid [${auth0User.auth0Sid}] existed`
       throw new HttpException(msg, HttpStatus.NOT_FOUND)
     }
+    const referralCode = await this.generateCode()
+    const data: Prisma.UsersUncheckedCreateInput = {
+      ...userDto,
+      referralCode
+    }
+    //referral process
     const referredUser = await this.prisma.users.findFirst({
       where: { referralCode: userDto.referredBy }
     })
+    const auth0Sub = referredUser.auth0Sub
+    let hasClaim = false
     if (!referredUser) {
       throw new HttpException(
         `Referral code [${userDto.referredBy}] not found`,
         HttpStatus.NOT_FOUND
       )
     } else {
+      const point = referredUser.referralAmount + 1
+      const rewardData = reward(point)
       await this.prisma.users.update({
         where: { auth0Sub: referredUser.auth0Sub },
         data: {
           referralAmount: { increment: 1 }
         }
       })
+      if (rewardData.mys > 0) {
+        const amount = rewardData.mys
+        await this.mysteryService.increase(auth0Sub, amount)
+        hasClaim = true
+      }
+      if (rewardData.common > 0) {
+        await this.chestService.increase(2, auth0Sub, rewardData.common)
+        hasClaim = true
+      }
+      if (rewardData.gold > 0) {
+        await this.chestService.increase(3, auth0Sub, rewardData.gold)
+        hasClaim = true
+      }
+      if (rewardData.diamond > 0) {
+        await this.chestService.increase(4, auth0Sub, rewardData.diamond)
+        hasClaim = true
+      }
+      if (rewardData.mythic > 0) {
+        await this.chestService.increase(6, auth0Sub, rewardData.mythic)
+        hasClaim = true
+      }
+      if (hasClaim) {
+        //save transaction
+        const data: Prisma.ReferralTransactionCreateInput = {
+          id: randomUUID(),
+          checkPoint: point,
+          referralCode: userDto.referredBy
+        }
+        await this.prisma.referralTransaction.create({
+          data
+        })
+      }
     }
-    const referralCode = await this.generateCode()
-    const data: Prisma.UsersUncheckedCreateInput = {
-      ...userDto,
-      referralCode
-    }
+
     return await this.prisma.users.create({ data })
   }
 
