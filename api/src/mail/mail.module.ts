@@ -8,7 +8,7 @@ import {
   GOOGLE_MAILER_CLIENT_ID,
   GOOGLE_MAILER_CLIENT_SECRET,
   GOOGLE_MAILER_REFRESH_TOKEN
-} from 'src/app.settings'
+} from '../app.settings'
 
 @Module({
   imports: [

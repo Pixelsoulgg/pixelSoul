@@ -5,7 +5,7 @@ import { SteamStrategy } from './steam.strategy'
 import { PassportModule } from '@nestjs/passport'
 import { GameService } from '../game/game.service'
 import { GameModule } from '../game/game.module'
-import { PrismaService } from 'src/prisma.service'
+import { PrismaService } from '../prisma.service'
 
 @Module({
   controllers: [SteamController],
