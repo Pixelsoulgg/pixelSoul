@@ -52,7 +52,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const { steamAuthSuccess, setAccessToken } = authSlice.actions;
+export const { steamAuthSuccess, setAccessToken, auth0LoginSuccess } = authSlice.actions;
 export default authSlice.reducer;
 
 export const getSteamInfoAction = createAsyncThunk<OpenIDData | undefined>(

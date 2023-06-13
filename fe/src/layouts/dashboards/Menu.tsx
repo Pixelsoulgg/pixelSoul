@@ -21,6 +21,9 @@ interface IProps extends FlexProps {
 
 export default function Menu({ isExpand, ...props }: IProps) {
   const { user } = useUser();
+  const {me} = useGlobal();
+  const modal = user || me;
+
 
   const { onMenuChange, menuSelected } = useGlobal();
 
@@ -78,21 +81,21 @@ export default function Menu({ isExpand, ...props }: IProps) {
 
       <Flex minH="80px" mx="10px" borderTop="1px solid #EAECF0">
         <HStack w="full">
-          <Avatar name={user?.name || ""} src={user?.picture || ""} w="50px" />
+          <Avatar name={modal?.name || ""} src={modal?.picture || ""} w="50px" />
           {isExpand && (
             <VStack justifyContent="center" alignItems="flex-start" py="24px">
               <Text variant="with-title" fontSize="14px" mb="-25px !important">
-                {user?.name || ""}
+              {modal?.name || ""}
               </Text>
-              {user && user.email && (
+              {modal && modal.nickname && (
                 <>
                   <Text
                     variant="with-title"
-                    fontSize="20px"
+                    fontSize="16px"
                     color="#475467"
                     fontWeight="normal"
                   >
-                    {user.email}
+                    {`${modal.nickname}@gmail.com`}
                   </Text>
                 </>
               )}

@@ -4,12 +4,13 @@ import { IAuth0Model } from '@/types';
 import axios from 'axios';
 import axiosInstance from '@/apis';
 import { useRouter } from 'next/router';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 interface IGlobalContext {
  menuSelected: string;
  onMenuChange?: (menu: string) => void; 
  onChangeAvatar?:(v: string) => void;
+ me?: IAuth0Model;
 }
 
 interface ProviderProps {
@@ -23,6 +24,7 @@ const GlobalContext = React.createContext<IGlobalContext>({
 export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
   const {push} = useRouter();
   const dispatch = useAppDispatch();
+  const [meModel, setMeModel] = useState<IAuth0Model>();
 
   const [menuSelected, setMenuSelected] = React.useState<string>('/my-souls'); 
   const onMenuChange = (menu: string) => setMenuSelected(menu);
@@ -45,6 +47,7 @@ export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
     if (!me) {
       push('/')
     }
+    setMeModel(me);
     await handleGetAccessToken();
     dispatch(handleAuth0LoginSuccess(me));
     dispatch(getSteamInfoAction());
@@ -56,7 +59,7 @@ export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
 
   return (
     <GlobalContext.Provider
-      value={{menuSelected, onMenuChange}}>
+      value={{menuSelected, onMenuChange, me: meModel}}>
       {children}
     </GlobalContext.Provider>
   );

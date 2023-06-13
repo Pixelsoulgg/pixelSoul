@@ -25,6 +25,7 @@ export default function WalletContainer() {
             value={numberFormat(score?.collectorLevel || 0)}
             percent={0}
             isUp={false}
+            ml={{ base: 0, lg: "24px" }}
           />
         </SimpleGrid>
       )}
