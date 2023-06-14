@@ -14,34 +14,54 @@ export interface IProps {
   children: ReactNode;
 }
 export default function DashboardLayout({ children }: IProps) {
-  const {user} = useUser();
-  const {me} = useGlobal();
-  const router = useRouter();  
+  const { user } = useUser();
+  const { me } = useGlobal();
+  const router = useRouter();
 
   const meModel = user || me;
 
+  const { steamUser } = useAppSelector((p) => p.soul);
+  const { score } = useAppSelector((p) => p.account);
 
-  const {steamUser} = useAppSelector(p => p.soul) ;
-  const {score} = useAppSelector(p => p.account) ;
-  
-
-  const soulScore = useMemo(() => {    
-    return  ((steamUser?.point || 0) * 0.7) + ((score?.collectorLevel || 0) * 0.2) + ((score?.investorLevel || 0) * 0.1)
+  const soulScore = useMemo(() => {
+    return (
+      (steamUser?.point || 0) * 0.7 +
+      (score?.collectorLevel || 0) * 0.2 +
+      (score?.investorLevel || 0) * 0.1
+    );
   }, [score?.collectorLevel, score?.investorLevel, steamUser?.point]);
 
-
-  const {onMenuChange} = useGlobal();
+  const { onMenuChange } = useGlobal();
 
   const { pathname } = router;
 
   const isHideSearch = useMemo(() => {
-    const checkList = ["/my-souls", "/taverns", "/forges", "/epochs", "/soul-drops", "/event-boards"];
+    const checkList = [
+      "/my-souls",
+      "/taverns",
+      "/forges",
+      "/epochs",
+      "/soul-drops",
+      "/event-boards",
+      "/referrals",
+      "/game-hubs",
+    ];
     if (checkList.findIndex((p) => p === pathname) > -1) return false;
     return true;
   }, [pathname]);
 
   const isHideBack = useMemo(() => {
-    const checkList = ["/my-souls", "/dungeons", "/taverns", "/forges", "/epochs", "/soul-drops", "/event-boards"];
+    const checkList = [
+      "/my-souls",
+      "/dungeons",
+      "/taverns",
+      "/forges",
+      "/epochs",
+      "/soul-drops",
+      "/event-boards",
+      "/referrals",
+      "/game-hubs",
+    ];
     if (checkList.findIndex((p) => p === pathname) > -1) return false;
     return true;
   }, [pathname]);
@@ -54,21 +74,28 @@ export default function DashboardLayout({ children }: IProps) {
 
   const getTitle = useMemo(() => {
     switch (pathname.toLocaleLowerCase()) {
-      case "/taverns": return "Tavern"
-      case "/forges": return "Forge of Legends"
-      case "/epochs": return "Epoch"
+      case "/taverns":
+        return "Tavern";
+      case "/forges":
+        return "Forge of Legends";
+      case "/epochs":
+        return "Epoch";
       case "/profiles/collectible":
         return "My Collectibles";
       case "/profiles/nfts":
         return "My NFT";
-      case "/dungeons": 
+      case "/dungeons":
         return "Dungeon";
       case "/my-souls":
-        return `Welcome to PixelSoul, ${meModel?.name || ''}`;
+        return `Welcome to PixelSoul, ${meModel?.name || ""}`;
       case "/soul-drops":
-         return "SoulDrop";
-      case "/event-boards": 
-        return "Events"
+        return "SoulDrop";
+      case "/event-boards":
+        return "Events";
+      case "/referrals":
+        return "SoulDrop, #GametagID";
+      case "/game-hubs":
+        return "Game hub";
       default:
         return "";
     }
@@ -113,9 +140,13 @@ export default function DashboardLayout({ children }: IProps) {
                   <Image src="/back.svg" alt="back" />
                 </Button>
               )}
-              <Text variant="with-title" fontSize="40px">{getTitle}</Text>
+              <Text variant="with-title" fontSize="40px">
+                {getTitle}
+              </Text>
             </HStack>
-            {!isHideSearch && <SoulScoreButton soul={numberFormat(soulScore)} />}
+            {!isHideSearch && (
+              <SoulScoreButton soul={numberFormat(soulScore)} />
+            )}
             {isHideSearch && (
               <Search
                 paddingY="0px"

@@ -136,3 +136,93 @@ export const footer_menu = [
     { name: "Team of service", href: "#" },
   ] },
 ];
+
+
+export const ReferralData = [
+  {
+    value: 1,
+    label: 5,
+    logo: 1,
+    child: [
+      {lable: 1, icon: 1}
+    ]
+  },
+  {
+    value: 1,
+    label: 10,
+    logo: 1,
+    child: [
+      {lable: 5, icon: 1},
+      {lable: 1, icon: 2},
+    ]
+  },
+  {
+    value: 1,
+    label: 15,
+    logo: 1,
+    child: [
+      {lable: 10, icon: 1},
+      {lable: 1, icon: 2},
+    ]
+  },
+
+  {
+    value: 2,
+    label: 20,
+    logo: 2,
+    child: [
+      {lable: 20, icon: 1},
+      {lable: 1, icon: 2},
+      {lable: 1, icon: 3},
+      {lable: 1, icon: 4},
+    ]
+  },
+
+  {
+    value: 2,
+    label: 25,
+    logo: 2,
+    child: [
+      {lable: 25, icon: 1},
+      {lable: 1, icon: 2},      
+      {lable: 1, icon: 4},
+      {lable: 1, icon: 5},
+    ]
+  },
+
+  {
+    value: 2,
+    label: 30,
+    logo: 2,
+    child: [
+      {lable: 30, icon: 1},
+      {lable: 2, icon: 4},
+      {lable: 1, icon: 6},
+    ]
+  },
+
+  {
+    value: 3,
+    label: 31,
+    logo: 3,    
+  },
+]
+
+export const GameHubs = [
+  {
+    name: 'Grand Theft Auto 5',
+    id: 1
+  },
+  {
+    name: 'Team Fortress 2',
+    id: 2
+  },
+  {
+    name: 'Pay Day 2',
+    id: 3
+  },
+  {
+    name: 'Counter Strike',
+    id: 4
+  },
+]
