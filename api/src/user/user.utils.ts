@@ -33,3 +33,10 @@ export function reward(point: number): Reward {
   }
   return reward
 }
+export function soulPoint(point: number) {
+  if (point >= 30) return 3
+  else if (point >= 25) return 2
+  else if (point >= 20) return 2
+  else if (point >= 15) return 2
+  else return 1
+}

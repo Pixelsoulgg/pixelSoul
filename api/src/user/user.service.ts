@@ -4,7 +4,7 @@ import { PrismaService } from '../prisma.service'
 import { UserDto } from './dto/user.dto'
 import { UserUpdateDto } from './dto/userUpdate.dto'
 import { randomBytes, randomUUID } from 'crypto'
-import { reward } from './user.utils'
+import { reward, soulPoint } from './user.utils'
 import { MysteryChestService } from '../mystery-chest/mystery-chest.service'
 import { ChestService } from '../chest/chest.service'
 
@@ -25,8 +25,19 @@ export class UserService {
       throw new HttpException(msg, HttpStatus.NOT_FOUND)
     }
     const referralCode = await this.generateCode()
+    const filterData: UserDto = {
+      email: userDto.email,
+      walletAddress: userDto.walletAddress,
+      steamId: userDto.steamId,
+      auth0Sid: userDto.auth0Sid,
+      auth0NickName: userDto.auth0NickName,
+      auth0Name: userDto.auth0Name,
+      auth0Sub: userDto.auth0Sub,
+      imageUrl: userDto.imageUrl,
+      referredBy: userDto.referredBy
+    }
     const data: Prisma.UsersUncheckedCreateInput = {
-      ...userDto,
+      ...filterData,
       referralCode
     }
     //referral process
@@ -46,7 +57,8 @@ export class UserService {
       await this.prisma.users.update({
         where: { auth0Sub: referredUser.auth0Sub },
         data: {
-          referralAmount: { increment: 1 }
+          referralAmount: { increment: 1 },
+          referralSoulPoint: { increment: soulPoint(point) }
         }
       })
       if (rewardData.mys > 0) {
