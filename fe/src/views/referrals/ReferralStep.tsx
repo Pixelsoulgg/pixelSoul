@@ -3,11 +3,13 @@ import { Flex, FlexProps, Image, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 import { ReCard } from "./components";
 import { ReferralData } from "@/configs/constants";
+import { useAppSelector } from "@/reduxs/hooks";
 
 interface IProps extends FlexProps {}
 
 export default function ReferralStep({ ...props }: IProps) {
-  const currentRef = 20;
+  const {auth0Info} = useAppSelector(p => p.auth);
+  const currentRef = auth0Info?.referralAmount || 0;
   return (
     <Flex
       w="full"

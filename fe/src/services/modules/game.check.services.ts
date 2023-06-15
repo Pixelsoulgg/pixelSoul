@@ -16,22 +16,22 @@ export const gameCheckApiServices = api.injectEndpoints({
     getChest: builder.query<IChest[], string>({
       query: (auth0Sub) => `${CHEST_URL}/${auth0Sub}`,
       providesTags: (result) => {
-        return [{ type: 'Chests', id: 'LIST' }]
-      }
+        return [{ type: "Chests", id: "LIST" }];
+      },
     }),
 
     getMysteryChest: builder.query<IMysteryChest[], string>({
       query: (auth0Sub) => `${MYSTERY_CHEST_URL}/${auth0Sub}`,
       providesTags: (result) => {
-        return [{ type: 'Chests', id: 'LIST' }]
-      }
+        return [{ type: "Chests", id: "LIST" }];
+      },
     }),
 
     getAmountGroupByRarity: builder.query<IChestAmount[], string>({
       query: (auth0Sub) => `${CHEST_URL}/summary/${auth0Sub}`,
       providesTags: (result) => {
-        return [{ type: 'Chests', id: 'LIST' }]
-      }
+        return [{ type: "Chests", id: "LIST" }];
+      },
     }),
 
     addSuiWallet: builder.mutation<
@@ -45,7 +45,7 @@ export const gameCheckApiServices = api.injectEndpoints({
           body: { walletAddress: data.suiWalletAddress },
         };
       },
-    }),    
+    }),
 
     claimMysteryChest: builder.mutation<void, string>({
       query: (auth0Sub) => {
@@ -57,7 +57,10 @@ export const gameCheckApiServices = api.injectEndpoints({
       },
     }),
 
-    openChest: builder.mutation<{reward: string}, { auth0Sub: string; type: number; amount: number }>({
+    openChest: builder.mutation<
+      { reward: string },
+      { auth0Sub: string; type: number; amount: number }
+    >({
       query: (body) => {
         return {
           url: `${MYSTERY_CHEST_URL}/open`,
@@ -65,48 +68,68 @@ export const gameCheckApiServices = api.injectEndpoints({
           body,
         };
       },
-      invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Chests', id: 'LIST' }])
+      invalidatesTags: (result, error, data) =>
+        error ? [] : [{ type: "Chests", id: "LIST" }],
     }),
 
     // Events
     addEvent: builder.mutation<IEvent, FormData>({
       query: (body) => {
         return {
-          url: 'event/create',
+          url: "event/create",
           method: "POST",
-          body
-        }
+          body,
+        };
       },
-      invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Events', id: 'LIST' }])
+      invalidatesTags: (result, error, data) =>
+        error ? [] : [{ type: "Events", id: "LIST" }],
     }),
-    
+
     getEvents: builder.query<IEvent[], void>({
-      query: () => 'event',
+      query: () => "event",
       providesTags: (result) => {
-        return [{ type: 'Events', id: 'LIST' }]
-      }
+        return [{ type: "Events", id: "LIST" }];
+      },
     }),
 
     deleteEventById: builder.mutation<IEvent, string>({
-      query:(eventId) => {
+      query: (eventId) => {
         return {
           url: `event/${eventId}`,
-          method: 'DELETE',          
-        }
+          method: "DELETE",
+        };
       },
-      invalidatesTags: (result, error, data) => (error ? [] : [{type: 'Events', id: 'LIST'}]) 
+      invalidatesTags: (result, error, data) =>
+        error ? [] : [{ type: "Events", id: "LIST" }],
     }),
 
-    updateEventById: builder.mutation<IEvent, {eventId: string, data: FormData}>({
-      query: ({eventId, data: body}) => {
+    updateEventById: builder.mutation<
+      IEvent,
+      { eventId: string; data: FormData }
+    >({
+      query: ({ eventId, data: body }) => {
         return {
           url: `event/${eventId}`,
-          method: 'PATCH',
-          body
-        }
+          method: "PATCH",
+          body,
+        };
       },
-      invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Events', id: 'LIST' }])
-    })
+      invalidatesTags: (result, error, data) =>
+        error ? [] : [{ type: "Events", id: "LIST" }],
+    }),
+
+    inviteByEmail: builder.mutation<
+      void,
+      { referralCode: string; desMail: string }
+    >({
+      query: ({ referralCode, desMail }) => {
+        return {
+          url: `referral/mail`,
+          method: "POST",
+          body: { referralCode, desMail },
+        };
+      },
+    }),
   }),
 });
 
@@ -122,4 +145,5 @@ export const {
   useGetEventsQuery,
   useDeleteEventByIdMutation,
   useUpdateEventByIdMutation,
+  useInviteByEmailMutation,
 } = gameCheckApiServices;

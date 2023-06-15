@@ -63,6 +63,7 @@ export interface OpenIDData {
 
 export interface IAuth0Model extends UserProfile {
   sid: string;
+  referredBy?: string;
 }
 
 export interface IRole {
@@ -86,6 +87,11 @@ export interface IUser {
   claimWalletChest: number;
   claimSuiChest: number;
   grantRole: IRole[];
+  referralCode?: string;
+  referredBy?: string;
+  referralAmount?: number;
+  referralSoulPoint?: number;
+  
 }
 
 export interface IGame {

@@ -9,3 +9,7 @@ export const getSteamAuthUrl = () => {
 export const getCDNServer = () => {
   return process.env.NEXT_PUBLIC_IMAGE_URL;
 }
+
+export const getReferralUrl = () => {
+  return process.env.NEXT_PUBLIC_REFERRAL_URL;
+}

@@ -226,3 +226,26 @@ export const GameHubs = [
     id: 4
   },
 ]
+
+export const GameHubGamesData = [
+  {
+    name: 'Grand Theft Auto 5',
+    id: 1,
+    type: 'action',
+  },
+  {
+    name: 'Left 4 Dead',
+    id: 2,
+    type: 'action',
+  },
+  {
+    name: 'Grand Theft Auto 5',
+    id: 3,
+    type: 'action',
+  },
+  {
+    name: 'Terraria',
+    id: 4,
+    type: 'action',
+  },
+]

@@ -22,7 +22,7 @@ const GlobalContext = React.createContext<IGlobalContext>({
 });
 
 export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
-  const {push} = useRouter();
+  const {push, query} = useRouter();
   const dispatch = useAppDispatch();
   const [meModel, setMeModel] = useState<IAuth0Model>();
 
@@ -42,6 +42,7 @@ export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
     } catch(ex) {}   
   }, []);
 
+
   const handleInitialState= useCallback( async () => {
     const me = (await axios.get('/api/auth/me')).data as IAuth0Model;
     if (!me) {
@@ -49,7 +50,9 @@ export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
     }
     setMeModel(me);
     await handleGetAccessToken();
-    dispatch(handleAuth0LoginSuccess(me));
+    const referredBy = (query?.refer || '') as string;
+    console.log({referredBy})
+    dispatch(handleAuth0LoginSuccess({...me, referredBy}));
     dispatch(getSteamInfoAction());
   }, [dispatch, push]);
 

@@ -1,17 +1,49 @@
 import { InputPixel } from "@/components";
-import { fonts } from "@/configs/constants";
 import Layout from "@/layouts";
+import { useAppSelector } from "@/reduxs/hooks";
+import { useInviteByEmailMutation } from "@/services/modules/game.check.services";
 import { ButtonVariants, TextVariants } from "@/themes/theme";
+import { getToast, isValidEmail } from "@/utils";
+import { getReferralUrl } from "@/utils/env.helpers";
 import { ReferralStep } from "@/views/referrals";
-import { Button, Flex, HStack, Image, Input, Text } from "@chakra-ui/react";
+import { Button, Flex, HStack, Image, Spinner, Text, useClipboard, useToast } from "@chakra-ui/react";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 Referral.getLayout = function getLayout(page: React.ReactElement) {
   return <Layout variant="dashboard">{page}</Layout>;
 };
 
+const URL_REF = getReferralUrl();
+const DEFAULT_EMAIL = 'Enter the invited email address';
+
 export default function Referral() {
+  const {auth0Info} = useAppSelector(p => p.auth);
+  const [inviteByEmailAsync, {isLoading, isError, isSuccess}] = useInviteByEmailMutation();
+  const { onCopy, value, setValue } = useClipboard(`${URL_REF}${auth0Info?.referralCode || ''}`);
+  const [email, setEmail] = useState<string>('');
+  const toast = useToast();
+  useEffect(() => {
+    setValue(`${URL_REF}${auth0Info?.referralCode || ''}`);
+  }, [auth0Info, auth0Info?.referralCode]);
+
+
+  const handleSendEmail = async() => {
+    try {
+      if (!auth0Info || !auth0Info.referralCode || !email) 
+        return;
+      if (!isValidEmail(email)) {
+        toast(getToast('Please enter a valid email format.'))
+        return;
+      }
+      const {referralCode} = auth0Info;
+      await inviteByEmailAsync({referralCode, desMail: email}).unwrap();
+      toast(getToast(`The email has been sent to the email address ${email}.`, 'success', 'Pixelsoul Invitation'))
+      
+    } catch(ex) {}
+  }
+
+
   return (
     <Flex
       w="full"
@@ -55,7 +87,7 @@ export default function Referral() {
             <Text variant={TextVariants.WITH_18}>Your Referrals:</Text>
           </Flex>
           <InputPixel
-            value={"03"}
+            value={`${auth0Info?.referralAmount || 0}`}
             h="53px"
             wrapStyle={{ w: "82px", ml: "15px !important" }}
           />
@@ -64,7 +96,7 @@ export default function Referral() {
             <Text variant={TextVariants.WITH_18}>Total Reward:</Text>
           </Flex>
           <InputPixel
-            value={"03"}
+            value={`${auth0Info?.referralSoulPoint || 0}`}
             w="131px"
             textAlign="center"
             h="53px"
@@ -86,13 +118,24 @@ export default function Referral() {
             <Text variant={TextVariants.WITH_18}>Invite by email:</Text>
           </Flex>
           <InputPixel
-            value={"03"}
+            value={email}
+            placeholder={DEFAULT_EMAIL}
+            type="email"
             w="full"
             h="40px"
             textAlign="start"
             wrapStyle={{ w: "full" }}
+            className={email === DEFAULT_EMAIL ? 'input-placeholder' : ''}
+            onChange={(e) => setEmail(e.target.value)}
           />
-          <Button variant={ButtonVariants.WITH_HIGHLIGHT_BLUE}>Send</Button>
+          <Button 
+            variant={ButtonVariants.WITH_HIGHLIGHT_BLUE}                        
+            isDisabled={isLoading}
+            onClick={handleSendEmail}
+          >
+            {!isLoading && 'Send'}
+            {isLoading && <Spinner />}
+          </Button>
         </HStack>
 
         <HStack w="full">
@@ -100,12 +143,17 @@ export default function Referral() {
             <Text variant={TextVariants.WITH_18}>Invite by email:</Text>
           </Flex>
           <InputPixel
-            value={"03"}
+            value={value}
             w="full"
             textAlign="start"
             wrapStyle={{ w: "full" }}
           />
-          <Button variant={ButtonVariants.WITH_HIGHLIGHT_BLUE} h="36px">
+          <Button variant={ButtonVariants.WITH_HIGHLIGHT_BLUE} h="36px"
+            onClick={() => {
+              onCopy();
+              toast(getToast("Copied", "success", "Referral"))
+            }}
+          >
             Copy
           </Button>
         </HStack>

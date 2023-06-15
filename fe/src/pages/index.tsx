@@ -28,11 +28,12 @@ LandingPage.getLayout = function getLayout(page: React.ReactElement) {
 };
 
 export default function LandingPage() {
-  const { push } = useRouter();
+  const { push, pathname, query } = useRouter();
   const { user, isLoading, error } = useUser();
   const [authWindow, setAuthWindow] = useState<Window>();
   const [currentWindow, setCurrentWindow] = useState<Window>();
   const [accessToken, setAccessToken] = useState<string>();
+
 
   const getAccessToken = useCallback(
     async (isRedirect = false) => {
@@ -40,7 +41,7 @@ export default function LandingPage() {
       const auth = await response.json();
       if (auth.accessToken) {
         if (isRedirect) {
-          push("my-souls");
+          push(`/my-souls${query ? `?refer=${query.refer}` : ''}`);
         } else {
           setAccessToken(auth.accessToken);
         }
@@ -96,7 +97,7 @@ export default function LandingPage() {
     if (accessToken && authWindow) {
       authWindow.close();
       setAuthWindow(undefined);
-      push("/my-souls");
+      push(`/my-souls${query ? `?refer=${query.refer}` : ''}`);
     }
   }, [authWindow, accessToken, currentWindow, push]);
 

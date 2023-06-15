@@ -7,9 +7,10 @@ import React from "react";
 
 interface IProps extends FlexProps {
   index: number;
+  name: string;
 }
 
-export default function GameCard({ index }: IProps) {
+export default function GameCard({ name, index }: IProps) {
   return (
     <Flex
       as={motion.div}
@@ -28,7 +29,7 @@ export default function GameCard({ index }: IProps) {
     >
       <Tag label="Action" type="action" color="white" w="50px !important" />
       <Text variant={TextVariants.WITH_24} color="#fff" mt="5px">
-        Grand Theft Auto 5
+       {name}
       </Text>
     </Flex>
   );
