@@ -24,27 +24,17 @@ export default function App({ Component, pageProps }: MyAppProps) {
   return (
     <Provider store={store}>
       <ChakraProvider theme={theme}>
-        <WalletProvider defaultWallets={[SuiWallet]}>
+        <WalletProvider autoConnect={false} > 
+        {/* defaultWallets={[SuiWallet]} */}
           <UserProvider>
             <Head>
               <meta charSet="UTF-8" />
-              <meta name="keywords" content="Flip, coin, deget" />
-              <meta name="author" content="Flip Coin" />
+              <meta name="keywords" content="" />
+              <meta name="author" content="" />
               <meta
                 name="viewport"
                 content="width=device-width, initial-scale=1.0"
               />
-              {/* <link
-                rel="stylesheet"
-                type="text/css"
-                charSet="UTF-8"
-                href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-              />
-              <link
-                rel="stylesheet"
-                type="text/css"
-                href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-              /> */}
             </Head>
             {getLayout(<Component {...pageProps} />)}
           </UserProvider>

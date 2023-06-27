@@ -1,8 +1,13 @@
-import { connectToMetamask } from "@/contracts/interfaces/EthersConnect";
-import { Box, Text } from "@chakra-ui/react";
+import {
+  connectToMetamask,
+  connectToWalletConnect,
+} from "@/contracts/interfaces/EthersConnect";
+import { getToast } from "@/utils";
+import { Box, Text, useToast } from "@chakra-ui/react";
 import React from "react";
 
 export default function ConnectMetaMask() {
+  const toast = useToast();
   return (
     <Box
       cursor="pointer"
@@ -16,7 +21,13 @@ export default function ConnectMetaMask() {
       borderRadius="8px"
       px="16px"
       ml={{ base: "-100px", lg: "0px" }}
-      onClick={connectToMetamask}
+      onClick={async () => {
+        try {
+          await connectToWalletConnect();
+        } catch (er: any) {
+          toast(getToast(er));
+        }
+      }}
     >
       <Text variant="with-title" fontSize="16px" color="white">
         Connect MetaMask

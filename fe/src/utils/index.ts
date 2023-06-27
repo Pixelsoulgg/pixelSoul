@@ -127,3 +127,8 @@ export const convertDateToUnix = (date?: Date | string | number) => {
   if (!date) return moment().unix() * 1000;
   return moment(date).unix() * 1000;
 }
+
+export const isValidEmail = (email: string): boolean => {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailRegex.test(email);
+};

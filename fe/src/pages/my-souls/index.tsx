@@ -102,7 +102,7 @@ export default function MySoul() {
               <Image src="./three-dot.svg" alt="" /> */}
             </HStack>
 
-            <SimpleGrid columns={{ base: 1,  "2xl": 2}} w="full" columnGap="20px">
+            <SimpleGrid columns={{ base: 1,  "lg": 2}} w="full" columnGap="20px">
               <SteamContainer />
               <WalletContainer />
             </SimpleGrid>

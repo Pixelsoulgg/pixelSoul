@@ -17,6 +17,7 @@ export default class AppApi {
   }
 
   async createUser(user: IUser): Promise<IUser> {
+    console.log('in')
     return axiosInstance.post(`${this.USER_URL}`, user);
   }
 

@@ -82,7 +82,7 @@ export const handleAuth0LoginSuccess = createAsyncThunk<void, IAuth0Model>(
   "authentication/auth0LoginSuccess",
   async (model) => {
     const api = new AppApi();
-    const { sub } = model;
+    const { sub } = model;   
     if (sub) {
       let userInfo: IUser = await api.getUserById(sub);
       if (!userInfo) {
@@ -94,7 +94,8 @@ export const handleAuth0LoginSuccess = createAsyncThunk<void, IAuth0Model>(
           claimSteamChest: 0,
           claimWalletChest: 0,
           claimSuiChest: 0,
-          grantRole: []
+          grantRole: [],
+          referredBy: model.referredBy
         });
       }
       store.dispatch(authSlice.actions.auth0LoginSuccess(userInfo));
