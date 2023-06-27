@@ -24,7 +24,6 @@ const GlobalContext = React.createContext<IGlobalContext>({
 export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
   const {push, query} = useRouter();
   const dispatch = useAppDispatch();
-  const [meModel, setMeModel] = useState<IAuth0Model>();
 
   const [meModel, setMeModel] = useState<IAuth0Model>();
 
