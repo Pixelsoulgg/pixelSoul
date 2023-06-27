@@ -23,7 +23,7 @@ export class MysteryChestService {
     })
   }
 
-  async increase(auth0Sub: string) {
+  async claim(auth0Sub: string) {
     let amount = 0
     let claimSteam = 0
     let claimWallet = 0
@@ -58,17 +58,7 @@ export class MysteryChestService {
       claimWallet = 1
     }
     if (amount > 0) {
-      await this.prismaService.userMysteryChest.upsert({
-        where: { auth0Sub_mysteryId: { auth0Sub, mysteryId: 1 } },
-        create: {
-          amount,
-          auth0Sub,
-          mysteryId: 1
-        },
-        update: {
-          amount: { increment: amount }
-        }
-      })
+      await this.increase(auth0Sub, amount)
       await this.prismaService.users.update({
         where: { auth0Sub },
         data: { claimSteamChest: claimSteam, claimWalletChest: claimWallet }
@@ -81,6 +71,19 @@ export class MysteryChestService {
       where: { auth0Sub_mysteryId: { auth0Sub: data.auth0Sub, mysteryId: data.chestId } },
       data: {
         amount: { decrement: data.amount }
+      }
+    })
+  }
+  async increase(auth0Sub: string, amount: number) {
+    await this.prismaService.userMysteryChest.upsert({
+      where: { auth0Sub_mysteryId: { auth0Sub, mysteryId: 1 } },
+      create: {
+        amount,
+        auth0Sub,
+        mysteryId: 1
+      },
+      update: {
+        amount: { increment: amount }
       }
     })
   }

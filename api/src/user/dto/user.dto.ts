@@ -23,4 +23,7 @@ export class UserDto {
 
   @ApiProperty()
   imageUrl: string
+
+  @ApiProperty()
+  referredBy: string
 }

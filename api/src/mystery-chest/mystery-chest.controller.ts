@@ -16,7 +16,7 @@ export class MysteryChestController {
   @ApiBearerAuth()
   @Post('claim/:auth0Sub')
   async claim(@Param('auth0Sub') auth0Sub: string) {
-    return await this.mysteryChestService.increase(auth0Sub)
+    return await this.mysteryChestService.claim(auth0Sub)
   }
 
   @UseGuards(AuthGuard('jwt'))

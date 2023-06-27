@@ -20,11 +20,6 @@ export class UserController {
     return await this.userService.create(userDto)
   }
 
-  @Get()
-  async findAll() {
-    return await this.userService.findAll({})
-  }
-
   @Get(':auth0Sub')
   async findOne(@Param('auth0Sub') auth0Sub: string) {
     return await this.userService.findOne({ auth0Sub })

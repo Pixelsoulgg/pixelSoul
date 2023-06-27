@@ -15,7 +15,10 @@ export interface IProps {
 }
 export default function DashboardLayout({ children }: IProps) {
   const {user} = useUser();
+  const {me} = useGlobal();
   const router = useRouter();  
+
+  const meModel = user || me;
 
   const {steamUser} = useAppSelector(p => p.soul) ;
   const {score} = useAppSelector(p => p.account) ;
@@ -60,7 +63,7 @@ export default function DashboardLayout({ children }: IProps) {
       case "/dungeons": 
         return "Dungeon";
       case "/my-souls":
-        return `Welcome to PixelSoul, ${user?.name || ''}`;
+        return `Welcome to PixelSoul, ${meModel?.name || ''}`;
       case "/soul-drops":
          return "SoulDrop";
       case "/event-boards": 
@@ -68,7 +71,7 @@ export default function DashboardLayout({ children }: IProps) {
       default:
         return "";
     }
-  }, [pathname, user?.name]);
+  }, [pathname, meModel?.name]);
 
   useEffect(() => {
     onMenuChange && onMenuChange(router.pathname);

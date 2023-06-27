@@ -83,25 +83,29 @@ model UserChallenge {
 }
 
 model Users {
-  id               Int                @id @default(autoincrement())
-  email            String?            @unique(map: "email_UNIQUE") @db.VarChar(200)
-  walletAddress    String?            @unique(map: "walletAddress_UNIQUE") @db.VarChar(42)
-  steamId          String?            @unique(map: "steamId_UNIQUE") @db.VarChar(100)
-  imageUrl         String?            @db.VarChar(200)
-  auth0Sid         String?            @db.VarChar(100)
-  auth0NickName    String?            @db.VarChar(45)
-  auth0Name        String?            @db.VarChar(200)
-  auth0Sub         String?            @unique(map: "auth0Sub_UNIQUE") @db.VarChar(100)
-  steamTimeCreated DateTime?          @db.Timestamp(6)
-  gold             Int?               @default(0)
-  suiWalletAddress String?            @db.VarChar(66)
-  claimSteamChest  Int?               @default(0)
-  claimWalletChest Int?               @default(0)
-  claimSuiChest    Int?               @default(0)
-  grantRole        GrantRole[]
-  userChallenge    UserChallenge[]
-  userChest        UserChest[]
-  userMysteryChest UserMysteryChest[]
+  id                Int                @id @default(autoincrement())
+  email             String?            @unique(map: "email_UNIQUE") @db.VarChar(200)
+  walletAddress     String?            @unique(map: "walletAddress_UNIQUE") @db.VarChar(42)
+  steamId           String?            @unique(map: "steamId_UNIQUE") @db.VarChar(100)
+  imageUrl          String?            @db.VarChar(200)
+  auth0Sid          String?            @db.VarChar(100)
+  auth0NickName     String?            @db.VarChar(45)
+  auth0Name         String?            @db.VarChar(200)
+  auth0Sub          String?            @unique(map: "auth0Sub_UNIQUE") @db.VarChar(100)
+  steamTimeCreated  DateTime?          @db.Timestamp(6)
+  gold              Int?               @default(0)
+  suiWalletAddress  String?            @db.VarChar(66)
+  claimSteamChest   Int?               @default(0)
+  claimWalletChest  Int?               @default(0)
+  claimSuiChest     Int?               @default(0)
+  referralCode      String?            @db.VarChar(10)
+  referredBy        String?            @db.VarChar(10)
+  referralAmount    Int?               @default(0)
+  referralSoulPoint Int?               @default(0)
+  grantRole         GrantRole[]
+  userChallenge     UserChallenge[]
+  userChest         UserChest[]
+  userMysteryChest  UserMysteryChest[]
 
   @@index([auth0Sid], map: "fk_user_auth0_idx")
   @@index([steamId], map: "fk_user_steam_idx")
@@ -172,4 +176,10 @@ model Role {
   id        Int         @id @default(autoincrement())
   name      String?     @db.VarChar(100)
   grantRole GrantRole[]
+}
+
+model ReferralTransaction {
+  id           String  @id @db.VarChar(36)
+  checkPoint   Int?
+  referralCode String? @db.VarChar(10)
 }

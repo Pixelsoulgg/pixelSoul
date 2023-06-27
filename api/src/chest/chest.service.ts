@@ -59,4 +59,11 @@ export class ChestService {
     })
     return summary
   }
+  async increase(chestId: number, auth0Sub: string, amount: number) {
+    await this.prismaService.userChest.upsert({
+      create: { chestId: chestId, auth0Sub, amount },
+      update: { amount: { increment: 1 }, latestClaim: new Date().toISOString() },
+      where: { auth0Sub_chestId: { chestId: chestId, auth0Sub } }
+    })
+  }
 }

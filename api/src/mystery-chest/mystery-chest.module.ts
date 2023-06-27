@@ -8,6 +8,7 @@ import { SteamModule } from '../steam/steam.module'
 @Module({
   imports: [ScoreModule, SteamModule],
   providers: [MysteryChestService, PrismaService],
-  controllers: [MysteryChestController]
+  controllers: [MysteryChestController],
+  exports: [MysteryChestService]
 })
 export class MysteryChestModule {}
