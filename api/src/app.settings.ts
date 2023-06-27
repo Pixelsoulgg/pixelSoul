@@ -1,8 +1,5 @@
 import { INestApplication, RequestMethod, VersioningType } from '@nestjs/common'
-import { AuthGuard } from '@nestjs/passport'
 import * as dotenv from 'dotenv'
-import { RolesGuard } from './roles/roles.guard'
-import { Reflector } from '@nestjs/core'
 dotenv.config()
 export const MORALIS_API_KEY = process.env.MORALIS_API_KEY || ''
 export const OPENSEA_API_KEY = process.env.OPENSEA_API_KEY || ''
@@ -13,6 +10,10 @@ export const STEAM_API_KEY = process.env.STEAM_API_KEY || ''
 export const STEAM_API_HOST = process.env.STEAM_API_HOST || ''
 export const AUTH0_ISSUER_URL = process.env.AUTH0_ISSUER_URL || ''
 export const AUTH0_AUDIENCE = process.env.AUTH0_AUDIENCE || ''
+export const GOOGLE_MAILER_CLIENT_ID = process.env.GOOGLE_MAILER_CLIENT_ID || ''
+export const GOOGLE_MAILER_CLIENT_SECRET = process.env.GOOGLE_MAILER_CLIENT_SECRET || ''
+export const GOOGLE_MAILER_REFRESH_TOKEN = process.env.GOOGLE_MAILER_REFRESH_TOKEN || ''
+export const GOOGLE_EMAIL_ADDRESS = process.env.GOOGLE_EMAIL_ADDRESS || ''
 
 export function setAppSetting(app: INestApplication) {
   app.setGlobalPrefix('api', {
@@ -27,5 +28,4 @@ export function setAppSetting(app: INestApplication) {
     preflightContinue: false,
     optionsSuccessStatus: 204
   })
-  //app.useGlobalGuards(new (AuthGuard('jwt'))(), new RolesGuard(new Reflector()))
 }

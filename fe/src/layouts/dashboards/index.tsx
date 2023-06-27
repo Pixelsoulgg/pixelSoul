@@ -14,9 +14,9 @@ export interface IProps {
   children: ReactNode;
 }
 export default function DashboardLayout({ children }: IProps) {
-  const { user } = useUser();
-  const { me } = useGlobal();
-  const router = useRouter();
+  const {user} = useUser();
+  const {me} = useGlobal();
+  const router = useRouter();  
 
   const meModel = user || me;
 
@@ -87,7 +87,7 @@ export default function DashboardLayout({ children }: IProps) {
       case "/dungeons":
         return "Dungeon";
       case "/my-souls":
-        return `Welcome to PixelSoul, ${meModel?.name || ""}`;
+        return `Welcome to PixelSoul, ${meModel?.name || ''}`;
       case "/soul-drops":
         return "SoulDrop";
       case "/event-boards":

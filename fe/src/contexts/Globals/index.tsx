@@ -26,6 +26,8 @@ export const GlobalContextProvider: React.FC<ProviderProps> = ({children}) => {
   const dispatch = useAppDispatch();
   const [meModel, setMeModel] = useState<IAuth0Model>();
 
+  const [meModel, setMeModel] = useState<IAuth0Model>();
+
   const [menuSelected, setMenuSelected] = React.useState<string>('/my-souls'); 
   const onMenuChange = (menu: string) => setMenuSelected(menu);
 

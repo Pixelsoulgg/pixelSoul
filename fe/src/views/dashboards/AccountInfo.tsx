@@ -24,7 +24,6 @@ import { auth0LoginSuccess } from "@/reduxs/auths/auth.slices";
 import AppApi from "@/apis/app.api";
 import { IUser } from "@/types";
 
-
 const DEFAULT_MESSAGE = "Not connected yet";
 
 export default function AccountInfo() {

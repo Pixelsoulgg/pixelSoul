@@ -24,7 +24,6 @@ export default function Menu({ isExpand, ...props }: IProps) {
   const {me} = useGlobal();
   const modal = user || me;
 
-
   const { onMenuChange, menuSelected } = useGlobal();
 
   return (
@@ -85,7 +84,7 @@ export default function Menu({ isExpand, ...props }: IProps) {
           {isExpand && (
             <VStack justifyContent="center" alignItems="flex-start" py="24px">
               <Text variant="with-title" fontSize="14px" mb="-25px !important">
-              {modal?.name || ""}
+                {modal?.name || ""}
               </Text>
               {modal && modal.nickname && (
                 <>

@@ -3,7 +3,7 @@ import { GameDto } from './dto/game.dto'
 import { GameService } from './game.service'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { AuthGuard } from '@nestjs/passport'
-import { Roles } from 'src/roles/roles.decorator'
+import { Roles } from '../roles/roles.decorator'
 @ApiTags('game')
 @Controller({
   path: 'game',

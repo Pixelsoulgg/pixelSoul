@@ -95,9 +95,11 @@ export default function MySoul() {
                   fontFamily={fonts.Inter}
                   mt="4px"
                 >
-                 Your SoulScore and GamerScore unlock special perks and can be increased by completing challenges and playing games.
+                  Your SoulScore and GamerScore unlock special perks and can be increased by completing challenges and playing games.
                 </Text>
               </VStack>
+              {/* <Spacer />
+              <Image src="./three-dot.svg" alt="" /> */}
             </HStack>
 
             <SimpleGrid columns={{ base: 1,  "lg": 2}} w="full" columnGap="20px">
