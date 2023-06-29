@@ -1,0 +1,10 @@
+[package]
+name = "brawlz"
+version = "0.0.1"
+
+[dependencies]
+Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "testnet" }
+
+[addresses]
+brawlz =  "0xc40a97c587ea74e42d4f17e9b5864ec217a4fcedc941747b24cdd24b0394a65d"
+sui =  "0000000000000000000000000000000000000000000000000000000000000002"
