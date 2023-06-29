@@ -1,13 +1,11 @@
-import { MotionLazyContainer } from "@/components/animations";
 import { Flex } from "@chakra-ui/react";
 import React, { ReactNode } from "react";
 
 type Props = {
   children?: ReactNode;
 };
-export default function LandingLayout({ children }: Props) {
+export default function OtherLayout({ children }: Props) {
   return (
-    <MotionLazyContainer>
       <Flex
         w="100%"
         margin="0px auto"
@@ -23,6 +21,5 @@ export default function LandingLayout({ children }: Props) {
           {children}
         </Flex>
       </Flex>
-    </MotionLazyContainer>
   );
 }
