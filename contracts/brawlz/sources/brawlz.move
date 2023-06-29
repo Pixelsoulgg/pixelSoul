@@ -15,14 +15,14 @@ module brawlz::brawlz {
 
    struct Hero has key, store {
         id: UID,
-        name:string,
+        name:string::String,
         level: u64,
         experience: u64
     }
 
     struct Bot has key, store {
         id: UID,
-        name:string,
+        name:string::String,
         level: u64,
         experience: u64,
         game_id: ID,
@@ -30,18 +30,18 @@ module brawlz::brawlz {
 
     struct Skin has key, store {
         id: UID,
-        name: string,
+        name: string::String,
         color: string
     }
 
     struct Weapon has key, store {
         id: UID,
-        name: string,
+        name: string::String,
         strenght:u64
     }
 
     //mint hero
-    public entry fun mintHero(name:string, ctx: &mut TxContext){
+    public entry fun mintHero(name:string::String, ctx: &mut TxContext){
         let hero=Hero{
             id:object::new(ctx),
             name,
@@ -51,7 +51,7 @@ module brawlz::brawlz {
         transfer::transfer(hero,tx_context::sender(ctx));
     }
     
-    public entry fun mintSkin(name:string,color:string,ctx:&mut TxContext){
+    public entry fun mintSkin(name:string::String,color:string::String,ctx:&mut TxContext){
         let skin=Skin{
             id:object::new(ctx),
             name,
