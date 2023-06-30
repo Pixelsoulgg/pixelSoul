@@ -67,10 +67,15 @@ module soultag::soulTag {
         &soulTag.reputation
     }
     #[allow(unused_function)]
-    public entry fun update(soulTag:&mut SoulTag,increase:u64,quest: Quest, _:&mut TxContext){
+    public entry fun update(soulTag:&mut SoulTag,increase:u64,quest:&Quest, ctx:&mut TxContext){
         let newReputation=soulTag.reputation+increase;
         soulTag.reputation=soulTag.reputation+increase;
-        object_table::add(&mut soulTag.quests,object::id(&quest),quest);
+        let q=Quest{
+            id:object::new(ctx),
+            name:quest.name,
+            url:quest.url
+        };
+        object_table::add(&mut soulTag.quests,object::id(&q),q);
         event::emit(ReputationIncreased{
             soulTagId:object::uid_to_inner(&soulTag.id),
             newReputation
