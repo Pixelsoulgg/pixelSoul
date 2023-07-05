@@ -17,6 +17,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@ethersproject/abstract-provider": "^5.7.0",
+    "@mysten/sui.js": "^0.37.1",
     "@reduxjs/toolkit": "^1.9.3",
     "@suiet/wallet-kit": "^0.2.10",
     "@types/node": "18.15.11",

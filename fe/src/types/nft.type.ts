@@ -139,3 +139,16 @@ export interface NFTResponse {
   previous?: string;
   assets: NFT[];
 }
+
+export interface ISuiNftItem {
+  objectId: string;
+  type: string;
+  body: string;
+  gun: string;
+  head: string;
+  leg: string;
+  level: number;
+  name: string;
+  sword: string;
+  image: string;
+}

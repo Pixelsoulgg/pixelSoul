@@ -39,7 +39,7 @@ export default function LeaderBoard() {
               >
                 <Image src="/game-ui/item.svg" />
                 <Text fontFamily={fonts.VT323} fontSize="20px">
-                  Name 1
+                Name {index + 1}
                 </Text>
               </HStack>
             ))}
@@ -47,7 +47,7 @@ export default function LeaderBoard() {
 
           <VStack alignItems="flex-start" mt="25px" w="440px">
             <Text fontFamily={fonts.Silkscreen} fontSize="24px" color="#1E0505">
-              Bot battle
+             Real Battles  
             </Text>
             {new Array(4).fill(0).map((_, index) => (
               <HStack
@@ -60,7 +60,7 @@ export default function LeaderBoard() {
               >
                 <Image src="/game-ui/item.svg" />
                 <Text fontFamily={fonts.VT323} fontSize="20px">
-                  Name 1
+                 Name {index + 1}
                 </Text>
               </HStack>
             ))}

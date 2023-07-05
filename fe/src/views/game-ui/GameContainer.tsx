@@ -7,13 +7,45 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import CharacterAttribute from "./components/CharacterAttribute";
 import Attribute, { AttributeType } from "./components/Attribute";
 import { m } from "framer-motion";
+import { useWallet } from "@suiet/wallet-kit";
+import { JsonRpcProvider, testnetConnection } from "@mysten/sui.js";
+import { coinType, package_type } from "@/utils/suis";
+import { ISuiNftItem } from "@/types/nft.type";
+import { showSortAddress } from "@/utils";
+import { useAppDispatch, useAppSelector } from "@/reduxs/hooks";
+import { getSuiNFTAction } from "@/reduxs/suinft/sui.actions";
 
 export default function GameContainer() {
-  const [active, setActive] = useState<number>(2)
+  const [active, setActive] = useState<number>();
+  const wallet = useWallet();
+  const {nfts} = useAppSelector((p) => p.suinft);
+  const dispatch = useAppDispatch();
+
+  const handleFetchMyNFTs = useCallback(async () => {
+    if (wallet && wallet.address) {
+     dispatch(getSuiNFTAction(wallet.address));
+    }
+  }, [wallet?.address]);
+
+  useEffect(() => {
+    handleFetchMyNFTs();
+  }, [handleFetchMyNFTs]);
+
+
+  const emptyArray = useMemo(() => {
+    if (nfts.length >= 12) return [];
+    return new Array(12 - nfts.length).fill(0);
+  }, [nfts]);
+
+  const nft = useMemo(() => {
+    if (active === undefined) return undefined;
+    return nfts[active];
+  }, [active]);
+
   return (
     <Flex w="96%" margin="0px auto" mt="27px">
       <Flex flex={1}>
@@ -27,9 +59,9 @@ export default function GameContainer() {
           >
             Select Character
           </Text>
-          <CharacterAttribute type={1} label="Thunderstom" />
-          <CharacterAttribute type={2} label="ID:12312312" />
-          <CharacterAttribute type={3} label="Level 123" />
+          <CharacterAttribute type={1} label={nft?.name ||'-- --'} />
+          <CharacterAttribute type={2} label={`ID:${showSortAddress(nft?.objectId || '')}`} />
+          <CharacterAttribute type={3} label={`Level ${nft?.level || '0'}`} />
           <Attribute type={AttributeType.attack} value={3} />
           <Attribute type={AttributeType.defense} value={5} />
           <Attribute type={AttributeType.blood} value={6} />
@@ -38,7 +70,7 @@ export default function GameContainer() {
       </Flex>
       <Flex flexDirection="column" position="relative" pt="40px">
         <SimpleGrid columns={4} gap="40px">
-          {new Array(12).fill(0).map((_, index) => (
+          {nfts.map((item, index) => (
             <Box key={index}
               bgImage={active === index ? "/game-ui/game-characters/active.svg" : undefined }
               w="162px"
@@ -53,14 +85,37 @@ export default function GameContainer() {
               whileHover={{scale: 1.1}}
             >
               <Image
-                src={`/game-ui/game-characters/${index + 1}.svg`}
+                src={`/game-ui/game-characters/new/${item.image}.svg`}
                 w="162px"
                 h="162px"
                 cursor="pointer"
                 transform={`scale(${active === index ? 0.9 : 1})`}
+                fallbackSrc={`/game-ui/game-characters/new/0.svg`}
               />
             </Box>
           ))}
+
+          {emptyArray.map((_, index) =>  <Box key={index}
+              w="162px"
+              h="162px"
+              bgRepeat="no-repeat"
+              bgSize="cover"
+              boxShadow={active === index ? '0px 0px 50px 0px #0035F2': '' }
+             
+              as={m.div}
+              whileTap={{scale: 1.05}}
+              whileInView={{scale: 1.05}}
+              whileHover={{scale: 1.1}}
+            >
+              <Image
+                src={`/game-ui/game-characters/new/0.svg`}
+                w="162px"
+                h="162px"
+                cursor="pointer"
+                transform={`scale(${active === index ? 0.9 : 1})`}
+                fallbackSrc={`/game-ui/game-characters/new/0.svg`}
+              />
+            </Box>)}
         </SimpleGrid>
         <Box
           position="absolute"

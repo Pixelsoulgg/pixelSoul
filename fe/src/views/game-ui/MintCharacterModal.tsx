@@ -1,4 +1,8 @@
 import { fonts } from "@/configs/constants";
+import { useAppDispatch } from "@/reduxs/hooks";
+import { getSuiNFTAction } from "@/reduxs/suinft/sui.actions";
+import { getToast } from "@/utils";
+import { coinType } from "@/utils/suis";
 import {
   Box,
   Flex,
@@ -9,20 +13,56 @@ import {
   ModalBody,
   ModalContent,
   ModalOverlay,
-  Spacer,
-  useDisclosure,
   Text,
   ModalProps,
+  useToast,
+  Spacer,
 } from "@chakra-ui/react";
+import { TransactionBlock } from "@mysten/sui.js";
+import { useAccountBalance, useWallet } from "@suiet/wallet-kit";
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useState } from "react";
 
-interface IProps extends Omit<ModalProps, "children">{}
+interface IProps extends Omit<ModalProps, "children"> {}
 
-export default function MinCharacterModal({onClose, ...props}: IProps) {
+export default function MinCharacterModal({ onClose, ...props }: IProps) {
+  const dispatch = useAppDispatch();
+  const toast = useToast();
+  const wallet = useWallet();
+  const [nftName, setNftName] = useState<string>("");
+  const [character, setCharacter] = useState<number>(1);
 
+  const handleMintNFT = async () => {
+    if (!wallet.connected || !nftName) return;
+    const tx = new TransactionBlock();
+    tx.moveCall({
+      target: coinType,
+      arguments: [
+        tx.pure(nftName), // name
+        tx.pure("red"), //head
+        tx.pure("blue"), //head
+        tx.pure("green"),
+        tx.pure(`${character}`),
+      ],
+    });
+    try {
+      const resData = await wallet.signAndExecuteTransactionBlock({
+        //@ts-ignore
+        transactionBlock: tx,
+      });
+      if (wallet.address) {
+        dispatch(getSuiNFTAction(wallet.address)).unwrap();
+      }
+      setNftName("");
+      toast(getToast("nft minted successfully!", "success", "Mint NFT"));
+      onClose();
+    } catch (er) {
+      toast(getToast("nft mint failed"));
+      console.error("nft mint failed", er);
+    }
+  };
   return (
-    <Modal size="3xl" onClose={onClose} {...props} >
+    <Modal size="3xl" onClose={onClose} {...props}>
       <ModalOverlay />
       <ModalContent
         h="675px"
@@ -52,12 +92,14 @@ export default function MinCharacterModal({onClose, ...props}: IProps) {
               fontFamily={fonts.VT323}
               fontSize="32px"
               marginTop="5px"
+              value={nftName}
+              onChange={(e) => setNftName(e.target.value)}
             />
           </Box>
           <Text color="transparent">1</Text>
           <Flex w="456px" h="456px" mt="47px" position="relative">
             <Image
-              src="/game-ui/characters/1.gif"
+              src={`/game-ui/characters/${character}.png`}
               w="332px"
               top={0}
               bottom={0}
@@ -72,19 +114,26 @@ export default function MinCharacterModal({onClose, ...props}: IProps) {
               px="20px"
             >
               <HStack>
-                <Image src="/game-ui/arrow.svg" cursor="pointer"  />
+                <Image
+                  src={`/game-ui/${character > 1 ? "active-" : ""}arrow.svg`}
+                  cursor="pointer"
+                  onClick={() => {
+                    if (character > 1) {
+                      setCharacter((pre) => pre - 1);
+                    }
+                  }}
+                />
                 <Spacer />
-                <Image src="/game-ui/arrow.svg" transform={"rotate(180deg)"} cursor="pointer" />
-              </HStack>
-              <HStack>
-                <Image src="/game-ui/arrow.svg" cursor="pointer" />
-                <Spacer />
-                <Image src="/game-ui/arrow.svg" transform={"rotate(180deg)"} cursor="pointer" />
-              </HStack>
-               <HStack>
-                <Image src="/game-ui/arrow.svg" cursor="pointer" />
-                <Spacer />
-                <Image src="/game-ui/arrow.svg" transform={"rotate(180deg)"} cursor="pointer" />
+                <Image
+                  src={`/game-ui/${character < 10 ? "active-" : ""}arrow.svg`}
+                  transform={"rotate(180deg)"}
+                  cursor="pointer"
+                  onClick={() => {
+                    if (character < 10) {
+                      setCharacter((pre) => pre + 1);
+                    }
+                  }}
+                />
               </HStack>
             </Flex>
           </Flex>
@@ -102,6 +151,7 @@ export default function MinCharacterModal({onClose, ...props}: IProps) {
               as={motion.img}
               whileTap={{ scale: 0.95 }}
               cursor="pointer"
+              onClick={handleMintNFT}
             />
           </HStack>
         </ModalBody>
