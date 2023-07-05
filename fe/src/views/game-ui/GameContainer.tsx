@@ -101,7 +101,6 @@ export default function GameContainer() {
               bgRepeat="no-repeat"
               bgSize="cover"
               boxShadow={active === index ? '0px 0px 50px 0px #0035F2': '' }
-             
               as={m.div}
               whileTap={{scale: 1.05}}
               whileInView={{scale: 1.05}}
@@ -111,7 +110,6 @@ export default function GameContainer() {
                 src={`/game-ui/game-characters/new/0.svg`}
                 w="162px"
                 h="162px"
-                cursor="pointer"
                 transform={`scale(${active === index ? 0.9 : 1})`}
                 fallbackSrc={`/game-ui/game-characters/new/0.svg`}
               />
