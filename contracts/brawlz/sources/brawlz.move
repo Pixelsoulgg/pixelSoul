@@ -17,6 +17,7 @@ module brawlz::brawlz {
     struct Hero has key, store {
         id: UID,
         name:string::String,
+        image:string::String,
         level: u64,
         experience: u64,
         head:Option<Head>,
@@ -133,7 +134,7 @@ module brawlz::brawlz {
         game.status
     }
 
-    public entry fun mint_hero(name:vector<u8>,head:vector<u8>,body:vector<u8>,leg:vector<u8>, ctx: &mut TxContext){
+    public entry fun mint_hero(name:vector<u8>,head:vector<u8>,body:vector<u8>,leg:vector<u8>,image:vector<u8>, ctx: &mut TxContext){
         let ohead=create_head(head,ctx);
         let obody=create_body(body,ctx);
         let oleg=create_leg(leg,ctx);
@@ -142,6 +143,7 @@ module brawlz::brawlz {
         let hero=Hero{
             id:object::new(ctx),
             name:string::utf8(name),
+            image:string::utf8(image),
             level:0,
             experience:0,
             head:option::some(ohead),
