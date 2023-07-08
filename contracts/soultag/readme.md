@@ -1,4 +1,4 @@
-## This document describe the currunt functions of soultag smart contract on SUI (WIP)
+## This document describe the current functions of soultag smart contract on SUI (WIP)
 
 + Structs
 
