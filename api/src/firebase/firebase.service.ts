@@ -53,7 +53,7 @@ export class FirebaseService {
     bots.forEach((f) => {
       arrHuman.push(f.val())
     })
-    //return 
+    //return human
     return arrHuman
   }
 
