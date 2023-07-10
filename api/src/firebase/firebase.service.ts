@@ -49,10 +49,13 @@ export class FirebaseService {
   async leaderBoardHuman() {
     const dbRef = ref(getDatabase())
     const bots = await get(child(dbRef, `leaderboard_users`))
-    const arrBots = []
+    const arrHuman = []
     bots.forEach((f) => {
-      arrBots.push(f.val())
+      arrHuman.push(f.val())
     })
-    return arrBots
+    //return 
+    return arrHuman
   }
+
+
 }
