@@ -17,7 +17,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "firebase:start": "node dist/firebase/jobs/updateChainData"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.8.1",
@@ -31,6 +32,7 @@
     "@nestjs/swagger": "^6.2.1",
     "@nestjs/throttler": "^4.0.0",
     "@prisma/client": "^4.12.0",
+    "firebase": "^10.0.0",
     "google-auth-library": "^8.8.0",
     "handlebars": "^4.7.7",
     "jwks-rsa": "^3.0.1",

@@ -197,6 +197,7 @@ module brawlz::brawlz {
     public entry fun bot_win(game:&mut GameInfo,winner:&Bot){
         game.winner=option::some(object::id(winner));
     }
+    
     #[test_only]
     public fun testInit(ctx:&mut TxContext){
         init(ctx);

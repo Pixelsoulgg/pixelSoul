@@ -17,6 +17,7 @@ import { AuthModule } from './auth/auth.module'
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler'
 import { APP_GUARD } from '@nestjs/core'
 import { ReferralModule } from './referral/referral.module'
+import { FirebaseModule } from './firebase/firebase.module'
 
 @Module({
   imports: [
@@ -37,7 +38,8 @@ import { ReferralModule } from './referral/referral.module'
       ttl: 60,
       limit: 30
     }),
-    ReferralModule
+    ReferralModule,
+    FirebaseModule
   ],
   controllers: [AppController],
   providers: [

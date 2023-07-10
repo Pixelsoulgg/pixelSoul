@@ -14,6 +14,7 @@ export const GOOGLE_MAILER_CLIENT_ID = process.env.GOOGLE_MAILER_CLIENT_ID || ''
 export const GOOGLE_MAILER_CLIENT_SECRET = process.env.GOOGLE_MAILER_CLIENT_SECRET || ''
 export const GOOGLE_MAILER_REFRESH_TOKEN = process.env.GOOGLE_MAILER_REFRESH_TOKEN || ''
 export const GOOGLE_EMAIL_ADDRESS = process.env.GOOGLE_EMAIL_ADDRESS || ''
+export const FIREBASE_DB_URL = process.env.FIREBASE_DB_URL || ''
 
 export function setAppSetting(app: INestApplication) {
   app.setGlobalPrefix('api', {
