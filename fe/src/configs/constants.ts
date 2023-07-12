@@ -210,6 +210,10 @@ export const ReferralData = [
 
 export const GameHubs = [
   {
+    name: 'Brawlhalla',
+    id: 5
+  },
+  {
     name: 'Grand Theft Auto 5',
     id: 1
   },
