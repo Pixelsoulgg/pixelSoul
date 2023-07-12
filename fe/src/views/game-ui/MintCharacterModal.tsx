@@ -131,7 +131,7 @@ export default function MinCharacterModal({ onClose, ...props }: IProps) {
                 />
                 <Spacer />
                 <Image
-                  src={`/game-ui/${character < 10 ? "active-" : ""}arrow.svg`}
+                  src={`/game-ui/${character < 5 ? "active-" : ""}arrow.svg`}
                   transform={"rotate(180deg)"}
                   cursor="pointer"
                   onClick={() => {
