@@ -13,8 +13,8 @@ import CharacterAttribute from "./components/CharacterAttribute";
 import Attribute, { AttributeType } from "./components/Attribute";
 import { m } from "framer-motion";
 import { useWallet } from "@suiet/wallet-kit";
-import { JsonRpcProvider, testnetConnection } from "@mysten/sui.js";
-import { coinType, package_type } from "@/utils/suis";
+import { JsonRpcProvider, TransactionBlock, testnetConnection } from "@mysten/sui.js";
+import { coinType, operator_address, package_type } from "@/utils/suis";
 import { ISuiNftItem } from "@/types/nft.type";
 import { convertObjectToQueryString, getToast, showSortAddress } from "@/utils";
 import { useAppDispatch, useAppSelector } from "@/reduxs/hooks";
@@ -53,11 +53,19 @@ export default function GameContainer() {
     return nfts[active];
   }, [active]);
 
-  const handlePlayGame = () => {
+  const handlePlayGame = async() => {
     if (!nft) {      
       toast(getToast('Please select character!'))
       return;
     }
+
+    const tx_transfer = new TransactionBlock();
+    tx_transfer.transferObjects([tx_transfer.object(nft.objectId)], tx_transfer.pure(operator_address))
+    const result = await wallet.signAndExecuteTransactionBlock({
+      //@ts-ignore
+      transactionBlock: tx_transfer
+    })
+
     const character = {
       address: wallet.address,
       object_id: nft.objectId,
@@ -72,7 +80,7 @@ export default function GameContainer() {
 
   return (
     <Flex w="96%" margin="0px auto" mt="27px">
-      <Flex flex={1}>/game-ui/cancel-btn.svg
+      <Flex flex={1}>
         <VStack alignItems="flex-start" spacing="30px">
           <Text
             fontFamily={fonts.Silkscreen}
@@ -86,10 +94,11 @@ export default function GameContainer() {
           <CharacterAttribute type={1} label={nft?.name ||'-- --'} />
           <CharacterAttribute type={2} label={`ID:${showSortAddress(nft?.objectId || '')}`} />
           <CharacterAttribute type={3} label={`Level ${nft?.level || '0'}`} />
-          <Attribute type={AttributeType.attack} value={3} />
+          <CharacterAttribute type={3} label={`Exp: ${nft?.experience || '0'}`} />
+          {/* <Attribute type={AttributeType.attack} value={3} />
           <Attribute type={AttributeType.defense} value={5} />
           <Attribute type={AttributeType.blood} value={6} />
-          <Attribute type={AttributeType.mana} value={9} />
+          <Attribute type={AttributeType.mana} value={9} /> */}
         </VStack>
       </Flex>
       <Flex flexDirection="column" position="relative" pt="40px">

@@ -22,7 +22,7 @@ export default function Game() {
         minH="100vh"
         w="full"
         flexDirection="column"
-        maxW="1450px"
+        maxW="1400px"
         alignSelf="center"
         py="30px"
         margin="0px auto"

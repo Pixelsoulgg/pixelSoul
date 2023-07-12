@@ -151,6 +151,9 @@ export interface ISuiNftItem {
   name: string;
   sword: string;
   image: string;
+  experience: number;
+  winBot: number;
+  winUser: number;
 }
 
 export interface IFirebaseLeaderBoard {

@@ -1,6 +1,6 @@
 import { ISuiNftItem } from "@/types/nft.type";
 import { package_type } from "@/utils/suis";
-import { JsonRpcProvider, testnetConnection } from "@mysten/sui.js";
+import { JsonRpcProvider, testnetConnection, devnetConnection } from "@mysten/sui.js";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getSuiNFTAction = createAsyncThunk<ISuiNftItem[], string>(
@@ -8,7 +8,7 @@ export const getSuiNFTAction = createAsyncThunk<ISuiNftItem[], string>(
   async (wallet) => {
     if (wallet) {
       const owner = wallet;
-      const provider = new JsonRpcProvider(testnetConnection);
+      const provider = new JsonRpcProvider(devnetConnection);
       const objects = await provider.getOwnedObjects({ owner });
       const ids = objects.data.map((p) => p.data?.objectId);
       const newIds: string[] = [];
@@ -24,7 +24,6 @@ export const getSuiNFTAction = createAsyncThunk<ISuiNftItem[], string>(
       });
       
      const a= txns.filter((p) => p.data && p.data.type === package_type).map((tx) => {
-      console.log({tx})
       //@ts-ignore
       const fields = tx.data?.content?.fields; 
       const nft: ISuiNftItem = {
@@ -37,7 +36,10 @@ export const getSuiNFTAction = createAsyncThunk<ISuiNftItem[], string>(
         leg: fields.leg.fields.color,
         level: Number(fields.level),
         sword: fields.sword.fields.strenght,
-        image: fields.image
+        image: fields.image,
+        experience: Number(fields.experience),
+        winBot: Number(fields.winBot),
+        winUser: Number(fields.winUser),
       };
         return nft;
       })
