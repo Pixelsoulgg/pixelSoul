@@ -1,6 +1,7 @@
 import { IGameDungeon } from "@/types/dungeon.types";
 import { api } from "../api";
 import { IChest, IChestAmount, IEvent, IMysteryChest, IUser } from "@/types";
+import { IFirebaseLeaderBoard } from "@/types/nft.type";
 
 const GAME_URL = "game";
 const CHEST_URL = "chest";
@@ -130,6 +131,14 @@ export const gameCheckApiServices = api.injectEndpoints({
         };
       },
     }),
+
+    getLeaderBoardBot: builder.query<IFirebaseLeaderBoard[], void>({
+      query: () => "firebase/leaderBoardBot",      
+    }),
+
+    getLeaderBoardHuman: builder.query<IFirebaseLeaderBoard[], void>({
+      query: () => "firebase/leaderBoardHuman",      
+    }),
   }),
 });
 
@@ -146,4 +155,6 @@ export const {
   useDeleteEventByIdMutation,
   useUpdateEventByIdMutation,
   useInviteByEmailMutation,
+  useGetLeaderBoardBotQuery,
+  useGetLeaderBoardHumanQuery
 } = gameCheckApiServices;

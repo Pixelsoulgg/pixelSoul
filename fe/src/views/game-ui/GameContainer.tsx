@@ -6,6 +6,7 @@ import {
   SimpleGrid,
   Text,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import CharacterAttribute from "./components/CharacterAttribute";
@@ -15,11 +16,15 @@ import { useWallet } from "@suiet/wallet-kit";
 import { JsonRpcProvider, testnetConnection } from "@mysten/sui.js";
 import { coinType, package_type } from "@/utils/suis";
 import { ISuiNftItem } from "@/types/nft.type";
-import { showSortAddress } from "@/utils";
+import { convertObjectToQueryString, getToast, showSortAddress } from "@/utils";
 import { useAppDispatch, useAppSelector } from "@/reduxs/hooks";
 import { getSuiNFTAction } from "@/reduxs/suinft/sui.actions";
+import { getBrawGameUrl } from "@/utils/env.helpers";
+import { useRouter } from "next/router";
 
 export default function GameContainer() {
+  const toast = useToast();
+  const {push}= useRouter();
   const [active, setActive] = useState<number>();
   const wallet = useWallet();
   const {nfts} = useAppSelector((p) => p.suinft);
@@ -35,6 +40,8 @@ export default function GameContainer() {
     handleFetchMyNFTs();
   }, [handleFetchMyNFTs]);
 
+ 
+
 
   const emptyArray = useMemo(() => {
     if (nfts.length >= 12) return [];
@@ -46,9 +53,26 @@ export default function GameContainer() {
     return nfts[active];
   }, [active]);
 
+  const handlePlayGame = () => {
+    if (!nft) {      
+      toast(getToast('Please select character!'))
+      return;
+    }
+    const character = {
+      address: wallet.address,
+      object_id: nft.objectId,
+      name: nft.name,
+      hat: nft.head,
+      body: nft.body,
+      leg: nft.leg
+    }
+   const qr = convertObjectToQueryString(character);
+    push(`${getBrawGameUrl()}${qr}`);
+  }
+
   return (
     <Flex w="96%" margin="0px auto" mt="27px">
-      <Flex flex={1}>
+      <Flex flex={1}>/game-ui/cancel-btn.svg
         <VStack alignItems="flex-start" spacing="30px">
           <Text
             fontFamily={fonts.Silkscreen}
@@ -100,7 +124,6 @@ export default function GameContainer() {
               h="162px"
               bgRepeat="no-repeat"
               bgSize="cover"
-              boxShadow={active === index ? '0px 0px 50px 0px #0035F2': '' }
               as={m.div}
               whileTap={{scale: 1.05}}
               whileInView={{scale: 1.05}}
@@ -150,6 +173,7 @@ export default function GameContainer() {
             cursor="pointer"
             as={m.div}
             whileTap={{scale: 0.95}}
+            onClick={handlePlayGame}
           />
         </Flex>
       </Flex>

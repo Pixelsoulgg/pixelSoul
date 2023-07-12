@@ -152,3 +152,12 @@ export interface ISuiNftItem {
   sword: string;
   image: string;
 }
+
+export interface IFirebaseLeaderBoard {
+  extra: number;
+  name: string;
+  score: number;
+  updateAt: {
+    TIMESTAMP: number;
+  };
+}

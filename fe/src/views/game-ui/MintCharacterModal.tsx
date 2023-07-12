@@ -1,4 +1,4 @@
-import { fonts } from "@/configs/constants";
+import { character_nft_data, fonts } from "@/configs/constants";
 import { useAppDispatch } from "@/reduxs/hooks";
 import { getSuiNFTAction } from "@/reduxs/suinft/sui.actions";
 import { getToast } from "@/utils";
@@ -19,7 +19,7 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import { TransactionBlock } from "@mysten/sui.js";
-import { useAccountBalance, useWallet } from "@suiet/wallet-kit";
+import { useWallet } from "@suiet/wallet-kit";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 
@@ -33,15 +33,21 @@ export default function MinCharacterModal({ onClose, ...props }: IProps) {
   const [character, setCharacter] = useState<number>(1);
 
   const handleMintNFT = async () => {
+    if (!nftName) {
+      toast(getToast('Name is invalid!'))
+      return;
+    }
     if (!wallet.connected || !nftName) return;
     const tx = new TransactionBlock();
+    //@ts-ignore
+    const ob = character_nft_data[character];
     tx.moveCall({
       target: coinType,
       arguments: [
         tx.pure(nftName), // name
-        tx.pure("red"), //head
-        tx.pure("blue"), //head
-        tx.pure("green"),
+        tx.pure(`${ob[0]}`), //head
+        tx.pure(ob[1]), //head
+        tx.pure(ob[2]),
         tx.pure(`${character}`),
       ],
     });
@@ -129,7 +135,7 @@ export default function MinCharacterModal({ onClose, ...props }: IProps) {
                   transform={"rotate(180deg)"}
                   cursor="pointer"
                   onClick={() => {
-                    if (character < 10) {
+                    if (character < 5) {
                       setCharacter((pre) => pre + 1);
                     }
                   }}

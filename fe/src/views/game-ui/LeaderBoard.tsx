@@ -11,11 +11,29 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { m } from "framer-motion";
-import React from "react";
+import React, { useMemo } from "react";
 import MintCharacterModal from "./MintCharacterModal";
+import { useGetLeaderBoardBotQuery, useGetLeaderBoardHumanQuery } from "@/services/modules/game.check.services";
 
 export default function LeaderBoard() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { data: botLeaderBoard, isLoading: isLoadingLeaderBoardBot } = useGetLeaderBoardBotQuery();
+  const { data: humanLeaderBoard, isLoading: isLoadingLeaderBoardHuman } = useGetLeaderBoardHumanQuery();
+
+  const humanEmptyArray = useMemo(() => {
+    if (!humanLeaderBoard || humanLeaderBoard.length === 0 || humanLeaderBoard.length > 3) return [];
+    return new Array(4 - humanLeaderBoard.length).fill(0);
+  }, [humanLeaderBoard]);
+  
+  const botEmptyArray = useMemo(() => {
+    if (!botLeaderBoard || botLeaderBoard.length === 0 || botLeaderBoard.length > 3) return [];
+    return new Array(4 - botLeaderBoard.length).fill(0);
+  }, [botLeaderBoard]);
+
+  const botLeaderBoardData = useMemo(() => {
+    if(botLeaderBoard && botLeaderBoard.length > 4) return botLeaderBoard?.slice(0, 4);
+    return botLeaderBoard;
+  }, [botLeaderBoard]);
 
   return (
     <Flex w="full" justifyContent='space-between' alignItems='flex-end' px="30px">
@@ -28,7 +46,7 @@ export default function LeaderBoard() {
             <Text fontFamily={fonts.Silkscreen} fontSize="24px" color="#1E0505">
               Bot battle
             </Text>
-            {new Array(4).fill(0).map((_, index) => (
+            {botLeaderBoardData?.map((lead, index) => (
               <HStack
                 key={index}
                 w="full"
@@ -39,7 +57,22 @@ export default function LeaderBoard() {
               >
                 <Image src="/game-ui/item.svg" />
                 <Text fontFamily={fonts.VT323} fontSize="20px">
-                Name {index + 1}
+                {lead.name}
+                </Text>
+              </HStack>
+            ))}
+            {botEmptyArray.map((_, index) => (
+              <HStack
+                key={index}
+                w="full"
+                borderRadius="8px"
+                border="1.644px solid #77312B"
+                p="9px"
+                bgColor="rgba(255,255,255, 0.6)"
+              >
+                <Image src="/game-ui/item.svg" />
+                <Text fontFamily={fonts.VT323} fontSize="20px">
+                --- ---
                 </Text>
               </HStack>
             ))}
@@ -49,7 +82,7 @@ export default function LeaderBoard() {
             <Text fontFamily={fonts.Silkscreen} fontSize="24px" color="#1E0505">
              Real Battles  
             </Text>
-            {new Array(4).fill(0).map((_, index) => (
+            {humanLeaderBoard?.map((lead, index) => (
               <HStack
                 key={index}
                 w="full"
@@ -60,7 +93,22 @@ export default function LeaderBoard() {
               >
                 <Image src="/game-ui/item.svg" />
                 <Text fontFamily={fonts.VT323} fontSize="20px">
-                 Name {index + 1}
+                {lead.name}
+                </Text>
+              </HStack>
+            ))}
+            {humanEmptyArray.map((_, index) => (
+              <HStack
+                key={index}
+                w="full"
+                borderRadius="8px"
+                border="1.644px solid #77312B"
+                p="9px"
+                bgColor="rgba(255,255,255, 0.6)"
+              >
+                <Image src="/game-ui/item.svg" />
+                <Text fontFamily={fonts.VT323} fontSize="20px">
+                 --- ---
                 </Text>
               </HStack>
             ))}
