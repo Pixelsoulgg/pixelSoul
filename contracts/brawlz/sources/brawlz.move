@@ -19,6 +19,9 @@ module brawlz::brawlz {
         name:string::String,
         level: u64,
         experience: u64,
+        image:string::String,
+        winBot:u64,
+        winUser:u64,
         head:Option<Head>,
         body:Option<Body>,
         leg:Option<Leg>,
@@ -57,7 +60,7 @@ module brawlz::brawlz {
         strenght:u64
     }
 
-    struct AdminCap has key{id:UID}
+    struct AdminCap has key,store{id:UID}
 
     #[allow(unused_function)]
     fun init(ctx: &mut TxContext){
@@ -133,7 +136,7 @@ module brawlz::brawlz {
         game.status
     }
 
-    public entry fun mint_hero(name:vector<u8>,head:vector<u8>,body:vector<u8>,leg:vector<u8>, ctx: &mut TxContext){
+    public entry fun mint_hero(name:vector<u8>,head:vector<u8>,body:vector<u8>,leg:vector<u8>,image:vector<u8>, ctx: &mut TxContext){
         let ohead=create_head(head,ctx);
         let obody=create_body(body,ctx);
         let oleg=create_leg(leg,ctx);
@@ -142,8 +145,11 @@ module brawlz::brawlz {
         let hero=Hero{
             id:object::new(ctx),
             name:string::utf8(name),
+            image:string::utf8(image),
             level:0,
             experience:0,
+            winBot:0,
+            winUser:0,
             head:option::some(ohead),
             body:option::some(obody),
             leg:option::some(oleg),
@@ -196,6 +202,14 @@ module brawlz::brawlz {
 
     public entry fun bot_win(game:&mut GameInfo,winner:&Bot){
         game.winner=option::some(object::id(winner));
+    }
+
+    public entry fun update_hero(_:&AdminCap, hero:Hero,plevel:u64,pxp:u64,winBot:u64,winUser:u64)
+    {
+       hero.level=plevel;
+       hero.winBot=winBot;
+       hero.winUser=winUser;
+       hero.experience=pxp;
     }
     
     #[test_only]

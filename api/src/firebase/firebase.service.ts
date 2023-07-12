@@ -24,15 +24,21 @@ export class FirebaseService {
     this.app = initializeApp(firebaseConfig)
   }
 
-  listen(path: string, fn: (sns: DataSnapshot) => Promise<void>) {
+  async listen(path: string, fn: (board: DataSnapshot) => Promise<void>) {
     const db = getDatabase()
     const lref = ref(db, path)
-    onChildChanged(lref, (snapshot) => {
+    const auths = await this.auth()
+    let childrenCount = 0
+    onChildChanged(lref, async (snapshot) => {
       fn(snapshot)
     })
 
-    onChildAdded(lref, (snapshot) => {
-      fn(snapshot)
+    onChildAdded(lref, async (snapshot, pre) => {
+      childrenCount += 1
+      if (childrenCount > auths.length) {
+        console.log('call process funciton')
+        fn(snapshot)
+      }
     })
   }
 
@@ -49,13 +55,26 @@ export class FirebaseService {
   async leaderBoardHuman() {
     const dbRef = ref(getDatabase())
     const bots = await get(child(dbRef, `leaderboard_users`))
-    const arrHuman = []
+    const arrBots = []
     bots.forEach((f) => {
-      arrHuman.push(f.val())
+      arrBots.push(f.val())
     })
-    //return human
-    return arrHuman
+    return arrBots
   }
 
+  async auth() {
+    const dbRef = ref(getDatabase())
+    const auths = await get(child(dbRef, `auth`))
+    const arr = []
+    auths.forEach((f) => {
+      arr.push(f.val())
+    })
+    return arr
+  }
 
+  async hero(name: string) {
+    const dbRef = ref(getDatabase())
+    const hero = await get(child(dbRef, `auth/${name}`))
+    return hero
+  }
 }

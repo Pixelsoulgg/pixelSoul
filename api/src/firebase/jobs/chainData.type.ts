@@ -1,5 +1,5 @@
 export interface Hero {
-  objectId: string
-  level: number
-  xp: number
+  object_id: string
+  p_level: number
+  p_xp: number
 }
