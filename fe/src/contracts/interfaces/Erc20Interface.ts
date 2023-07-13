@@ -7,7 +7,7 @@ class Erc20 extends BaseInterface{
   }
 
   async balanceOf(walletAddress: string): Promise<number> {
-    const balance = await this._contract.balanceOf(walletAddress);    
+    const balance = await this._contract.balanceOf(walletAddress);
     return this._toNumber(balance);
   }
 

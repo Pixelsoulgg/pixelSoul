@@ -25,6 +25,8 @@ import React, { useState } from "react";
 
 interface IProps extends Omit<ModalProps, "children"> {}
 
+const CHECK_NAME_OBJECT_ID='0x7a2982a80f5dd142267cf36c940e3c2cf337806462ccc7c3efdb37e120632827';
+
 export default function MinCharacterModal({ onClose, ...props }: IProps) {
   const dispatch = useAppDispatch();
   const toast = useToast();
@@ -49,6 +51,7 @@ export default function MinCharacterModal({ onClose, ...props }: IProps) {
         tx.pure(ob[1]), //head
         tx.pure(ob[2]),
         tx.pure(`${character}`),
+        tx.pure(CHECK_NAME_OBJECT_ID)
       ],
     });
     try {
