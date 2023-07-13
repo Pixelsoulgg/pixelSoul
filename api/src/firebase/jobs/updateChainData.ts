@@ -60,8 +60,6 @@ async function updateUserInfor(board: DataSnapshot) {
 async function main() {
   const fb = new FirebaseService()
   fb.listen('/auth', updateUserInfor)
-
-  //await buildSigner()
 }
 
 main().catch((err) => console.log('job error', err))

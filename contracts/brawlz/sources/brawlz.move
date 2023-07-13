@@ -4,6 +4,7 @@ module brawlz::brawlz {
     use sui::transfer;
     use std::string;
     use sui::tx_context::{Self, TxContext};
+    use sui::table::{Self,Table};
 
     struct GameInfo has key, store {
         id: UID,
@@ -62,11 +63,22 @@ module brawlz::brawlz {
 
     struct AdminCap has key,store{id:UID}
 
+    struct HeroName has key,store{
+        id:UID,
+        names:Table<string::String,string::String>
+    }
+
     #[allow(unused_function)]
     fun init(ctx: &mut TxContext){
         transfer::transfer(AdminCap{
             id:object::new(ctx)
         },tx_context::sender(ctx));
+
+        let heroNames=HeroName{
+            id:object::new(ctx),
+            names:table::new(ctx)
+        };
+        transfer::share_object(heroNames);
     }
 
     public fun create_head(color:vector<u8>,ctx:&mut TxContext):Head{
@@ -136,7 +148,8 @@ module brawlz::brawlz {
         game.status
     }
 
-    public entry fun mint_hero(name:vector<u8>,head:vector<u8>,body:vector<u8>,leg:vector<u8>,image:vector<u8>, ctx: &mut TxContext){
+    public entry fun mint_hero(name:vector<u8>,head:vector<u8>,body:vector<u8>,leg:vector<u8>,image:vector<u8>,hero_name:&mut HeroName, ctx: &mut TxContext){
+        assert!(!table::contains(&mut hero_name.names,string::utf8(name)), 1);
         let ohead=create_head(head,ctx);
         let obody=create_body(body,ctx);
         let oleg=create_leg(leg,ctx);
@@ -157,6 +170,8 @@ module brawlz::brawlz {
             gun:option::some(ogun)
         };
         transfer::transfer(hero,tx_context::sender(ctx));
+        table::add(&mut hero_name.names,string::utf8(name),string::utf8(name));
+        
     }
     
     public entry fun create_game_with_bot(_:&AdminCap,hero1:&Hero,ctx:&mut TxContext){
@@ -204,7 +219,7 @@ module brawlz::brawlz {
         game.winner=option::some(object::id(winner));
     }
 
-    public entry fun update_hero(_:&AdminCap, hero:Hero,plevel:u64,pxp:u64,winBot:u64,winUser:u64)
+    public entry fun update_hero(_:&AdminCap, hero:&mut Hero,plevel:u64,pxp:u64,winBot:u64,winUser:u64)
     {
        hero.level=plevel;
        hero.winBot=winBot;
@@ -216,5 +231,4 @@ module brawlz::brawlz {
     public fun testInit(ctx:&mut TxContext){
         init(ctx);
     }
-
 }
