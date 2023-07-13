@@ -18,6 +18,7 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler'
 import { APP_GUARD } from '@nestjs/core'
 import { ReferralModule } from './referral/referral.module'
 import { FirebaseModule } from './firebase/firebase.module'
+import { SoultagModule } from './soultag/soultag.module'
 
 @Module({
   imports: [
@@ -39,7 +40,8 @@ import { FirebaseModule } from './firebase/firebase.module'
       limit: 30
     }),
     ReferralModule,
-    FirebaseModule
+    FirebaseModule,
+    SoultagModule
   ],
   controllers: [AppController],
   providers: [
