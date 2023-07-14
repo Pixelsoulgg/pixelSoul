@@ -139,6 +139,16 @@ export const gameCheckApiServices = api.injectEndpoints({
     getLeaderBoardHuman: builder.query<IFirebaseLeaderBoard[], void>({
       query: () => "firebase/leaderBoardHuman",      
     }),
+
+    uploadImageSoulTag : builder.mutation<{fileurl: string} , FormData>({
+      query: (body) => {
+        return {
+          url: "soultag/uploadImage",
+          method: "POST",
+          body,
+        };
+      },
+    })
   }),
 });
 
@@ -156,5 +166,6 @@ export const {
   useUpdateEventByIdMutation,
   useInviteByEmailMutation,
   useGetLeaderBoardBotQuery,
-  useGetLeaderBoardHumanQuery
+  useGetLeaderBoardHumanQuery,
+  useUploadImageSoulTagMutation,
 } = gameCheckApiServices;

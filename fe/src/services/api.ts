@@ -14,7 +14,7 @@ const baseQuery = fetchBaseQuery({
   credentials: 'same-origin',
   prepareHeaders: (headers, {endpoint, getState}) => {
     const accessToken = (getState() as RootState).auth.accessToken
-    const UPLOAD_ENDPOINT = ["addEvent", "updateEventById"];
+    const UPLOAD_ENDPOINT = ["addEvent", "updateEventById", "uploadImageSoulTag"];
     const index = UPLOAD_ENDPOINT.indexOf(endpoint);
     headers.set('Accept', 'application/json');
     if (index < 0) {

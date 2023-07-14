@@ -2,7 +2,7 @@ import { character_nft_data, fonts } from "@/configs/constants";
 import { useAppDispatch } from "@/reduxs/hooks";
 import { getSuiNFTAction } from "@/reduxs/suinft/sui.actions";
 import { getToast } from "@/utils";
-import { coinType } from "@/utils/suis";
+import { CHECK_NAME_OBJECT_ID, coinType } from "@/utils/suis";
 import {
   Box,
   Flex,
@@ -25,7 +25,6 @@ import React, { useState } from "react";
 
 interface IProps extends Omit<ModalProps, "children"> {}
 
-const CHECK_NAME_OBJECT_ID='0x7a2982a80f5dd142267cf36c940e3c2cf337806462ccc7c3efdb37e120632827';
 
 export default function MinCharacterModal({ onClose, ...props }: IProps) {
   const dispatch = useAppDispatch();

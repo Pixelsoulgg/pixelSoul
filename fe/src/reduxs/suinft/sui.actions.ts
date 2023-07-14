@@ -1,6 +1,10 @@
 import { ISuiNftItem } from "@/types/nft.type";
-import { package_type } from "@/utils/suis";
-import { JsonRpcProvider, testnetConnection, devnetConnection } from "@mysten/sui.js";
+import { package_type, soultag_check_condition } from "@/utils/suis";
+import {
+  JsonRpcProvider,
+  testnetConnection,
+  devnetConnection,
+} from "@mysten/sui.js";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getSuiNFTAction = createAsyncThunk<ISuiNftItem[], string>(
@@ -12,9 +16,11 @@ export const getSuiNFTAction = createAsyncThunk<ISuiNftItem[], string>(
       const objects = await provider.getOwnedObjects({ owner });
       const ids = objects.data.map((p) => p.data?.objectId);
       const newIds: string[] = [];
-      ids.forEach(p => {
-        if (p) {newIds.push(p)}
-      })
+      ids.forEach((p) => {
+        if (p) {
+          newIds.push(p);
+        }
+      });
       const txns = await provider.multiGetObjects({
         ids: newIds,
         options: {
@@ -22,29 +28,56 @@ export const getSuiNFTAction = createAsyncThunk<ISuiNftItem[], string>(
           showContent: true,
         },
       });
-      
-     const a= txns.filter((p) => p.data && p.data.type === package_type).map((tx) => {
-      //@ts-ignore
-      const fields = tx.data?.content?.fields; 
-      const nft: ISuiNftItem = {
-        name: fields.name,
-        objectId: tx.data?.objectId || '',
-        type: tx.data?.type || '',
-        body: fields.body.fields.color,
-        gun: fields.gun.fields.strenght,
-        head: fields.head.fields.color,
-        leg: fields.leg.fields.color,
-        level: Number(fields.level),
-        sword: fields.sword.fields.strenght,
-        image: fields.image,
-        experience: Number(fields.experience),
-        winBot: Number(fields.winBot),
-        winUser: Number(fields.winUser),
-      };
-        return nft;
-      })
-     return a;    
+
+      const a = txns
+        .filter((p) => p.data && p.data.type === package_type)
+        .map((tx) => {
+          //@ts-ignore
+          const fields = tx.data?.content?.fields;
+          const nft: ISuiNftItem = {
+            name: fields.name,
+            objectId: tx.data?.objectId || "",
+            type: tx.data?.type || "",
+            body: fields.body.fields.color,
+            gun: fields.gun.fields.strenght,
+            head: fields.head.fields.color,
+            leg: fields.leg.fields.color,
+            level: Number(fields.level),
+            sword: fields.sword.fields.strenght,
+            image: fields.image,
+            experience: Number(fields.experience),
+            winBot: Number(fields.winBot),
+            winUser: Number(fields.winUser),
+          };
+          return nft;
+        });
+      return a;
     }
     return [];
+  }
+);
+export const checkSoulTagAction = createAsyncThunk<boolean, string>(
+  "sui/checkSoulTagAction",
+  async (owner) => {
+    if (owner) {
+      const provider = new JsonRpcProvider(devnetConnection);
+      const objects = await provider.getOwnedObjects({ owner });
+      const ids = objects.data.map((p) => p.data?.objectId);
+      const newIds: string[] = [];
+      ids.forEach((p) => {
+        if (p) {
+          newIds.push(p);
+        }
+      });
+      const txns = await provider.multiGetObjects({
+        ids: newIds,
+        options: {
+          showType: true,
+          showContent: true,
+        },
+      });
+      return txns.find((p) => p.data && p.data.type === soultag_check_condition) !== undefined
+    }
+    return false;
   }
 );
