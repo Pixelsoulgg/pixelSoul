@@ -76,7 +76,10 @@ export const checkSoulTagAction = createAsyncThunk<boolean, string>(
           showContent: true,
         },
       });
-      return txns.find((p) => p.data && p.data.type === soultag_check_condition) !== undefined
+      return (
+        txns.find((p) => p.data && p.data.type === soultag_check_condition) !==
+        undefined
+      );
     }
     return false;
   }
