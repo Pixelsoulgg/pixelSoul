@@ -40,8 +40,8 @@ MySoul.getLayout = function getLayout(page: React.ReactElement) {
 
 export default function MySoul() {
   const router = useRouter();
+  
   const dispatch = useAppDispatch();
-
   const {isOpen: isMintSoulTag, onClose, onOpen} = useDisclosure();
 
   const { walletInfo } = useAppSelector((s) => s.account);

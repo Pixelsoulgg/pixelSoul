@@ -1,8 +1,10 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import DashboardLayout from "./dashboards";
 import LandingLayout from "./landings";
 import OtherLayout from "./others"
 import { GlobalContextProvider } from "@/contexts/Globals";
+import { useAppSelector } from "@/reduxs/hooks";
+import { useRouter } from "next/router";
 
 type Props = {
   children: ReactNode;
@@ -10,6 +12,14 @@ type Props = {
 };
 
 export default function Layout({ variant = "dashboard", children }: Props) {
+  const {isMintedSoulTag} = useAppSelector((p) => p.suinft);
+  const {pathname, push} = useRouter();
+ 
+  useEffect(() => {
+    if (!isMintedSoulTag && ["/soul-drops", "/game", "/game-hubs"].indexOf(pathname) > -1) {
+      push('/my-souls')
+    }
+  }, [isMintedSoulTag]);
   if (variant === "landing") {
     return <LandingLayout>{children}</LandingLayout>;
   }

@@ -9,11 +9,12 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import React from "react";
+import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 import { useGlobal } from "../../contexts/Globals";
 import { MENUS, SETTING_MENU } from "./constants";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { useAppSelector } from "@/reduxs/hooks";
 
 interface IProps extends FlexProps {
   isExpand?: boolean;
@@ -23,13 +24,19 @@ export default function Menu({ isExpand, ...props }: IProps) {
   const { user } = useUser();
   const {me} = useGlobal();
   const modal = user || me;
+  const {isMintedSoulTag} = useAppSelector((p) => p.suinft);
 
   const { onMenuChange, menuSelected } = useGlobal();
+
+  const menusRender = useMemo(() => {
+    if (isMintedSoulTag) return MENUS;
+    return MENUS.filter((p => p.nav !== "/game-hubs" && p.nav !== "/soul-drops"));
+  }, [isMintedSoulTag]);
 
   return (
     <Flex w="full" flex={1} flexDirection="column" {...props}>
       <Flex w="full" flexDirection="column" flex={1}>
-        {MENUS.map((menu) => (
+        {menusRender.map((menu) => (
           <Link href={menu.nav || "/"} key={menu.name}>
               <HStack
                 cursor="pointer"
