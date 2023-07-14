@@ -129,7 +129,7 @@ export default function AccountInfo() {
 
         <VStack w="full" alignItems="flex-start" mb="30px">
           <Text variant="with-24">Sui Wallet ID</Text>
-          {!auth0Info?.suiWalletAddress && (
+          {!wallet.connected || !auth0Info?.suiWalletAddress && (
             <HStack w="full">
               <Text variant="with-18" color="#98A2B3">
                 {DEFAULT_MESSAGE}
@@ -138,10 +138,10 @@ export default function AccountInfo() {
               <SuiWalletConnector />
             </HStack>
           )}
-          {auth0Info?.suiWalletAddress && (
+          {wallet.connected && auth0Info && auth0Info?.suiWalletAddress && (
             <HStack w="full">
               <Text variant="with-18">
-                {showSortAddress(wallet.address || "") || DEFAULT_MESSAGE}
+                {showSortAddress(auth0Info?.suiWalletAddress || "") || DEFAULT_MESSAGE}
               </Text>
               <Image
                 src="/copy.svg"

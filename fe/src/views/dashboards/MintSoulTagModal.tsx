@@ -51,13 +51,15 @@ export default function MintSoulTagModal({ onClose, ...props }: IProps) {
     }
   };
 
-  const handleOnOk = useCallback(async () => {
-    console.log({nickname})
+  const handleOnOk = async () => {
     if (!nickname) {
       toast(getToast("Nickname is invalid!"));
       return;
     }
-    if (!wallet.connected) return;
+    if (!wallet.connected) {
+      toast(getToast("Please connect your Sui wallet first!"));
+      return;
+    }
     const pfp =
       avatarChoose.indexOf(getCDNServer()!) > -1
         ? avatarChoose
@@ -85,7 +87,8 @@ export default function MintSoulTagModal({ onClose, ...props }: IProps) {
     } catch (ex) {
       toast(getToast("nft mint failed"));
     }
-  }, [avatarChoose]);
+  }
+
 
   return (
     <Modal size="3xl" onClose={onClose} {...props}>
@@ -127,6 +130,7 @@ export default function MintSoulTagModal({ onClose, ...props }: IProps) {
               fontFamily={fonts.VT323}
               mt="20px !important"
               bgColor="white"
+
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
             />

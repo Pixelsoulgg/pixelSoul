@@ -127,9 +127,7 @@ export default function MySoul() {
                   Mint SoulTag to get access to the Pixelsoul ecosystem of games and partners.
                 </Text>
               </VStack>
-
               <Spacer />
-
               {!isMintedSoulTag &&<VStack>
                 <Button
                   variant={ButtonVariants.WITH_HIGHLIGHT_BLUE}
@@ -139,7 +137,8 @@ export default function MySoul() {
                 >
                   Mint SoulTag
                 </Button>
-              </VStack>}
+              </VStack>
+              }
             </HStack>
 
             <HStack
