@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }: MyAppProps) {
   return (
     <Provider store={store}>
       <ChakraProvider theme={theme}>
-        <WalletProvider autoConnect={false} > 
+        <WalletProvider autoConnect={true} > 
         {/* defaultWallets={[SuiWallet]} */}
           <UserProvider>
             <Head>

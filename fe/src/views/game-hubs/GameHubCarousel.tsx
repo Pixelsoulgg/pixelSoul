@@ -4,10 +4,15 @@ import { GameHubs } from "@/configs/constants";
 import { ButtonVariants, TextVariants } from "@/themes/theme";
 import { Button, Flex, HStack, Image, Text, VStack } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 import React from "react";
 
 export default function GameHubCarousel() {
-  const [game, setGame] = React.useState<number>(1);
+  const {push} = useRouter();
+  const [game, setGame] = React.useState<number>(5);
+
+  
+
   return (
     <Flex
       w="full"
@@ -19,11 +24,11 @@ export default function GameHubCarousel() {
         flex={1}
         w="full"
         borderRadius="8px"
-        bgImage="/game-hubs/bg.png"
+        bgImage="/game-hubs/brawll.png"
         bgSize="cover"
         bgRepeat="no-repeat"
         overflow="hidden"
-        minH="120px"
+        minH="120px"  
       >
         <Flex
           w="full"
@@ -36,13 +41,15 @@ export default function GameHubCarousel() {
           <Tag label="Action" type="action" color="#fff" w="62px" />
 
           <VStack w="378px" alignItems="flex-start">
-            <Image src="/game-hubs/logos/1.svg" />
+            <Image src="/game-hubs/logos/2.svg" />
             <Text variant={TextVariants.WITH_18} color="#fff" fontSize="20px">
               Movet nonumy est id, eos nonumy reprehendunt te, quo ei enim harum
               omittantur. Ei nam placerat percipit cotidieque, an eum tale
               antiopam. Eu pro illud ignota luptatum
             </Text>
-            <Button variant={ButtonVariants.WITH_HIGHLIGHT_BLUE} mt="28px">
+            <Button variant={ButtonVariants.WITH_HIGHLIGHT_BLUE} mt="28px"
+              onClick={() => push('/game')}
+            >
               EXPLORE
             </Button>
           </VStack>

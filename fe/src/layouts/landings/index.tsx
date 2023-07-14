@@ -13,17 +13,10 @@ export default function LandingLayout({ children }: Props) {
         margin="0px auto"
         flexDirection="column"
         alignItems="center"
-        // // bgImage="/bg1.png"
-        // bgRepeat="no-repeat"
-        // bgSize="cover"
       >
         <Flex
           flexDirection="column"
           w="100%"
-          // maxW="1667.56px"
-          // px="20px"
-          // py="20px"
-          // minH="100vh"
           justifyContent="center"
           alignItems="center"
         >

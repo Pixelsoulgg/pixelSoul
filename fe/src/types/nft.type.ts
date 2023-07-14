@@ -139,3 +139,28 @@ export interface NFTResponse {
   previous?: string;
   assets: NFT[];
 }
+
+export interface ISuiNftItem {
+  objectId: string;
+  type: string;
+  body: string;
+  gun: string;
+  head: string;
+  leg: string;
+  level: number;
+  name: string;
+  sword: string;
+  image: string;
+  experience: number;
+  winBot: number;
+  winUser: number;
+}
+
+export interface IFirebaseLeaderBoard {
+  extra: number;
+  name: string;
+  score: number;
+  updateAt: {
+    TIMESTAMP: number;
+  };
+}

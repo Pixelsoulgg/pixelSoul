@@ -210,6 +210,10 @@ export const ReferralData = [
 
 export const GameHubs = [
   {
+    name: 'Brawlhalla',
+    id: 5
+  },
+  {
     name: 'Grand Theft Auto 5',
     id: 1
   },
@@ -249,3 +253,15 @@ export const GameHubGamesData = [
     type: 'action',
   },
 ]
+
+//[hat, body, leg]
+//hat: 1,2,3,4,5,6,7,8
+//body: red, blue, green, orange, brown, black
+//leg: red, blue, green, orange, brown, black
+export const character_nft_data = {
+  1: [5, 'red', 'red'],
+  2: [1, 'green', 'brow'],
+  3: [4, 'orange', 'orange'],
+  4: [5, 'brown', 'brown'],
+  5: [5, 'green', 'green'],
+}

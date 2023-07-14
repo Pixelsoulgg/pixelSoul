@@ -1,3 +1,4 @@
+import { getCDNServer } from "@/utils/env.helpers";
 import { Box, Image } from "@chakra-ui/react";
 import React from "react";
 
@@ -6,7 +7,14 @@ interface IProps {
   disableViewMore?: boolean;
 }
 
-export default function UserAvatar({avatar, disableViewMore = false}: IProps) {
+export default function UserAvatar({
+  avatar,
+  disableViewMore = false,
+}: IProps) {
+  const avatarUrl =
+    avatar && avatar.indexOf(getCDNServer()!) > -1
+      ? avatar
+      : `/avatar/${avatar ? avatar : "avatar-default"}.svg`;
   return (
     <Box
       bg="#EAECF0"
@@ -20,16 +28,17 @@ export default function UserAvatar({avatar, disableViewMore = false}: IProps) {
       display="flex"
       overflow="hidden"
     >
-     {!disableViewMore &&  <Image
-        src="/three-dot.svg"
-        position="absolute"
-        right="15px"
-        top="16px"
-        alt="view more"
-      />
-     }
+      {!disableViewMore && (
+        <Image
+          src="/three-dot.svg"
+          position="absolute"
+          right="15px"
+          top="16px"
+          alt="view more"
+        />
+      )}
       <Image
-        src={`/avatar/${avatar ? avatar : "avatar-default"}.svg`}
+        src={avatarUrl}
         objectFit={avatar ? "cover" : "none"}
         w="full"
         alt="avatar"

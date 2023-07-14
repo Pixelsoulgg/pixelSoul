@@ -75,7 +75,6 @@ export default function AddEditEventModal({
     if (!event) {
       setModel(initialState);
     } else {
-      console.log({ event });
       setModel({
         name: event.name,
         description: event.description,

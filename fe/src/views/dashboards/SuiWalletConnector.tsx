@@ -1,5 +1,4 @@
 import { fonts } from "@/configs/constants";
-import { ButtonVariants } from "@/themes/theme";
 import { getToast } from "@/utils";
 import { Box, Button, Text, useToast } from "@chakra-ui/react";
 import { ConnectButton, ErrorCode, useWallet } from "@suiet/wallet-kit";

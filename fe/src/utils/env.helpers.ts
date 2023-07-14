@@ -13,3 +13,7 @@ export const getCDNServer = () => {
 export const getReferralUrl = () => {
   return process.env.NEXT_PUBLIC_REFERRAL_URL;
 }
+
+export const getBrawGameUrl = () => {
+  return process.env.NEXT_PUBLIC_GAME_URL;
+}
