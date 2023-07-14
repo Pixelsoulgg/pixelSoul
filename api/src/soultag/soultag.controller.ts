@@ -13,13 +13,12 @@ import {
   UseInterceptors
 } from '@nestjs/common'
 import { diskStorage } from 'multer'
-import { Roles } from 'src/roles/roles.decorator'
 import { AuthGuard } from '@nestjs/passport'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { SoulTagUploadDto } from './dto/soultag.upload.dto'
 
 @ApiTags('soulTag')
-@Controller('soultag')
+@Controller({ path: 'soultag', version: '1' })
 export class SoultagController {
   @ApiBearerAuth('bearer')
   @UseGuards(AuthGuard('jwt'))
@@ -39,7 +38,7 @@ export class SoultagController {
       })
     })
   )
-  async upload(@Req() req: Request, @UploadedFile() file: Express.Multer.File) {
-    return `${req.headers['origin']}/${file.filename}`
+  async upload(@UploadedFile() file: Express.Multer.File) {
+    return { fileurl: `${file.filename}` }
   }
 }
