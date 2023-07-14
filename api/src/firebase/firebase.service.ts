@@ -29,11 +29,11 @@ export class FirebaseService {
     const lref = ref(db, path)
     const auths = await this.auth()
     let childrenCount = 0
-    onChildChanged(lref, async (snapshot) => {
+    onChildChanged(lref, (snapshot) => {
       fn(snapshot)
     })
 
-    onChildAdded(lref, async (snapshot, pre) => {
+    onChildAdded(lref, (snapshot, pre) => {
       childrenCount += 1
       if (childrenCount > auths.length) {
         console.log('call process funciton')
