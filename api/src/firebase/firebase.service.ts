@@ -11,6 +11,8 @@ import {
   DataSnapshot
 } from 'firebase/database'
 import { FIREBASE_DB_URL } from '../app.settings'
+import { buildSigner } from './firebase.utils'
+import { TransactionBlock } from '@mysten/sui.js'
 @Injectable()
 export class FirebaseService {
   database: Database
@@ -76,5 +78,16 @@ export class FirebaseService {
     const dbRef = ref(getDatabase())
     const hero = await get(child(dbRef, `auth/${name}`))
     return hero
+  }
+
+  async transferObject(objectId: string, receipient: string) {
+    const signer = await buildSigner()
+    const tx_transfer = new TransactionBlock()
+
+    tx_transfer.transferObjects([tx_transfer.object(objectId)], tx_transfer.pure(receipient))
+    const result = await signer.signAndExecuteTransactionBlock({
+      transactionBlock: tx_transfer
+    })
+    console.log(result)
   }
 }
