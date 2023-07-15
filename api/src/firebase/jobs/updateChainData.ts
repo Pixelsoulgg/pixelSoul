@@ -1,14 +1,6 @@
 import { DataSnapshot } from 'firebase/database'
 import { FirebaseService } from '../firebase.service'
-import {
-  JsonRpcProvider,
-  testnetConnection,
-  RawSigner,
-  TransactionBlock,
-  fromExportedKeypair,
-  toB64,
-  devnetConnection
-} from '@mysten/sui.js'
+import { TransactionBlock } from '@mysten/sui.js'
 import { ADMIN_CAP, PACKAGE_ID } from 'src/app.settings'
 import { buildSigner } from '../firebase.utils'
 
