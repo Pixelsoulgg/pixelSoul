@@ -35,8 +35,6 @@ export const GlobalContextProvider: React.FC<ProviderProps> = ({
   const dispatch = useAppDispatch();
   const { address: suiWalletAddress } = useWallet();
 
-  const { auth0Info } = useAppSelector((p) => p.auth);
-
   const [meModel, setMeModel] = useState<IAuth0Model>();
   const [menuSelected, setMenuSelected] = React.useState<string>("/my-souls");
   const onMenuChange = (menu: string) => setMenuSelected(menu);

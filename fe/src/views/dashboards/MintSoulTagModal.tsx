@@ -86,13 +86,14 @@ export default function MintSoulTagModal({ onClose, ...props }: IProps) {
       setAvatarChoose("");
       toast(getToast("Mint SoulTag success", "success", "Mint"));
       if (wallet.address) {
-        dispatch(checkSoulTagAction(wallet.address));
+        dispatch(checkSoulTagAction(wallet.address))
       }
       onClose();
     } catch (ex) {
       toast(getToast("nft mint failed"));
     }
-  };
+  }
+
 
   return (
     <Modal size="3xl" onClose={onClose} {...props}>
@@ -134,6 +135,7 @@ export default function MintSoulTagModal({ onClose, ...props }: IProps) {
               fontFamily={fonts.VT323}
               mt="20px !important"
               bgColor="white"
+
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
             />

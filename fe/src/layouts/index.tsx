@@ -12,14 +12,15 @@ type Props = {
 };
 
 export default function Layout({ variant = "dashboard", children }: Props) {
-  const {isMintedSoulTag} = useAppSelector((p) => p.suinft);
+  const {soulTagNft} = useAppSelector((p) => p.suinft);
   const {pathname, push} = useRouter();
  
   useEffect(() => {
-    if (!isMintedSoulTag && ["/soul-drops", "/game", "/game-hubs"].indexOf(pathname) > -1) {
+    if (!soulTagNft && ["/soul-drops", "/game-hubs"].indexOf(pathname) > -1) {
       push('/my-souls')
     }
-  }, [isMintedSoulTag]);
+  }, [soulTagNft]);
+
   if (variant === "landing") {
     return <LandingLayout>{children}</LandingLayout>;
   }

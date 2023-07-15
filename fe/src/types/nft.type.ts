@@ -164,3 +164,10 @@ export interface IFirebaseLeaderBoard {
     TIMESTAMP: number;
   };
 }
+
+export interface ISoulTagNft {
+  name: string;
+  objectId: string;
+  pfp: string;
+  reputation: number;
+}

@@ -33,6 +33,7 @@ import {
 } from "@/reduxs/souls/soul.slices";
 import { ButtonVariants } from "@/themes/theme";
 import MintSoulTagModal from "@/views/dashboards/MintSoulTagModal";
+import SoulTagNftInfo from "@/views/dashboards/SoulTagNftInfo";
 
 MySoul.getLayout = function getLayout(page: React.ReactElement) {
   return <Layout variant="dashboard">{page}</Layout>;
@@ -46,7 +47,7 @@ export default function MySoul() {
 
   const { walletInfo } = useAppSelector((s) => s.account);
   const { auth0Info, auth0Sub, steamId, accessToken } = useAppSelector((s) => s.auth);
-  const {isMintedSoulTag} = useAppSelector((p) => p.suinft);
+  const {soulTagNft} = useAppSelector((p) => p.suinft);
 
   const handleSteamAuth = useCallback(() => {
     //@ts-ignore
@@ -106,7 +107,7 @@ export default function MySoul() {
               p="20px"
               borderRadius="12px"
             >
-              <VStack alignItems="flex-start">
+              <VStack alignItems="flex-start" w="full">
                 <Heading
                   size="md"
                   fontFamily={fonts.Inter}
@@ -126,9 +127,10 @@ export default function MySoul() {
                 >
                   Mint SoulTag to get access to the Pixelsoul ecosystem of games and partners.
                 </Text>
+               {soulTagNft && <SoulTagNftInfo />}
               </VStack>
               <Spacer />
-              {!isMintedSoulTag &&<VStack>
+              {!soulTagNft &&<VStack>
                 <Button
                   variant={ButtonVariants.WITH_HIGHLIGHT_BLUE}
                   minW="135px"

@@ -24,14 +24,14 @@ export default function Menu({ isExpand, ...props }: IProps) {
   const { user } = useUser();
   const {me} = useGlobal();
   const modal = user || me;
-  const {isMintedSoulTag} = useAppSelector((p) => p.suinft);
+  const {soulTagNft} = useAppSelector((p) => p.suinft);
 
   const { onMenuChange, menuSelected } = useGlobal();
 
   const menusRender = useMemo(() => {
-    if (isMintedSoulTag) return MENUS;
+    if (soulTagNft) return MENUS;
     return MENUS.filter((p => p.nav !== "/game-hubs" && p.nav !== "/soul-drops"));
-  }, [isMintedSoulTag]);
+  }, [soulTagNft]);
 
   return (
     <Flex w="full" flex={1} flexDirection="column" {...props}>
