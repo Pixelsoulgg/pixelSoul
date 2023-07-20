@@ -33,21 +33,24 @@ export default function AccountInfo() {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { onCopy: onMetaMaskCopy, setValue: setValueMetaMask } = useClipboard("");
+  const { onCopy: onMetaMaskCopy, setValue: setValueMetaMask } =
+    useClipboard("");
   const { onCopy: onSuiCopy, setValue: setValueSui } = useClipboard("");
 
-  const { steamInfo, steamId, auth0Sub, auth0Info } = useAppSelector((p) => p.auth);
+  const { steamInfo, steamId, auth0Sub, auth0Info } = useAppSelector(
+    (p) => p.auth
+  );
   const { walletInfo } = useAppSelector((p) => p.account);
-  const [disconnectType, setDisconnectType] = useState<'SUI' | 'METAMASK'>();
+  const [disconnectType, setDisconnectType] = useState<"SUI" | "METAMASK">();
 
-  const [addSuiWallet, addSuiWalletResult] = useAddSuiWalletMutation()
+  const [addSuiWallet, addSuiWalletResult] = useAddSuiWalletMutation();
 
   const handleDisconnectWallet = async () => {
-    if (wallet.address && disconnectType === 'SUI') {
-      await wallet.disconnect();      
+    if (wallet.address && disconnectType === "SUI") {
+      await wallet.disconnect();
     } else {
       await disconnectMetaMask();
-      dispatch(disconnectMetamaskAction())
+      dispatch(disconnectMetamaskAction());
     }
     onClose();
   };
@@ -57,32 +60,34 @@ export default function AccountInfo() {
     setValueSui(wallet?.address || "");
   }, [wallet, walletInfo]);
 
-  const handleCopy = useCallback((isSui = false) => {
-    if (isSui)
-       onSuiCopy()
-   else 
-      onMetaMaskCopy();
-    toast(getToast("copied", "success", ""));
-  }, [toast]);
+  const handleCopy = useCallback(
+    (isSui = false) => {
+      if (isSui) onSuiCopy();
+      else onMetaMaskCopy();
+      toast(getToast("copied", "success", ""));
+    },
+    [toast]
+  );
 
-
-  const handlePostSuiWalletToApi = useCallback(async() => {
+  const handlePostSuiWalletToApi = useCallback(async () => {
     try {
       if (wallet && wallet.address && auth0Sub) {
-        await addSuiWallet({auth0Sub: auth0Sub, suiWalletAddress: wallet.address}).unwrap();
+        await addSuiWallet({
+          auth0Sub: auth0Sub,
+          suiWalletAddress: wallet.address,
+        }).unwrap();
         const api = new AppApi();
         let userInfo: IUser = await api.getUserById(auth0Sub);
         dispatch(auth0LoginSuccess(userInfo));
-      } 
-    } catch(ex) {}
-   
+      }
+    } catch (ex) {}
   }, [wallet, wallet.address, auth0Sub]);
 
   useEffect(() => {
     handlePostSuiWalletToApi();
   }, [handlePostSuiWalletToApi]);
 
-
+  console.log("connect", wallet.connected);
   return (
     <>
       <Flex w="full" flexDirection="column" borderBottom="1.5px solid #E4E7EC">
@@ -104,7 +109,8 @@ export default function AccountInfo() {
           {auth0Info?.walletAddress && (
             <HStack w="full">
               <Text variant="with-18">
-                {showSortAddress(auth0Info?.walletAddress || "") || DEFAULT_MESSAGE}
+                {showSortAddress(auth0Info?.walletAddress || "") ||
+                  DEFAULT_MESSAGE}
               </Text>
               <Image
                 src="/copy.svg"
@@ -129,7 +135,7 @@ export default function AccountInfo() {
 
         <VStack w="full" alignItems="flex-start" mb="30px">
           <Text variant="with-24">Sui Wallet ID</Text>
-          {!auth0Info?.suiWalletAddress && (
+          {(!wallet.connected || !auth0Info?.suiWalletAddress) && (
             <HStack w="full">
               <Text variant="with-18" color="#98A2B3">
                 {DEFAULT_MESSAGE}
@@ -138,10 +144,11 @@ export default function AccountInfo() {
               <SuiWalletConnector />
             </HStack>
           )}
-          {auth0Info?.suiWalletAddress && (
+          {wallet.connected && auth0Info && auth0Info?.suiWalletAddress && (
             <HStack w="full">
               <Text variant="with-18">
-                {showSortAddress(wallet.address || "") || DEFAULT_MESSAGE}
+                {showSortAddress(auth0Info?.suiWalletAddress || "") ||
+                  DEFAULT_MESSAGE}
               </Text>
               <Image
                 src="/copy.svg"

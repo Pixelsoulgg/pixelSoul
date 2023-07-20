@@ -1,4 +1,4 @@
-import { ISuiNftItem } from "@/types/nft.type";
+import { ISoulTagNft, ISuiNftItem } from "@/types/nft.type";
 import { package_type, soultag_check_condition } from "@/utils/suis";
 import {
   JsonRpcProvider,
@@ -21,6 +21,7 @@ export const getSuiNFTAction = createAsyncThunk<ISuiNftItem[], string>(
           newIds.push(p);
         }
       });
+
       const txns = await provider.multiGetObjects({
         ids: newIds,
         options: {
@@ -56,12 +57,13 @@ export const getSuiNFTAction = createAsyncThunk<ISuiNftItem[], string>(
     return [];
   }
 );
-export const checkSoulTagAction = createAsyncThunk<boolean, string>(
+
+export const checkSoulTagAction = createAsyncThunk<ISoulTagNft | undefined, string>(
   "sui/checkSoulTagAction",
   async (owner) => {
     if (owner) {
       const provider = new JsonRpcProvider(devnetConnection);
-      const objects = await provider.getOwnedObjects({ owner });
+      const objects = await provider.getOwnedObjects({ owner }); 
       const ids = objects.data.map((p) => p.data?.objectId);
       const newIds: string[] = [];
       ids.forEach((p) => {
@@ -76,8 +78,18 @@ export const checkSoulTagAction = createAsyncThunk<boolean, string>(
           showContent: true,
         },
       });
-      return txns.find((p) => p.data && p.data.type === soultag_check_condition) !== undefined
+      const nft = txns.find((p) => p.data && p.data.type === soultag_check_condition);
+      if (!nft) return undefined;
+      //@ts-ignore
+      const fields = nft.data?.content?.fields;
+      const soulTagNft: ISoulTagNft = {
+        name: fields.name,
+        objectId: fields.id.id,
+        pfp: fields.pfp,
+        reputation: Number(fields.reputation),
+      }
+      return soulTagNft;
     }
-    return false;
+    return undefined;
   }
 );

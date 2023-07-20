@@ -1,17 +1,16 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { ISuiNftItem } from "@/types/nft.type";
+import { ISoulTagNft, ISuiNftItem } from "@/types/nft.type";
 import { checkSoulTagAction, getSuiNFTAction } from "./sui.actions";
 
 export const DEFAULT_MES = "Something error!";
 
 export interface SuiNftState {
   nfts: ISuiNftItem[];
-  isMintedSoulTag: boolean;
+  soulTagNft?: ISoulTagNft;
 }
 
 const initialState: SuiNftState = {
-  nfts: [],
-  isMintedSoulTag: false,
+  nfts: [], 
 };
 
 export const suiNftReducer = createReducer(initialState, (builder) => {
@@ -20,7 +19,7 @@ export const suiNftReducer = createReducer(initialState, (builder) => {
   });
 
   builder.addCase(checkSoulTagAction.fulfilled, (state, { payload }) => {   
-    state.isMintedSoulTag = payload;
+    state.soulTagNft = payload;
   });
 
 });
