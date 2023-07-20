@@ -6,7 +6,7 @@ import { buildSigner } from '../firebase.utils'
 
 async function updateUserInfor(board: DataSnapshot) {
   // update to sui chain
-  let objectId = board.val()?.object_id
+  const objectId = board.val()?.object_id
   if (objectId) {
     const address = board.val()?.address
     const p_level = board.val()?.p_level

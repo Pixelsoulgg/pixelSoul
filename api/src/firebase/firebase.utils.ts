@@ -5,7 +5,7 @@ import {
   fromExportedKeypair,
   toB64
 } from '@mysten/sui.js'
-import { PRIVATE_KEY } from 'src/app.settings'
+import { PRIVATE_KEY } from '../app.settings'
 
 export async function buildSigner() {
   const keypair = fromExportedKeypair({
