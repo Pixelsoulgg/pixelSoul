@@ -1,10 +1,12 @@
 import { fonts } from "@/configs/constants";
-import { MAX_WIDTH } from "@/themes/config";
+import Layout from "@/layouts";
 import { TextVariants } from "@/themes/theme";
-import LandingFooter from "@/views/landings/LandingFooter";
 import { LandingContainer } from "@/views/new-landings";
 import EverGrowing from "@/views/new-landings/EverGrowing";
+import GameStudio from "@/views/new-landings/GameStudio";
+import LandingFooter from "@/views/new-landings/LandingFooter";
 import TechIsNothing from "@/views/new-landings/TechIsNothing";
+import TimeToJumpIn from "@/views/new-landings/TimeToJumpIn";
 import UniqueGame from "@/views/new-landings/UniqueGame";
 import {
   Button,
@@ -17,6 +19,11 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
+
+Landing.getLayout = function getLayout(page: React.ReactElement) {
+  return <Layout variant="landing">{page}</Layout>;
+};
+
 
 export default function Landing() {
   return (
@@ -109,8 +116,9 @@ export default function Landing() {
         <EverGrowing />
         <TechIsNothing />
         <UniqueGame />
-
-        
+        <GameStudio />
+        <TimeToJumpIn />
+        <LandingFooter />
       </VStack>
     </>
   );
