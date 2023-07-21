@@ -8,12 +8,14 @@ import { useInView } from "react-intersection-observer";
 interface IProps extends FlexProps {
   contentStyle?: FlexProps;
   isDisableAnimation?: boolean;
+  initial?: 'visible' | 'hidden'
 }
 
 export default function LandingContainer({
   contentStyle,
   children,
   isDisableAnimation = false,
+  initial = 'hidden',
   ...props
 }: IProps) {
   const controls = useAnimation();
@@ -33,7 +35,7 @@ export default function LandingContainer({
       as={m.div}
       ref={ref}
       animate={controls}
-      initial={`${isDisableAnimation ? 'visible' : "hidden"}`}
+      initial={initial}
       variants={AnimateVariants}
       {...props}
     >
