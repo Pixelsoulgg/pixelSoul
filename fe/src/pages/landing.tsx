@@ -42,6 +42,7 @@ export default function Landing() {
           boxShadow="px 4px 4px 0px rgba(0, 0, 0, 0.25)"
           justifyContent="center"
           backdropFilter="blur(7px)"
+          isDisableAnimation
         >
           <HStack w="full">
             <Link href="/">
@@ -72,7 +73,7 @@ export default function Landing() {
           </HStack>
         </LandingContainer>
 
-        <LandingContainer flex={1} justifyContent="center">
+        <LandingContainer flex={1} justifyContent="center" isDisableAnimation>
           <VStack w="full">
             <Text variant={TextVariants.WITH_LANDING} className="text-border">
               Play. Win. Earn.
