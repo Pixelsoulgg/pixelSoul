@@ -1,3 +1,6 @@
+import { devnetConnection, mainnetConnection, testnetConnection } from "@mysten/sui.js";
+import { getSuiNetworkEnv } from "../env.helpers";
+
 export const CHECK_NAME_OBJECT_ID =
   "0x7a2982a80f5dd142267cf36c940e3c2cf337806462ccc7c3efdb37e120632827";
 
@@ -11,3 +14,15 @@ export const soultag_package =
   "0xc235858950e5d59c9ffba08dbdc237d45b53b8daf77292fb69ce2f49819038f4::soulTag::mint";
 export const soultag_check_condition =
   "0xc235858950e5d59c9ffba08dbdc237d45b53b8daf77292fb69ce2f49819038f4::soulTag::SoulTag";
+
+
+export const getSuiNetworkConnection = () => {
+  const env = getSuiNetworkEnv();
+  switch(env) {
+    case 'TEST':  
+      return testnetConnection;
+    case 'MAIN':
+      return mainnetConnection;
+    default: return devnetConnection;
+  }
+}
