@@ -39,7 +39,7 @@ export default function LandingContainer({
       variants={AnimateVariants}
       {...props}
     >
-      <Flex w="full" maxW={`${MAX_WIDTH}px`} {...contentStyle}>
+      <Flex w="full" maxW={`${MAX_WIDTH}px`} px={{base: "10px", lg: 0}} {...contentStyle}>
         {children}
       </Flex>
     </Flex>

@@ -48,6 +48,7 @@ export default function LandingFooter() {
           w="full"
           h="full"
           flexDirection={{ base: "column-reverse", lg: "row" }}
+          px="20px"
         >
           <Flex flex={1} mt={{ base: "20px", lg: "0px" }}>
             <VStack w="full" alignItems={{ base: "center", lg: "flex-start" }}>

@@ -28,7 +28,12 @@ export default function TechIsNothing() {
         alignItems="center"
         justifyContent="center"
       >
-        <Text variant={TextVariants.WITH_18} fontSize="40px" color="#fff">
+        <Text variant={TextVariants.WITH_18} 
+          fontSize={{base: '30px', lg: "40px"}} 
+          color="#fff"
+          textAlign="center"
+          lineHeight="normal"
+        >
           Tech is nothing without a community.
         </Text>
         <HStack mt="32px !important">
