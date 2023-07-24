@@ -28,7 +28,7 @@ import { useWallet } from "@suiet/wallet-kit";
 import { motion } from "framer-motion";
 import React, { useCallback, useState } from "react";
 
-const SOULTAG_NAME = `0x53bf1027f34ee7cde48179452e2615536a4105290d0305e0c7d14639e57b4194`;
+const SOULTAG_NAME = `0xcc1b068308e08e04983ad9c95847d824501b667769b4659ff7e7afbb3c5608a5`;
 
 interface IProps extends Omit<ModalProps, "children"> {}
 
@@ -86,14 +86,13 @@ export default function MintSoulTagModal({ onClose, ...props }: IProps) {
       setAvatarChoose("");
       toast(getToast("Mint SoulTag success", "success", "Mint"));
       if (wallet.address) {
-        dispatch(checkSoulTagAction(wallet.address))
+        dispatch(checkSoulTagAction(wallet.address));
       }
       onClose();
     } catch (ex) {
       toast(getToast("nft mint failed"));
     }
-  }
-
+  };
 
   return (
     <Modal size="3xl" onClose={onClose} {...props}>
@@ -135,7 +134,6 @@ export default function MintSoulTagModal({ onClose, ...props }: IProps) {
               fontFamily={fonts.VT323}
               mt="20px !important"
               bgColor="white"
-
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
             />

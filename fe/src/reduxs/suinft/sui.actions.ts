@@ -1,5 +1,5 @@
 import { ISoulTagNft, ISuiNftItem } from "@/types/nft.type";
-import { package_type, soultag_check_condition } from "@/utils/suis";
+import { getSuiNetworkConnection, package_type, soultag_check_condition } from "@/utils/suis";
 import {
   JsonRpcProvider,
   testnetConnection,
@@ -12,7 +12,8 @@ export const getSuiNFTAction = createAsyncThunk<ISuiNftItem[], string>(
   async (wallet) => {
     if (wallet) {
       const owner = wallet;
-      const provider = new JsonRpcProvider(devnetConnection);
+      const suiConnection = getSuiNetworkConnection();
+      const provider = new JsonRpcProvider(suiConnection);
       const objects = await provider.getOwnedObjects({ owner });
       const ids = objects.data.map((p) => p.data?.objectId);
       const newIds: string[] = [];
@@ -62,7 +63,8 @@ export const checkSoulTagAction = createAsyncThunk<ISoulTagNft | undefined, stri
   "sui/checkSoulTagAction",
   async (owner) => {
     if (owner) {
-      const provider = new JsonRpcProvider(devnetConnection);
+      const suiConnection = getSuiNetworkConnection();
+      const provider = new JsonRpcProvider(suiConnection);
       const objects = await provider.getOwnedObjects({ owner }); 
       const ids = objects.data.map((p) => p.data?.objectId);
       const newIds: string[] = [];

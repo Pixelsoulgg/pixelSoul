@@ -17,3 +17,7 @@ export const getReferralUrl = () => {
 export const getBrawGameUrl = () => {
   return process.env.NEXT_PUBLIC_GAME_URL;
 }
+
+export const getSuiNetworkEnv = () => {
+  return process.env.NEXT_PUBLIC_SUI_NETWORK;
+}
