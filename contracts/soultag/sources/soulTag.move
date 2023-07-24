@@ -35,7 +35,6 @@ module soultag::soulTag {
         soulTagId:ID,
         owner:address
     }
-
     struct ReputationIncreased has copy,drop{
         soulTagId:ID,
         newReputation:u64
