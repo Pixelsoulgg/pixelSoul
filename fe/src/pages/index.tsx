@@ -1,39 +1,39 @@
+import { varFade, varScale } from "@/components/animations";
+import { fonts } from "@/configs/constants";
+import Layout from "@/layouts";
+import { TextVariants } from "@/themes/theme";
+import { LandingContainer } from "@/views/new-landings";
+import EverGrowing from "@/views/new-landings/EverGrowing";
+import GameStudio from "@/views/new-landings/GameStudio";
+import LandingFooter from "@/views/new-landings/LandingFooter";
+import TechIsNothing from "@/views/new-landings/TechIsNothing";
+import TimeToJumpIn from "@/views/new-landings/TimeToJumpIn";
+import UniqueGame from "@/views/new-landings/UniqueGame";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import {
-  Avatar,
-  Box,
   Button,
   Flex,
   HStack,
   Image,
   Spacer,
-  Stack,
   Text,
-  Tooltip,
+  VStack,
 } from "@chakra-ui/react";
-import Link from "next/link";
-import React, { useCallback, useEffect, useState } from "react";
 import { m } from "framer-motion";
-import { varFade, varScale } from "@/components/animations";
-import { useUser } from "@auth0/nextjs-auth0/client";
-import PixelSouldLogo from "@/components/PixelSould";
-import Layout from "@/layouts";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { PlayEarnConnect } from "@/views/landings";
-import SoulScoreShowcase from "@/views/landings/SoulScoreShowcase";
-import UnleashYourGaming from "@/views/landings/UnleashYourGaming";
-import LandingFooter from "@/views/landings/LandingFooter";
+import React, { useCallback, useEffect, useState } from "react";
 
-LandingPage.getLayout = function getLayout(page: React.ReactElement) {
+Landing.getLayout = function getLayout(page: React.ReactElement) {
   return <Layout variant="landing">{page}</Layout>;
 };
 
-export default function LandingPage() {
+export default function Landing() {
   const { push, pathname, query } = useRouter();
   const { user, isLoading, error } = useUser();
   const [authWindow, setAuthWindow] = useState<Window>();
   const [currentWindow, setCurrentWindow] = useState<Window>();
   const [accessToken, setAccessToken] = useState<string>();
-
 
   const getAccessToken = useCallback(
     async (isRedirect = false) => {
@@ -41,7 +41,7 @@ export default function LandingPage() {
       const auth = await response.json();
       if (auth.accessToken) {
         if (isRedirect) {
-          push(`/my-souls${query ? `?refer=${query.refer}` : ''}`);
+          push(`/my-souls${query ? `?refer=${query.refer}` : ""}`);
         } else {
           setAccessToken(auth.accessToken);
         }
@@ -97,193 +97,155 @@ export default function LandingPage() {
     if (accessToken && authWindow) {
       authWindow.close();
       setAuthWindow(undefined);
-      push(`/my-souls${query ? `?refer=${query.refer}` : ''}`);
+      push(`/my-souls${query ? `?refer=${query.refer}` : ""}`);
     }
   }, [authWindow, accessToken, currentWindow, push]);
 
   return (
-    <Flex w="full" flexDirection="column">
+    <>
       <Flex
-        flex={1}
         w="full"
-        flexDirection={{ base: "column", lg: "column" }}
-        bgImage="/bg1.png"
+        bgImage="./new-landings/header-bg.svg"
+        minH="100vh"
+        flexDirection="column"
         bgRepeat="no-repeat"
         bgSize="cover"
-        minH={{base: "800px", lg: "100vh"}}
       >
-        <Flex
-          w="full"
-          maxW="1667.56px"
-          px="20px"
-          py="20px"
-          minH="100vh"
-          flexDirection="column"
-          alignSelf="center"
+        <LandingContainer
+          h="79px"
+          bgColor="rgba(255, 255, 255, 0.20)"
+          boxShadow="px 4px 4px 0px rgba(0, 0, 0, 0.25)"
+          justifyContent="center"
+          backdropFilter="blur(7px)"
+          isDisableAnimation={false}
+          initial="visible"
         >
-          <Flex
+          <HStack
             w="full"
             as={m.header}
             variants={varFade({ easeIn: "linear" }).inDown}
             initial="initial"
             animate="animate"
           >
-            <HStack alignItems="center">
-              <PixelSouldLogo isExpand />
-              <Link href="/">
-                <Text
-                  variant="with-lexend-menu"
-                  color="color.white"
-                  ml={{ base: "5px", lg: "25px" }}
-                >
-                  Games
-                </Text>
-              </Link>
-            </HStack>
+            <Link href="/">
+              <Image src="./new-landings/logo.svg" />
+            </Link>
             <Spacer />
-            {!user && (
-              <>
-                <Button
-                  variant="with-no-bg"
-                  ml="20px"
-                  as="a"
-                  cursor="pointer"
-                  onClick={handleAuth}
-                >
-                  Login
-                </Button>
-                <Button
-                  cursor="pointer"
-                  variant="with-no-bg"
-                  bg="bg.primary"
-                  border="none"
-                  ml="16px"
-                  onClick={handleAuth}
-                >
-                  Sign up
-                </Button>
-              </>
-            )}
-            {user && (
-              <HStack>
-                <Tooltip title={user.name || undefined}>
-                  <Avatar
-                    name={user.name || "pixelSoul"}
-                    src={user.picture || ""}
-                    w="53px"
-                    h="53px"
-                    mr="10px"
-                    title={user.name || ""}
-                    border="1px solid rgba(0,0,0, 0.4)"
-                  />
-                </Tooltip>
-                <Link href="/api/auth/logout">
-                  <Button
-                    variant="with-no-bg"
-                    bg="bg.primary"
-                    border="none"
-                    ml="16px"
-                  >
-                    log out
-                  </Button>
-                </Link>
-              </HStack>
-            )}
-          </Flex>
-     
+            <HStack>
+              <Button
+                variant="ghost"
+                w="120px !important"
+                h="40px !important"
+                _hover={{ bgColor: "none" }}
+                _active={{ bgColor: "none" }}
+                onClick={handleAuth}
+              >
+                <Image src="./new-landings/login-btn.svg" />
+              </Button>
+              <Button
+                variant="ghost"
+                w="120px !important"
+                h="40px !important"
+                _hover={{ bgColor: "none" }}
+                _active={{ bgColor: "none" }}
+                ml="-20px !important"
+                onClick={handleAuth}
+              >
+                <Image src="./new-landings/signup-btn.svg" />
+              </Button>
+            </HStack>
+          </HStack>
+        </LandingContainer>
 
-          <Flex
-            w="full"
-            flex={1}
-            flexDirection="column"
-            justifyContent="center"
-          >
+        <LandingContainer flex={1} justifyContent="center" initial="visible">
+          <VStack w="full">
             <Text
-              variant="with-lexend"
-              fontSize="20px"
-              fontWeight="400"
-              mb="22px"
+              variant={TextVariants.WITH_LANDING}
+              className="text-border"
               as={m.p}
               variants={varFade({ easeIn: "linear", durationIn: 1 }).in}
               initial="initial"
               animate="animate"
+              fontSize={{base:  "25px", lg: "32px"}}
             >
               Play. Win. Earn.
             </Text>
-
             <Text
-              variant="with-heading"
+              variant={TextVariants.WITH_LANDING}
+              fontSize={{base:  "32px", lg: "48px"}}
+              className="text-border-4"
+              fontFamily={fonts.QuinqueFive}
+              fontWeight="400"
+              my="39px !important"
+              textAlign="center"             
               as={m.p}
               variants={varFade({ easeIn: "linear" }).inUp}
               initial="initial"
               animate="animate"
             >
-              New world of gaming
+              New World of Gaming
             </Text>
 
             <Text
-              variant="with-lexend"
-              mt="22px"
-              fontSize="31px"
-              fontWeight="500"
+              variant={TextVariants.WITH_LANDING}
+              className="text-border"
+              fontWeight="700"
               as={m.p}
               variants={varScale({ easeIn: "linear" }).inY}
               initial="initial"
               animate="animate"
+              textAlign="center"
             >
               Bringing the power back to the player
             </Text>
-
-            <Box
-              mt="84px"
+            <Flex
               w="full"
+              justifyContent="center"
+              mt="70px !important"
               as={m.div}
-              variants={varFade().inUp}
+              variants={varFade({ easeIn: "linear" }).inUp}
               initial="initial"
               animate="animate"
             >
-              <Button
-                variant="with-bg"
-                mr="30px"
-                my="5px"
+              <Image
+                src="./new-landings/signup1-btn.svg"
                 cursor="pointer"
-               minW={{base: "150px", lg: "198px"}}
+                mr="23px"
                 onClick={handleAuth}
-              >
-                Sign Up
-              </Button>
-              <Button
-                variant="with-bg"
-                bg="bg.white"
-                color="color.black"
-                my="5px"
+                as={m.img}
+                whileTap={{
+                  scaleX: 0.98,
+                  boxShadow: "4px 4px 4px rgba(151, 71, 255, 0.35)",
+                }}
+              />
+              <Image
+                src="./new-landings/demo-btn.svg"
                 cursor="pointer"
-                isDisabled={!user}
-                _disabled={{ bg: "rgba(255,255,255, 0.5)" }}
                 onClick={() => push("/my-souls")}
-                minW={{base: "150px", lg: "198px"}}
-              >
-                <Image src="/subtract.svg" mr="17px" alt="subtract" />
-                Demo
-              </Button>
-            </Box>
-          </Flex>
-        </Flex>
+                as={m.img}
+                whileTap={{
+                  scaleX: 0.98,
+                  boxShadow: "4px 4px 4px rgba(151, 71, 255, 0.35)",
+                }}
+              />
+            </Flex>
+          </VStack>
+        </LandingContainer>
       </Flex>
-      <Flex
+      <VStack
         w="full"
+        bgImage="./new-landings/body-bg.png"
         minH="100vh"
-        flexDirection="column"
-        bgImage="/landings/bg-wrap.svg"
-        bgPosition="bottom"
         bgRepeat="no-repeat"
         bgSize="cover"
       >
-        <PlayEarnConnect />
-        <SoulScoreShowcase />
-        <UnleashYourGaming onSignUp={handleAuth} />
+        <EverGrowing />
+        <TechIsNothing />
+        <UniqueGame />
+        <GameStudio />
+        <TimeToJumpIn />
         <LandingFooter />
-      </Flex>
-    </Flex>
+      </VStack>
+    </>
   );
 }

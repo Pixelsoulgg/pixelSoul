@@ -3,7 +3,6 @@ import {
   extendTheme,
   ThemeConfig,
 } from "@chakra-ui/react";
-import type { GlobalStyleProps } from "@chakra-ui/theme-tools";
 import { fonts } from "../configs/constants";
 
 const config: ThemeConfig = {
@@ -105,8 +104,15 @@ const Text: ComponentStyleConfig = {
       lineHeight: "24px",
       color: "#475467",
       fontStyle: "normal"
+    },
+    "with-landing": {
+      fontFamily: fonts.Silkscreen,
+      color: '#4691FF',
+      fontSize: "32px",
+      fontStyle: 'normal',
+      fontWeight: 700,   
+      textShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",       
     }
-
   },
 };
 
@@ -116,6 +122,7 @@ export const TextVariants = {
   WITH_14: "with-14",
   WITH_SUB: "with-sub",
   WITH_TITLE: "with-title",
+  WITH_LANDING: "with-landing",
 }
 
 const Button: ComponentStyleConfig = {
