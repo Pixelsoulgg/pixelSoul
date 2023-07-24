@@ -18,7 +18,7 @@ export default function GameStudio() {
       minH="706px"
       bgImage="./new-landings/game-studios/bg.png"
       bgRepeat="no-repeat"
-      bgSize="contain"
+      bgSize="cover"
       contentStyle={{
         justifyContent: "center",
       }}
