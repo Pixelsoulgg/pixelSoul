@@ -15,6 +15,7 @@ export const fonts = {
   Lexend: "VT323",
   VT323: "VT323",
   Silkscreen: "Silkscreen",
+  QuinqueFive: "QuinqueFive",
 };
 
 export const layouts = {

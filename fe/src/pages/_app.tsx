@@ -1,6 +1,7 @@
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import store from "@/reduxs/store";
-import { SuiWallet, WalletProvider } from "@suiet/wallet-kit";
+import { WalletProvider } from "@suiet/wallet-kit";
+import "@/styles/fonts.css";
 import "@/styles/globals.css";
 import "@suiet/wallet-kit/style.css";
 import theme from "@/themes/theme";
@@ -24,7 +25,7 @@ export default function App({ Component, pageProps }: MyAppProps) {
   return (
     <Provider store={store}>
       <ChakraProvider theme={theme}>
-        <WalletProvider autoConnect={true} > 
+        <WalletProvider autoConnect={false} > 
         {/* defaultWallets={[SuiWallet]} */}
           <UserProvider>
             <Head>
