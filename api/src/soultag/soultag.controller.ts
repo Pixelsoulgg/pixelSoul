@@ -20,8 +20,8 @@ import { SoulTagUploadDto } from './dto/soultag.upload.dto'
 @ApiTags('soulTag')
 @Controller({ path: 'soultag', version: '1' })
 export class SoultagController {
-  @ApiBearerAuth('bearer')
-  @UseGuards(AuthGuard('jwt'))
+  // @ApiBearerAuth('bearer')
+  // @UseGuards(AuthGuard('jwt'))
   @Post('uploadImage')
   @ApiConsumes('multipart/form-data')
   @ApiBody({
