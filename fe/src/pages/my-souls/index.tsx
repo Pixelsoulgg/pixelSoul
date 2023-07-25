@@ -34,6 +34,7 @@ import {
 import { ButtonVariants } from "@/themes/theme";
 import MintSoulTagModal from "@/views/dashboards/MintSoulTagModal";
 import SoulTagNftInfo from "@/views/dashboards/SoulTagNftInfo";
+import { getSuiTagProfileAction } from "@/reduxs/suinft/sui.actions";
 
 MySoul.getLayout = function getLayout(page: React.ReactElement) {
   return <Layout variant="dashboard">{page}</Layout>;
@@ -89,6 +90,7 @@ export default function MySoul() {
     <>
       <Flex flex={1} w="full" flexDirection={{ base: "column", lg: "row" }}>
         <ProfileSection />
+        <Button onClick={async() => await dispatch(getSuiTagProfileAction()).unwrap()}>Test</Button>
         <Flex
           flex={{ base: 1, lg: 4 }}
           w="full"

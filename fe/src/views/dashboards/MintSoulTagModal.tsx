@@ -6,7 +6,7 @@ import { useUploadImageSoulTagMutation } from "@/services/modules/game.check.ser
 import { ButtonVariants, TextVariants } from "@/themes/theme";
 import { getToast, getURL } from "@/utils";
 import { getCDNServer } from "@/utils/env.helpers";
-import { soultag_package } from "@/utils/suis";
+import { SOULTAG_CHECK_NAME, soultag_package } from "@/utils/suis";
 import {
   Button,
   Flex,
@@ -28,7 +28,7 @@ import { useWallet } from "@suiet/wallet-kit";
 import { motion } from "framer-motion";
 import React, { useCallback, useState } from "react";
 
-const SOULTAG_NAME = `0xcc1b068308e08e04983ad9c95847d824501b667769b4659ff7e7afbb3c5608a5`;
+
 
 interface IProps extends Omit<ModalProps, "children"> {}
 
@@ -73,7 +73,7 @@ export default function MintSoulTagModal({ onClose, ...props }: IProps) {
       arguments: [
         tx.pure(nickname), // name
         tx.pure(pfp), // pfp
-        tx.pure(SOULTAG_NAME),
+        tx.pure(SOULTAG_CHECK_NAME),
       ],
     });
 

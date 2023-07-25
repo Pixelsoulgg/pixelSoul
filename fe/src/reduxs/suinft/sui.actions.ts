@@ -1,10 +1,14 @@
+import { SoulTagProfile } from "@/types";
 import { ISoulTagNft, ISuiNftItem } from "@/types/nft.type";
-import { getSuiNetworkConnection, package_type, soultag_check_condition } from "@/utils/suis";
 import {
-  JsonRpcProvider,
-  testnetConnection,
-  devnetConnection,
-} from "@mysten/sui.js";
+  SOULTAG_PROFILE,
+  SOUL_TAG_OWNER,
+  SOUL_TAG_PROFILE_CONDITION,
+  getSuiNetworkConnection,
+  package_type,
+  soultag_check_condition,
+} from "@/utils/suis";
+import { JsonRpcProvider } from "@mysten/sui.js";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getSuiNFTAction = createAsyncThunk<ISuiNftItem[], string>(
@@ -59,39 +63,74 @@ export const getSuiNFTAction = createAsyncThunk<ISuiNftItem[], string>(
   }
 );
 
-export const checkSoulTagAction = createAsyncThunk<ISoulTagNft | undefined, string>(
-  "sui/checkSoulTagAction",
-  async (owner) => {
-    if (owner) {
-      const suiConnection = getSuiNetworkConnection();
-      const provider = new JsonRpcProvider(suiConnection);
-      const objects = await provider.getOwnedObjects({ owner }); 
-      const ids = objects.data.map((p) => p.data?.objectId);
-      const newIds: string[] = [];
-      ids.forEach((p) => {
-        if (p) {
-          newIds.push(p);
-        }
-      });
-      const txns = await provider.multiGetObjects({
-        ids: newIds,
-        options: {
-          showType: true,
-          showContent: true,
-        },
-      });
-      const nft = txns.find((p) => p.data && p.data.type === soultag_check_condition);
-      if (!nft) return undefined;
-      //@ts-ignore
-      const fields = nft.data?.content?.fields;
-      const soulTagNft: ISoulTagNft = {
-        name: fields.name,
-        objectId: fields.id.id,
-        pfp: fields.pfp,
-        reputation: Number(fields.reputation),
+export const checkSoulTagAction = createAsyncThunk<
+  ISoulTagNft | undefined,
+  string
+>("sui/checkSoulTagAction", async (owner) => {
+  if (owner) {
+    const suiConnection = getSuiNetworkConnection();
+    const provider = new JsonRpcProvider(suiConnection);
+    const objects = await provider.getOwnedObjects({ owner });
+    const ids = objects.data.map((p) => p.data?.objectId);
+    const newIds: string[] = [];
+    ids.forEach((p) => {
+      if (p) {
+        newIds.push(p);
       }
-      return soulTagNft;
-    }
-    return undefined;
+    });
+    const txns = await provider.multiGetObjects({
+      ids: newIds,
+      options: {
+        showType: true,
+        showContent: true,
+      },
+    });
+    const nft = txns.find(
+      (p) => p.data && p.data.type === soultag_check_condition
+    );
+    if (!nft) return undefined;
+    //@ts-ignore
+    const fields = nft.data?.content?.fields;
+    const soulTagNft: ISoulTagNft = {
+      name: fields.name,
+      objectId: fields.id.id,
+      pfp: fields.pfp,
+      reputation: Number(fields.reputation),
+    };
+    return soulTagNft;
+  }
+  return undefined;
+});
+
+export const getSuiTagProfileAction = createAsyncThunk<string, string>(
+  "sui/getSuiTagProfile",
+  async (wallet) => {
+    const suiConnection = getSuiNetworkConnection();
+    const provider = new JsonRpcProvider(suiConnection);
+    const objects = await provider.getOwnedObjects({ owner: SOUL_TAG_OWNER });
+    const ids = objects.data.map((p) => p.data?.objectId);
+    const newIds: string[] = [];
+    ids.forEach((p) => {
+      if (p) {
+        newIds.push(p);
+      }
+    });
+    const txns = await provider.multiGetObjects({
+      ids: newIds,
+      options: {
+        showType: true,
+        showContent: true,
+      },
+    });
+
+    const a = txns
+      .filter((p) => p.data && p.data.type === SOUL_TAG_PROFILE_CONDITION)
+      .map((tx) => {
+        //@ts-ignore
+        const fields = tx.data as SoulTagProfile;
+        return fields;
+      });
+    const myProfile = a.find((p) => p.content.fields.soulTagOwner === wallet);
+    return myProfile ? myProfile.content.fields.reputation :  '0';
   }
 );

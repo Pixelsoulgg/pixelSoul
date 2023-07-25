@@ -1,4 +1,5 @@
-import { useAppSelector } from "@/reduxs/hooks";
+import { useAppDispatch, useAppSelector } from "@/reduxs/hooks";
+import { getSuiTagProfileAction } from "@/reduxs/suinft/sui.actions";
 import { getToast, showSortAddress } from "@/utils";
 import {
   Flex,
@@ -8,13 +9,27 @@ import {
   useClipboard,
   useToast,
 } from "@chakra-ui/react";
-import React, { useCallback } from "react";
+import { useWallet } from "@suiet/wallet-kit";
+import React, { useCallback, useEffect } from "react";
 
 export default function SoulTagNftInfo() {
+  const dispatch = useAppDispatch();
   const toast = useToast();
-  const { soulTagNft } = useAppSelector((p) => p.suinft);
-
+  const {address: suiAddress} = useWallet();
+  const { soulTagNft, reputation } = useAppSelector((p) => p.suinft);
   const { onCopy: onSuiNftCopy, setValue: setValueSuiNft } = useClipboard("");
+
+  useEffect(() => {
+    if (suiAddress) {
+      dispatch(getSuiTagProfileAction(suiAddress))
+    }
+  }, [suiAddress]);
+
+  useEffect(() => {
+    setValueSuiNft(soulTagNft?.objectId || "");    
+  }, [soulTagNft, soulTagNft?.objectId]);
+
+
   const handleCopy = useCallback(
     (isSui = false) => {
       if (isSui) onSuiNftCopy();
@@ -67,7 +82,7 @@ export default function SoulTagNftInfo() {
         />
         <Text variant="with-18">
         Reputation:
-        {soulTagNft?.reputation}
+        {reputation}
         </Text>
         
       </HStack>

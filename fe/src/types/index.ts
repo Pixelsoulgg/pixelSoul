@@ -1,6 +1,6 @@
 import { UserProfile } from "@auth0/nextjs-auth0/client";
 import { FLIP_TYPE } from "../contracts/types";
-import BetaReleaseData  from '@/configs/beta-release-func.json';
+import BetaReleaseData from "@/configs/beta-release-func.json";
 
 export interface IDropdownItem {
   lable: string;
@@ -92,7 +92,6 @@ export interface IUser {
   referredBy?: string;
   referralAmount?: number;
   referralSoulPoint?: number;
-  
 }
 
 export interface IGame {
@@ -147,5 +146,33 @@ export interface IEvent {
   image: string;
 }
 
-
 export type PixelFuncType = keyof typeof BetaReleaseData;
+
+export interface SoulTagProfile {
+  objectId: string;
+  version: string;
+  digest: string;
+  type: string;
+  content: {
+    dataType: string;
+    type: string;
+    hasPublicTransfer: boolean;
+    fields: {
+      id: {
+        id: string;
+      };
+      quests: {
+        type: string;
+        fields: {
+          id: {
+            id: string;
+          };
+          size: string;
+        };
+      };
+      reputation: string;
+      soulTagId: string;
+      soulTagOwner: string;
+    };
+  };
+}
