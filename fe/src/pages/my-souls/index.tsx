@@ -90,7 +90,6 @@ export default function MySoul() {
     <>
       <Flex flex={1} w="full" flexDirection={{ base: "column", lg: "row" }}>
         <ProfileSection />
-        <Button onClick={async() => await dispatch(getSuiTagProfileAction()).unwrap()}>Test</Button>
         <Flex
           flex={{ base: 1, lg: 4 }}
           w="full"
