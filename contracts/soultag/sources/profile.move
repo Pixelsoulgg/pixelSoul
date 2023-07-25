@@ -9,6 +9,8 @@ module soultag::profile {
     use sui::url::{Self, Url};
     use sui::event;
     use sui::object_table::{Self, ObjectTable};
+    use sui::table::{Self, Table};
+
 
     struct Profile has key{
         id:UID,
@@ -28,6 +30,11 @@ module soultag::profile {
         id:UID
     }
 
+    struct SoulTagProfile has key{
+        id:UID,
+        data:Table<ID,ID>
+    }
+
     struct ProfileCreated has copy,drop{
         profileId:ID,
         owner:address
@@ -43,6 +50,12 @@ module soultag::profile {
         transfer::transfer(OperatorCap {
             id: object::new(ctx)
         }, tx_context::sender(ctx));
+
+        let soulProfile=SoulTagProfile{
+            id:object::new(ctx),
+            data:table::new(ctx)
+        };
+        transfer::share_object(soulProfile);
     }
 
     public entry fun add_operator_cap(_:&OperatorCap,receipient:address,ctx:&mut TxContext){
@@ -60,7 +73,8 @@ module soultag::profile {
         transfer::share_object(quest);
     }
 
-    public entry fun createProfile(_:&OperatorCap,soulTagOwner:address,soulTagId:ID,reputation:u64,ctx:&mut TxContext){
+    public entry fun createProfile(_:&OperatorCap,soulTagOwner:address,soulTagId:ID,reputation:u64,soultag_profile:&mut SoulTagProfile,ctx:&mut TxContext){
+        assert!(!table::contains(&soultag_profile.data,soulTagId),101);
         let id=object::new(ctx);
         let profileId=object::uid_to_inner(&id);
         let sender=tx_context::sender(ctx);
@@ -72,6 +86,7 @@ module soultag::profile {
             quests:object_table::new(ctx)
         };
         transfer::transfer(profile,sender);
+        table::add(&mut soultag_profile.data,soulTagId,profileId);
         event::emit(ProfileCreated{
             profileId,
             owner:sender
@@ -90,7 +105,6 @@ module soultag::profile {
         event::emit(ReputationIncreased{
             profileId:object::uid_to_inner(&profile.id),
             newReputation
-        })
+        });
     }
-
 }
