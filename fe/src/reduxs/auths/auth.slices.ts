@@ -59,8 +59,9 @@ export const getSteamInfoAction = createAsyncThunk<OpenIDData | undefined>(
   "authentication/getSteamInfo",
   async () => {
     const storage = new StorageHelpers();
-    const model = storage.getSteamInfo();
-    return model;
+    // const model = storage.getSteamInfo();
+    // return model;
+    return undefined;
   }
 );
 

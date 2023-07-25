@@ -1,5 +1,6 @@
 import { UserProfile } from "@auth0/nextjs-auth0/client";
 import { FLIP_TYPE } from "../contracts/types";
+import BetaReleaseData  from '@/configs/beta-release-func.json';
 
 export interface IDropdownItem {
   lable: string;
@@ -145,3 +146,6 @@ export interface IEvent {
   description: string;
   image: string;
 }
+
+
+export type PixelFuncType = keyof typeof BetaReleaseData;

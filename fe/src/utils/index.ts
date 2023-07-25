@@ -1,5 +1,7 @@
 import { UseToastOptions } from "@chakra-ui/react";
+import BetaReleaseData from '@/configs/beta-release-func.json';
 import moment from "moment";
+import { PixelFuncType } from "@/types";
 const DATE_TIME_FORMAT = "DD/MM/YYYY HH:mm:ss";
 const DATE_TIME_FORMAT_ONE = "DD/MM/YYYY HH:mm";
 
@@ -15,7 +17,7 @@ export const convertTextInput = (str?: string): string => {
 };
 
 export const showSortAddress = (address: string): string => {
-  return `${address?.substr(0, 4)}...${address?.substr(
+  return `${address?.substring(0, 4)}...${address?.substr(
     address.length - 4,
     address.length - 1
   )}`;
@@ -175,4 +177,14 @@ export function getURL(path: string) {
     ? process.env.NEXT_PUBLIC_SITE_URL!
     : window.location.origin;
   return new URL(path, baseURL).toString();
+}
+
+
+export const isBetaRender = (funcName: PixelFuncType) => {
+  try {
+    const result = BetaReleaseData[funcName as keyof typeof BetaReleaseData];
+    return result;
+  } catch(ex) {
+    return false;
+  }
 }

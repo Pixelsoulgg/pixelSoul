@@ -5,6 +5,7 @@ import { useAppSelector } from "../../reduxs/hooks";
 import Link from "next/link";
 import { numberFormat } from "@/utils";
 import { getSteamAuthUrl } from "@/utils/env.helpers";
+import ComingSoon from "@/components/ComingSoon";
 
 export default function SteamContainer() {
   const { steamInfo, steamId } = useAppSelector((state) => state.auth);
@@ -22,6 +23,7 @@ export default function SteamContainer() {
   return (
     <Flex w="full" flexDir="column" mt={{ base: "10px" }}>
       {!steamId && (
+        <ComingSoon funcName="Connect_Steam" isCenter>
         <Link href={getSteamAuthUrl() || ""}>
           <Box
             cursor="pointer"
@@ -40,6 +42,7 @@ export default function SteamContainer() {
             </Text>
           </Box>
         </Link>
+        </ComingSoon>
       )}
       {steamId && (
         <SimpleGrid w="full" columns={{ base: 1, lg: 2 }} columnGap="24px">

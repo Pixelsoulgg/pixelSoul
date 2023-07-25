@@ -4,14 +4,19 @@ import StatCard from "../../components/dashboards/StatCard";
 import { useAppSelector } from "../../reduxs/hooks";
 import { numberFormat } from "@/utils";
 import ConnectMetaMask from "./ConnectMetaMask";
+import ComingSoon from "@/components/ComingSoon";
 
 export default function WalletContainer() {
   const { score } = useAppSelector((state) => state.account);
   const { auth0Info } = useAppSelector((state) => state.auth);
 
   return (
-    <Flex w="full" flexDir="column" mt={{ base: "10px"}}>
-      {!auth0Info?.walletAddress && <ConnectMetaMask />}
+    <Flex w="full" flexDir="column" mt={{ base: "10px" }}>
+      {!auth0Info?.walletAddress && (
+        <ComingSoon funcName="Connect_MetaMask" isCenter>
+          <ConnectMetaMask />
+        </ComingSoon>
+      )}
       {auth0Info?.walletAddress && (
         <SimpleGrid w="full" columns={{ base: 1, lg: 2 }} columnGap="24px">
           <StatCard

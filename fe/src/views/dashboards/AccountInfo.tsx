@@ -23,6 +23,7 @@ import { useAddSuiWalletMutation } from "@/services/modules/game.check.services"
 import { auth0LoginSuccess } from "@/reduxs/auths/auth.slices";
 import AppApi from "@/apis/app.api";
 import { IUser } from "@/types";
+import ComingSoon from "@/components/ComingSoon";
 
 const DEFAULT_MESSAGE = "Not connected yet";
 
@@ -87,18 +88,18 @@ export default function AccountInfo() {
     handlePostSuiWalletToApi();
   }, [handlePostSuiWalletToApi]);
 
-  console.log("connect", wallet.connected);
   return (
     <>
       <Flex w="full" flexDirection="column" borderBottom="1.5px solid #E4E7EC">
-        <Text variant="with-24">Steam Account</Text>
-        <Text
-          variant="with-18"
-          color={steamInfo?.["openid.sig"] ? "#475467" : "#98A2B3"}
-        >
-          {steamId || DEFAULT_MESSAGE}
-        </Text>
-
+          <VStack w="full" alignItems='flex-start'>
+            <Text variant="with-24">Steam Account</Text>
+            <Text
+              variant="with-18"
+              color={steamInfo?.["openid.sig"] ? "#475467" : "#98A2B3"}
+            >
+              {steamId || DEFAULT_MESSAGE}
+            </Text>
+          </VStack>
         <VStack w="full" alignItems="flex-start" my="30px">
           <Text variant="with-24">Wallet ID</Text>
           {!auth0Info?.walletAddress && (

@@ -1,14 +1,15 @@
+import ComingSoon from "@/components/ComingSoon";
 import {
   connectToMetamask,
   connectToWalletConnect,
 } from "@/contracts/interfaces/EthersConnect";
-import { getToast } from "@/utils";
+import { getToast, isBetaRender } from "@/utils";
 import { Box, Text, useToast } from "@chakra-ui/react";
 import React from "react";
 
 export default function ConnectMetaMask() {
-  const toast = useToast();
-  return (
+  const toast = useToast();  
+  return (   
     <Box
       cursor="pointer"
       bg="#DC6803"

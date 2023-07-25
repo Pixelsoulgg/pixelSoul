@@ -6,6 +6,7 @@ import { useAppSelector } from "../../reduxs/hooks";
 import SteamTable from "./SteamTable";
 import { numberFormat } from "@/utils";
 import { ButtonVariants } from "@/themes/theme";
+import ComingSoon from "@/components/ComingSoon";
 
 export default function StreamGeneralData() {
   const { steamId } = useAppSelector((state) => state.auth);
@@ -16,7 +17,15 @@ export default function StreamGeneralData() {
         <Button variant={ButtonVariants.WITH_ACTIVE} minW="103px" borderRadius="10px">Steam</Button>
         <Button variant={ButtonVariants.WITH_DEFAULT} minW="103px" borderRadius="10px" disabled isDisabled>Epic</Button>
       </HStack>
-      {!steamId && <Empty />}
+
+      <ComingSoon
+        bgColor="#F9FAFB"
+        justifyContent="center"
+        alignItems="center"
+        isCenter
+        isVCenter
+      />
+      {/* {!steamId && <Empty />}
       {steamId && (
         <Flex w="full" flexDirection="column">
           <SteamTable />
@@ -57,7 +66,7 @@ export default function StreamGeneralData() {
             </Flex>
           </SimpleGrid>
         </Flex>
-      )}
+      )} */}
     </Flex>
   );
 }
