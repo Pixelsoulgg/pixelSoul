@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Flex, SimpleGrid, Spacer, Text, VStack } from "@chakra-ui/react";
 import PixelSouldLogo from "@/components/PixelSould";
 import { fonts, footer_menu } from "@/configs/constants";
-import { m, useAnimation } from "framer-motion";
+import {  motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { AnimateVariants } from "@/components/animations";
 import LandingContainer from "./LandingContainer";
@@ -21,7 +21,7 @@ export default function LandingFooter() {
   return (
     <Flex
       w="full"
-      as={m.div}
+      as={motion.div}
       ref={ref}
       animate={controls}
       initial="hidden"

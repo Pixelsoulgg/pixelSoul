@@ -7,7 +7,7 @@ type Props = {
 };
 export default function LandingLayout({ children }: Props) {
   return (
-    <MotionLazyContainer>
+    // <MotionLazyContainer>
       <Flex
         w="100%"
         margin="0px auto"
@@ -23,6 +23,6 @@ export default function LandingLayout({ children }: Props) {
           {children}
         </Flex>
       </Flex>
-    </MotionLazyContainer>
+    // </MotionLazyContainer>
   );
 }

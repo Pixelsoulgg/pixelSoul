@@ -1,44 +1,74 @@
-<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="2.08594" y="8.50388" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="4.1709" y="8.50388" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="6.25684" y="8.50388" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="8.3418" y="8.50388" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="10.4277" y="8.50388" width="2.08546" height="2.08546" fill="#344054"/>
-<rect y="10.5894" width="2.08546" height="2.08546" fill="#344054"/>
-<rect y="12.6748" width="2.08546" height="2.08546" fill="#344054"/>
-<rect y="14.7603" width="2.08546" height="2.08546" fill="#344054"/>
-<rect y="16.8457" width="2.08546" height="2.08546" fill="#344054"/>
-<rect y="18.9312" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="2.08594" y="21.0166" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="4.1709" y="21.0166" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="6.25684" y="21.0166" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="8.3418" y="21.0166" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="10.4277" y="21.0166" width="2.08546" height="2.08546" fill="#344054"/>
-<rect width="2.08546" height="2.08546" transform="matrix(-1 0 0 1 22.9404 8.50388)" fill="#344054"/>
-<rect width="2.08546" height="2.08546" transform="matrix(-1 0 0 1 20.8545 8.50388)" fill="#344054"/>
-<rect width="2.08546" height="2.08546" transform="matrix(-1 0 0 1 18.7695 8.50388)" fill="#344054"/>
-<rect width="2.08546" height="2.08546" transform="matrix(-1 0 0 1 16.6836 8.50388)" fill="#344054"/>
-<rect width="2.08546" height="2.08546" transform="matrix(-1 0 0 1 14.5986 8.50388)" fill="#344054"/>
-<rect width="2.08546" height="2.08546" transform="matrix(-1 0 0 1 25.0254 10.5894)" fill="#344054"/>
-<rect width="2.08546" height="2.08546" transform="matrix(-1 0 0 1 25.0254 12.6748)" fill="#344054"/>
-<rect width="2.08546" height="2.08546" transform="matrix(-1 0 0 1 25.0254 14.7603)" fill="#344054"/>
-<rect width="2.08546" height="2.08546" transform="matrix(-1 0 0 1 25.0254 16.8457)" fill="#344054"/>
-<rect width="2.08546" height="2.08546" transform="matrix(-1 0 0 1 25.0254 18.9312)" fill="#344054"/>
-<rect width="2.08546" height="2.08546" transform="matrix(-1 0 0 1 22.9404 21.0166)" fill="#344054"/>
-<rect width="2.08546" height="2.08546" transform="matrix(-1 0 0 1 20.8545 21.0166)" fill="#344054"/>
-<rect width="2.08546" height="2.08546" transform="matrix(-1 0 0 1 18.7695 21.0166)" fill="#344054"/>
-<rect width="2.08546" height="2.08546" transform="matrix(-1 0 0 1 16.6836 21.0166)" fill="#344054"/>
-<rect width="2.08546" height="2.08546" transform="matrix(-1 0 0 1 14.5986 21.0166)" fill="#344054"/>
-<rect x="6.25684" y="2.2475" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="6.25684" y="4.33298" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="8.3418" y="4.33298" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="6.25684" y="12.6748" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="6.25684" y="14.7603" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="8.3418" y="14.7603" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="14.5986" y="16.8457" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="18.7695" y="12.6748" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="4.1709" y="14.7603" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="6.25684" y="16.8457" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="10.4277" y="4.33298" width="2.08546" height="2.08546" fill="#344054"/>
-<rect x="10.4277" y="6.41843" width="2.08546" height="2.08546" fill="#344054"/>
+<svg width="25" height="23" viewBox="0 0 25 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 57">
+<rect id="Rectangle 4401" x="2.08301" y="2.15051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4421" x="2.08301" y="20.9005" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4402" x="4.16699" y="2.15051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4474" x="8.33301" y="2.15051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4477" x="12.5" y="2.15051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4482" x="16.667" y="2.15051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4483" x="4.58301" y="4.23389" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4506" x="4.58301" y="9.4422" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4513" x="6.66699" y="14.6505" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4507" x="6.66699" y="9.4422" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4514" x="8.75" y="14.6505" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4508" x="8.75" y="9.4422" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4515" x="10.833" y="14.6505" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4509" x="10.833" y="9.4422" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4516" x="12.917" y="14.6505" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4510" x="12.917" y="9.4422" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4517" x="15" y="14.6505" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4511" x="15" y="9.4422" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4518" x="17.083" y="14.6505" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4512" x="17.083" y="9.4422" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4519" x="19.167" y="14.6505" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4502" x="10.833" y="4.23389" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4504" x="17.083" y="4.23389" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4501" x="4.58301" y="0.0671997" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4503" x="10.833" y="0.0671997" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4505" x="17.083" y="0.0671997" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4422" x="4.16699" y="20.9005" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4403" x="6.25" y="2.15051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4423" x="6.25" y="20.9005" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4404" x="8.33301" y="2.15051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4424" x="8.33301" y="20.9005" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4405" x="8.33301" y="2.15051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4425" x="8.33301" y="20.9005" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4406" x="10.417" y="2.15051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4426" x="10.417" y="20.9005" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4407" x="10.417" y="2.15051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4427" x="10.417" y="20.9005" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4408" x="12.5" y="2.15051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4485" x="16.667" y="2.15051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4428" x="12.5" y="20.9005" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4409" x="12.5" y="2.15051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4486" x="16.667" y="2.15051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4452" x="14.583" y="2.15051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4454" x="16.667" y="2.15051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4480" x="18.75" y="2.15051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4499" x="20.833" y="2.15051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4429" x="12.5" y="20.9005" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4453" x="14.583" y="20.9005" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4455" x="16.667" y="20.9005" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4481" x="18.75" y="20.9005" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4500" x="20.833" y="20.9005" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4391" y="4.23389" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4411" x="22.917" y="4.23389" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4392" y="6.3172" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4412" x="22.917" y="6.3172" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4393" y="8.40051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4413" x="22.917" y="8.40051" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4394" y="10.4839" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4414" x="22.917" y="10.4839" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4395" y="12.5672" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4467" x="22.917" y="12.5672" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4415" x="22.917" y="12.5672" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4396" y="14.6505" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4416" x="22.917" y="14.6505" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4397" y="16.7339" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4417" x="22.917" y="16.7339" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4398" y="18.8172" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4418" x="22.917" y="18.8172" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4399" y="18.8172" width="2.08333" height="2.08333" fill="#344054"/>
+<rect id="Rectangle 4419" x="22.917" y="18.8172" width="2.08333" height="2.08333" fill="#344054"/>
+</g>
 </svg>

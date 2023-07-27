@@ -1,7 +1,7 @@
 import { AnimateVariants } from "@/components/animations";
 import { MAX_WIDTH } from "@/themes/config";
 import { Flex, FlexProps } from "@chakra-ui/react";
-import { m, useAnimation } from "framer-motion";
+import { m, motion, useAnimation } from "framer-motion";
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
@@ -32,7 +32,7 @@ export default function LandingContainer({
       w="full"
       flexDirection="column"
       alignItems="center"
-      as={m.div}
+      as={motion.div}
       ref={ref}
       animate={controls}
       initial={initial}

@@ -35,6 +35,7 @@ import { ButtonVariants } from "@/themes/theme";
 import MintSoulTagModal from "@/views/dashboards/MintSoulTagModal";
 import SoulTagNftInfo from "@/views/dashboards/SoulTagNftInfo";
 import { getSuiTagProfileAction } from "@/reduxs/suinft/sui.actions";
+import MintSoulTagSuccessModal from "@/views/dashboards/MintSoulTagSuccessModal";
 
 MySoul.getLayout = function getLayout(page: React.ReactElement) {
   return <Layout variant="dashboard">{page}</Layout>;
@@ -107,12 +108,16 @@ export default function MySoul() {
               border="1px solid #D0D5DD"
               p="20px"
               borderRadius="12px"
+              bgColor="#E2FDFF"
+              bgImage="./bg-soultag.png"
+              bgRepeat='repeat-x'
+              bgPosition="bottom"
             >
               <VStack alignItems="flex-start" w="full">
                 <Heading
                   size="md"
                   fontFamily={fonts.Inter}
-                  color="#101828"
+                  color="#000082"
                   fontSize="24px"
                   fontWeight="600"
                   lineHeight="28px"
@@ -120,7 +125,7 @@ export default function MySoul() {
                   SoulTag
                 </Heading>
                 <Text
-                  color="#475467"
+                  color="#000082"
                   fontSize="18px"
                   fontWeight="400"
                   fontFamily={fonts.Inter}
@@ -135,6 +140,8 @@ export default function MySoul() {
                 <Button
                   variant={ButtonVariants.WITH_HIGHLIGHT_BLUE}
                   minW="135px"
+                  bgColor="#84C037"
+                  borderColor="#84C037"
                   borderRadius="6px !important"
                   onClick={() => onOpen()}
                 >
@@ -190,6 +197,8 @@ export default function MySoul() {
         isOpen={isMintSoulTag}
         onClose={onClose}        
       />
+
+      <MintSoulTagSuccessModal isOpen onClose={() => {}} />
     </>
   );
 }

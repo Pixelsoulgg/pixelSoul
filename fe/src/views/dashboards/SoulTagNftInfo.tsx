@@ -41,11 +41,11 @@ export default function SoulTagNftInfo() {
   return (
     <Flex
       w="85%"
-      borderRadius="8px"
-      bgColor="#F2F4F7"
-      border="1px solid #4691FF"
+      borderRadius="8px"      
       p="10px 20px"
       justifyContent='space-around'
+      bgColor="#FFF"
+      boxShadow="0px 4px 6px 0px rgba(0, 0, 0, 0.25)"
     >
       <HStack w="full">
         <Text variant="with-18">

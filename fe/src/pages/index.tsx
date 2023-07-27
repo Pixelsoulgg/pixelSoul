@@ -6,6 +6,7 @@ import { LandingContainer } from "@/views/new-landings";
 import EverGrowing from "@/views/new-landings/EverGrowing";
 import GameStudio from "@/views/new-landings/GameStudio";
 import LandingFooter from "@/views/new-landings/LandingFooter";
+import OpeningModal from "@/views/new-landings/OpeningModal";
 import TechIsNothing from "@/views/new-landings/TechIsNothing";
 import TimeToJumpIn from "@/views/new-landings/TimeToJumpIn";
 import UniqueGame from "@/views/new-landings/UniqueGame";
@@ -18,8 +19,10 @@ import {
   Spacer,
   Text,
   VStack,
+  useBoolean,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { m } from "framer-motion";
+import { m, motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
@@ -35,13 +38,17 @@ export default function Landing() {
   const [currentWindow, setCurrentWindow] = useState<Window>();
   const [accessToken, setAccessToken] = useState<string>();
 
+  const {isOpen, onClose, onOpen} = useDisclosure();
+
+
   const getAccessToken = useCallback(
     async (isRedirect = false) => {
       const response = await fetch("/api/check");
       const auth = await response.json();
       if (auth.accessToken) {
         if (isRedirect) {
-          push(`/my-souls${query ? `?refer=${query.refer}` : ""}`);
+          // push(`/my-souls${query ? `?refer=${query.refer}` : ""}`);
+          onOpen();
         } else {
           setAccessToken(auth.accessToken);
         }
@@ -97,7 +104,8 @@ export default function Landing() {
     if (accessToken && authWindow) {
       authWindow.close();
       setAuthWindow(undefined);
-      push(`/my-souls${query ? `?refer=${query.refer}` : ""}`);
+      // push(`/my-souls${query ? `?refer=${query.refer}` : ""}`);
+      onOpen();
     }
   }, [authWindow, accessToken, currentWindow, push]);
 
@@ -122,7 +130,7 @@ export default function Landing() {
         >
           <HStack
             w="full"
-            as={m.header}
+            as={motion.header}
             variants={varFade({ easeIn: "linear" }).inDown}
             initial="initial"
             animate="animate"
@@ -162,7 +170,7 @@ export default function Landing() {
             <Text
               variant={TextVariants.WITH_LANDING}
               className="text-border"
-              as={m.p}
+              as={motion.p}
               variants={varFade({ easeIn: "linear", durationIn: 1 }).in}
               initial="initial"
               animate="animate"
@@ -178,7 +186,7 @@ export default function Landing() {
               fontWeight="400"
               my="39px !important"
               textAlign="center"             
-              as={m.p}
+              as={motion.p}
               variants={varFade({ easeIn: "linear" }).inUp}
               initial="initial"
               animate="animate"
@@ -190,7 +198,7 @@ export default function Landing() {
               variant={TextVariants.WITH_LANDING}
               className="text-border"
               fontWeight="700"
-              as={m.p}
+              as={motion.p}
               variants={varScale({ easeIn: "linear" }).inY}
               initial="initial"
               animate="animate"
@@ -202,7 +210,7 @@ export default function Landing() {
               w="full"
               justifyContent="center"
               mt="70px !important"
-              as={m.div}
+              as={motion.div}
               variants={varFade({ easeIn: "linear" }).inUp}
               initial="initial"
               animate="animate"
@@ -212,7 +220,7 @@ export default function Landing() {
                 cursor="pointer"
                 mr="23px"
                 onClick={handleAuth}
-                as={m.img}
+                as={motion.img}
                 whileTap={{
                   scaleX: 0.98,
                   boxShadow: "4px 4px 4px rgba(151, 71, 255, 0.35)",
@@ -221,8 +229,11 @@ export default function Landing() {
               <Image
                 src="./new-landings/demo-btn.svg"
                 cursor="pointer"
-                onClick={() => push("/my-souls")}
-                as={m.img}
+                onClick={() => {
+                  //push("/my-souls")
+                  onOpen();
+                }}
+                as={motion.img}
                 whileTap={{
                   scaleX: 0.98,
                   boxShadow: "4px 4px 4px rgba(151, 71, 255, 0.35)",
@@ -246,6 +257,8 @@ export default function Landing() {
         <TimeToJumpIn />
         <LandingFooter />
       </VStack>
+
+      <OpeningModal isOpen={isOpen} onClose={onClose}  />
     </>
   );
 }
