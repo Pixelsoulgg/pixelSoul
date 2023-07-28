@@ -62,23 +62,24 @@ export default function Landing() {
   }, [getAccessToken]);
 
   const handleAuth = useCallback(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-    if (authWindow) {
-      authWindow.close();
-    }
+    onOpen();
+    // if (typeof window === "undefined") {
+    //   return;
+    // }
+    // if (authWindow) {
+    //   authWindow.close();
+    // }
 
-    const param =
-      "toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500px,height=700px'); return false;";
-    const _openWindow = window?.open(
-      "/api/auth/login",
-      "pixelSoulAuth0",
-      param
-    );
-    if (_openWindow) {
-      setAuthWindow(_openWindow);
-    }
+    // const param =
+    //   "toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500px,height=700px'); return false;";
+    // const _openWindow = window?.open(
+    //   "/api/auth/login",
+    //   "pixelSoulAuth0",
+    //   param
+    // );
+    // if (_openWindow) {
+    //   setAuthWindow(_openWindow);
+    // }
   }, [authWindow]);
 
   useEffect(() => {
