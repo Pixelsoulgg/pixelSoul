@@ -8,7 +8,7 @@ import { getSuiNetworkEnv } from "../env.helpers";
 const soultag_package_id =
   "0x8df27b06b9845229a14b190b36f84b4975bd46cc45cc5467f514c6f686efa101";
 export const SOULTAG_CHECK_NAME = `0xacf0f6f9d20882dd35e6814c91c7899c1dbbbd832f90533ed865f1891884a2db`;
-export const soultag_package = `${soultag_package_id}::soulTag::mint`;
+export const soultag_package = `0x8df27b06b9845229a14b190b36f84b4975bd46cc45cc5467f514c6f686efa101::soulTag::mint`;
 export const soultag_check_condition = `${soultag_package_id}::soulTag::SoulTag`;
 
 export const CHECK_NAME_OBJECT_ID =
