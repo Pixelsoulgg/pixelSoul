@@ -38,7 +38,7 @@ export default function OpeningModal({onClose, ...props}: IProps) {
             justifyContent="center"
             columnGap="10px"
             position="absolute"
-            bottom="150px"
+            bottom="135px"
           >
             <Link href="/">
               <Image src="./socials/twitter.png" w="45px" h="45px" />
