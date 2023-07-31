@@ -33,7 +33,7 @@ export default function TimeToJumpIn() {
           lineHeight="normal"
           textAlign="center"
         >
-          Time ti jump in
+          Time to jump in
         </Text>
 
         <Text
