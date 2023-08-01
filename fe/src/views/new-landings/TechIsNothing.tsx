@@ -28,8 +28,9 @@ export default function TechIsNothing() {
         alignItems="center"
         justifyContent="center"
       >
-        <Text variant={TextVariants.WITH_18} 
-          fontSize={{base: '30px', lg: "40px"}} 
+        <Text
+          variant={TextVariants.WITH_18}
+          fontSize={{ base: "30px", lg: "40px" }}
           color="#fff"
           textAlign="center"
           lineHeight="normal"
@@ -37,10 +38,10 @@ export default function TechIsNothing() {
           Tech is nothing without a community.
         </Text>
         <HStack mt="32px !important">
-          <Link href="/">
+          <Link href="http://twitter.com/pixelsoulGG">
             <Image src="./new-landings/twitter.png" />
           </Link>
-          <Link href="/">
+          <Link href="https://discord.gg/yBHkAEAQGM">
             <Image src="./new-landings/discord.png" />
           </Link>
         </HStack>

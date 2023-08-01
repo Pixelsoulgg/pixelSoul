@@ -16,7 +16,7 @@ import { Animate } from "@/components/animations";
 
 const data = {
   1: "player",
-  2: "game",
+  2: "game developer",
   3: "artist",
 };
 
@@ -76,7 +76,7 @@ export default function TimeToJumpIn() {
                   fontSize="35px"
                   fontWeight="400"
                   lineHeight="normal"
-                  w="50%"
+                  w="60%"
                   h="30%"
                   margin="auto"
                   position="absolute"
@@ -84,6 +84,7 @@ export default function TimeToJumpIn() {
                   left={0}
                   right={0}
                   bottom={0}
+                  textAlign={"center"}
                 >
                   {data[(index + 1) as keyof typeof data]}
                 </Text>

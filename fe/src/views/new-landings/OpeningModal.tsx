@@ -13,7 +13,7 @@ import React from "react";
 
 interface IProps extends Omit<ModalProps, "children"> {}
 
-export default function OpeningModal({onClose, ...props}: IProps) {
+export default function OpeningModal({ onClose, ...props }: IProps) {
   return (
     <Modal size="3xl" onClose={onClose} {...props}>
       <ModalOverlay />
@@ -40,10 +40,10 @@ export default function OpeningModal({onClose, ...props}: IProps) {
             position="absolute"
             bottom="135px"
           >
-            <Link href="/">
+            <Link href="https://twitter.com/pixelsoulGG">
               <Image src="./socials/twitter.png" w="45px" h="45px" />
             </Link>
-            <Link href="/">
+            <Link href="https://discord.gg/yBHkAEAQGM">
               <Image src="./socials/discord.png" w="45px" h="45px" />
             </Link>
           </HStack>

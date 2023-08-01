@@ -11,7 +11,7 @@ const data = {
   },
   2: {
     name: "Arena",
-    desc: "Prove your worth in community-based events and tournament.",
+    desc: "Prove your worth in community-based events and tournaments",
   },
   3: {
     name: "Soul Drops",
@@ -42,12 +42,12 @@ export default function EverGrowing() {
         >
           {new Array(4).fill(0).map((_, index) => (
             <Center key={index}>
-            <EverGrowingItem
-              key={index}
-              index={index + 1}
-              name={data[(index + 1) as keyof typeof data].name}
-              desc={data[(index + 1) as keyof typeof data].desc}
-            />
+              <EverGrowingItem
+                key={index}
+                index={index + 1}
+                name={data[(index + 1) as keyof typeof data].name}
+                desc={data[(index + 1) as keyof typeof data].desc}
+              />
             </Center>
           ))}
         </SimpleGrid>
